@@ -1,0 +1,1333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>线路管理</title>
+</head>
+
+<style>
+body{ font-family:"Microsoft Yahei"; font-size:14px; margin:20px;}
+strong{ color:#FF0000; font-size:12px; margin:0px; padding:0px;}
+li{ list-style-type:none}
+.add1{ font-size:24px; width:100%; border-bottom:2px solid #0066CC; padding-bottom:10px;}
+.add1 font{ color:#0066CC; font-size:12px}
+.add2{ margin-top:10px; line-height:20px; border-bottom:1px solid #ddd; width:100%; padding-bottom:10px; float:left}
+.add2 span{ color:#0066CC}
+.add3{ margin-top:30px; text-align:center; float:left}
+.add3 input{ width:100px; height:50px; font-size:16px}
+/*----------- 通用Ajax对话框 ------------*/
+.pubdlg {
+	z-index:8888;
+	border: 5px solid #749F4D;
+	background-color: #fff;
+	
+}
+
+.pubdlg .title {
+	border-bottom: 1px solid #C9CFC1;
+	background-color: #F9FCDC;
+	background:url(dlgtitle.gif) repeat-x;
+	height:28px;
+	line-height:28px;
+	text-align:left;
+	cursor:move;
+}
+
+.pubdlg .titLeft {
+	float:left;
+	padding-left:8px;
+	line-height:28px;
+	font-weight:bold;
+	color:#555;
+}
+
+.pubdlg .titRight {
+	float:right;
+	padding:0px;
+}
+
+.fullpagediv
+{
+	z-index:1999;
+	top:0;
+	left:0;
+	background:#cdcdcd;
+	filter:Alpha(opacity=50);
+	-moz-opacity:.5;
+	opacity:0.5;	
+	position:absolute;
+	width:100%;
+	height:2500px;
+}
+
+.quicksel {
+	z-index:10005;
+	width:680px;
+	height:420px;
+	margin-left:5px;
+	margin-top:5px;
+	overflow: auto;
+	scrollbar-face-color: #ffffff;
+	scrollbar-highlight-color: #919192;
+	scrollbar-shadow-color: #919192;
+	scrollbar-3dlight-color:#ffffff;
+	scrollbar-arrow-color: #919192;
+	scrollbar-track-color: #ffffff;
+	scrollbar-darkshadow-color: #ffffff;
+}
+
+.quickselfoot {
+	padding-top:8px;
+	border-top:1px dashed #C0CC9D;
+}
+
+.quickselItem {
+	margin-bottom:8px;
+}
+
+.quickselItem .topcat {
+	font-weight:bold;
+	clear:both;
+	line-height:24px;
+	border-bottom:1px dashed #ccc;
+	background:#FBFEEF;
+	padding-left:5px;
+}
+
+.quickselItem .soncat {
+	padding-left:10px; 
+}
+
+.quickselItem .item {
+	float:left;
+	margin-right:8px;
+	width:150px;
+	margin-top:10px;
+}
+
+.mysource, .mywriter {
+	z-index:10001;
+	border: 5px solid #749F4D;
+	background-color: #F0FAEB;
+	padding: 2px;
+	width: 280px;
+	line-height:160%;
+}
+
+.dlgws div {
+	width: 100%;
+}
+
+.dlgTesttitle
+{
+	border: 2px solid #749F4D;
+	background-color: #F0FAEB;
+	padding: 2px;
+	width: 300px;
+	line-height:150%;
+}
+
+#_mysource{ z-index:10003; }
+#_mywriter{ z-index:10004; }
+#uploadwait{ z-index:19999; }
+
+	.good_day .dhx_month_body{
+		background-color: #C1E0FF;
+	}
+	.good_day .dhx_month_head{
+		background-color: #95CAFF;
+	}
+dd{ margin:0px; padding:0px;} 
+#divinfo{ width:100%; height:40px; background-color:#eee; border:1px solid #ccc; line-height:40px; text-align:center; margin-top:10px; font-size:16px; color:#0066CC}
+#divinfo b{ color:#FF0000}
+
+
+.albCt{ float:left; width:120px;margin-left:5px; margin-top:5px; text-align:left; border:1px solid #ccc; padding:2px; height:130px;}
+.albCt img{ width:120px; height:80px; }
+.albCt .titit{ float:left;width:120px; }
+.albCt .titit span{ float:left; font-weight:normal; width:45px; margin:0px; padding:0px}
+.albCt .titit input{ width:115px;float:left}
+.albCt .titit a{ float:left; width:50px;}
+</style>
+<script language="javascript" src="../include/ajax188.js"></script>
+<script language='javascript' src='img/main.js'></script>
+<script>
+function DelAlbPic(pid)
+{
+	var tgobj = $Obj('albCtok'+pid);
+	var myajax = new ajaxx188(tgobj);
+	myajax.SendGet2('swfupload.php?dopost=del&id='+pid);
+	$Obj('thumbnails').removeChild(tgobj);
+}
+
+
+function URLencode(sStr) 
+{
+    return sStr.replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F').replace(/\//g,'%26');
+}
+
+
+//删除已经上传的图片(编辑时用)
+function DelAlbPicOld(picfile, pid)
+{
+	var tgobj = $Obj('albold'+pid);
+
+	var myajax = new ajaxx188(tgobj);
+	myajax.SendGet2('swfupload.php?dopost=delold&picfile='+picfile);
+	$Obj('thumbnailsEdit').removeChild(tgobj);
+}
+
+</script>
+
+<body>
+
+
+<?php
+if($id==1 or $id=='')
+{
+
+
+?>
+<!--
+  if(document.form1.title.value==""){
+   document.form1.title.focus();
+	   alert("帅哥 or 美女，标题是必须要填的哦！");
+	  
+	   return false;
+  }
+  if(document.form1.typeid.value==0){
+    document.form1.typeid.focus();
+	   alert("帅哥 or 美女，栏目是必须要选择对的哦！");
+	   return false;
+  }
+-->
+<script>
+<!--
+function PostComment()
+{
+
+
+
+	    var f = document.form1;
+		var taget_obj = $DE('commetcontentNew');
+		var flags;
+		var ismake;
+		
+  for(var i=0;i<f.flags.length;i++ )
+  {
+     if(f.flags[i].checked)
+	 { //判断复选框是否选中
+    flags=flags+f.flags[i].value + ","; //值的拼凑 .. 具体处理看你的需要,
+	 }
+  }
+
+//alert(flags);
+
+      for(var i=0;i<f.ismake.length;i++)
+      {         
+            if(f.ismake[i].checked)
+            {
+              ismake=f.ismake[i].value;
+              
+            }
+      }   
+
+		
+
+		var waithtml = "<div style='line-height:30px'>正在发送中...</div>";
+		if(f.title.value=='')
+		{
+			alert("帅哥 or 美女，标题是必须要填的哦！");
+			document.form1.title.focus();
+			return;
+		}
+		
+		if(f.typeid.value=='0')
+		{
+			alert("帅哥 or 美女，栏目必须选择！");
+			document.form1.typeid.focus();
+			return;
+		}
+		
+		var myajax = new ajaxx188(taget_obj, true, true, '', '', waithtml);
+		myajax.sendlang = 'utf-8';
+		myajax.AddKeyN('dopost', 'send');
+		myajax.AddKeyN('id', f.id.value);
+		myajax.AddKeyN('channelid', f.channelid.value);
+		var title=URLencode(f.title.value);
+		
+		myajax.AddKeyN('title',title);
+		
+		myajax.AddKeyN('aid', f.aid.value);
+		myajax.AddKeyN('typeid', f.typeid.value);
+		myajax.AddKeyN('typeid2', f.typeid2.value);
+		myajax.AddKeyN('color', f.color.value);
+		myajax.AddKeyN('shorttitle', f.shorttitle.value);
+		myajax.AddKeyN('weight', f.weight.value);
+		myajax.AddKeyN('flags', flags);
+		myajax.AddKeyN('keywords', f.keywords.value);
+		myajax.AddKeyN('description', f.description.value);
+		myajax.AddKeyN('filename', f.filename.value);
+		myajax.AddKeyN('click', f.clickk.value);
+		myajax.AddKeyN('ismake', ismake);
+		myajax.AddKeyN('s_begin_date', f.s_begin_date.value);
+		myajax.AddKeyN('s_end_date',f.s_end_date.value);
+		myajax.AddKeyN('dutyadmin', f.dutyadmin.value);
+		myajax.AddKeyN('oldjiage', f.oldjiage.value);
+		
+
+		myajax.AddKeyN('pubdate', f.pubdate.value);
+		myajax.AddKeyN('postcode', f.postcode.value);
+		myajax.AddKeyN('edt', f.edt.value);
+		myajax.SendPost2('add_post.php');
+
+
+var ret =  A188XHTTP.responseText;
+A188XHTTP = null;
+ if(ret.indexOf("ok")>0)
+  {
+   
+document.getElementById('commetcontentNew').innerHTML="<img src=img/loading.gif>写入数据完成....进入下一步...";
+
+  var str= new Array();
+  str=ret.split("!");
+  document.getElementById('aid').value=str[0];
+
+ setTimeout(function(){ gogo();  },1000);
+ 
+  }
+
+}
+
+function gogo()
+{
+form1.action="add.php";      
+form1.submit();
+}
+
+function flagh()
+{
+document.getElementById("tejia").style.display="block";
+}
+-->
+</script>
+<div class="add1"><li><?php if($edt=='ok') {echo '修改';} else { echo '添加';}?>
+	<b><?php echo $cInfos[$channelid];?></b> <span>第 <?php echo $id?> 步</span> 请填写 标题、选择栏目、SEO优化及相关重要设置：</li><font>打*为必填项目</font></div>
+<link href="img/search.css" rel="stylesheet" media="screen" type="text/css" />
+<script src="js/global.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/TN_date-min.js?v=0101"></script>
+
+
+<script>
+$(document).ready(function(){
+
+	$('#s_begin_date,#s_end_date').TN_date();
+
+});	
+</script>
+
+<div id=divinfo><div id='commetcontentNew'></div></div>
+
+<form name="form1" method="post">
+<input type="hidden" value="<?php echo $channelid ?>" name="channelid">
+<input type="hidden" value="2" name="id">
+<input type="hidden"  name="aid" id="aid" value="<?php echo $aid; ?>">
+<input type="hidden"  name="edt" id="edt" value="<?php echo $edt; ?>">
+<?php
+session_start();              
+$code = mt_rand(0,1000);
+$_SESSION['postcode'] = $code;
+echo '<input type="hidden" name="postcode" id="postcode" value="'.$_SESSION['postcode'].'"  >';
+?>
+<div class="add2"> 
+<li>
+<span>请填写标题 <strong>*</strong>：</span>
+<input name="title" type="text" id="title" value="<?php echo $row['title'];?>" style="width:388px">
+<span style="margin-left:5px;">颜色：</span>
+<input name="color" type="text" id="color" style="width:60px" value="<?php echo $row['color'];?>">
+ <input name="modcolor" type="button" id="modcolor" value="选取" onClick="ShowColor(event,this)">
+
+<span style="margin-left:20px;">副标题：</span>
+<input name="shorttitle" type="text" id="shorttitle" style="width:170px" value="<?php echo $row['shorttitle'];?>"> <a href="<?php echo $goto_url?>/help/3.htm#1" target="_blank">[?]</a>
+
+<span style="margin-left:20px;">排序：</span>
+<input name="weight" type="text" id="weight" style="width:30px" value="<?php echo $row['weight'];?>" /> <a href="<?php echo $goto_url?>/help/3.htm#2" target="_blank">&nbsp;&nbsp;[?]</a>
+</li>
+
+</div>
+
+<div class="add2"> 
+<li>
+<span>选择级别：</span>
+	<?php
+		$dsql->SetQuery("Select * From `#@__arcatt` order by sortid asc");
+        $dsql->Execute();
+        while($trow = $dsql->GetObject())
+        {
+       
+            
+			if(ereg($trow->att,$row['flag']))
+			{
+			
+			
+            echo "<input class='np' type='checkbox' name='flags' id='flags{$trow->att}' value='{$trow->att}'  checked='checked' />{$trow->attname}[{$pic}{$trow->att}]";
+		if(ereg($trow->att,'h'))
+		{
+		$h='yes';
+		}
+			
+			}
+            else
+			{
+			
+			if(ereg($trow->att,'h'))
+			{
+			 echo "<input class='np' type='checkbox' name='flags' id='flags{$trow->att}' value='{$trow->att}' onclick='flagh();'/><b style='color: #FF0000'>{$trow->attname}[{$pic}{$trow->att}]</b>";
+			}
+			else
+			{
+            echo "<input class='np' type='checkbox' name='flags' id='flags{$trow->att}' value='{$trow->att}' />{$trow->attname}[{$pic}{$trow->att}]";
+			}
+			
+			
+			}
+         }
+          ?>
+				<a href="content_att.php" target="_blank">&nbsp;&nbsp;[自定义级别]</a>
+				</li>
+</div>
+
+<div class="add2" style="display:none" id="tejia"> 
+<li>
+<span style="margin-left:5px;">[特价抢购] 开始时间：</span><input type="text" class="input_t1 Wdate cgrey2 border-focus" value="<?php echo $dt[0];?>" name="s_begin_date" readonly id="s_begin_date" style=" width:60px;">
+<span style="margin-left:5px;">[特价抢购] 结束时间：</span><input type="text" class="input_t1 Wdate cgrey2 border-focus" value="<?php echo $dt[1];?>" name="s_end_date" readonly id="s_end_date" style=" width:60px;">
+<span style="margin-left:5px;">[特价抢购] 抢购名额：</span><input type="text" class="input_t1 Wdate cgrey2 border-focus" value="<?php echo $row['dutyadmin'];?>" name="dutyadmin"  style=" width:30px;"> 人
+<span style="margin-left:5px;">[特价抢购] 原价：</span><input type="text" class="input_t1 Wdate cgrey2 border-focus" value="<?php echo $dt[2];?>" name="oldjiage"  style=" width:50px;"> 元
+</li>
+</div>
+
+<?php
+	if($h=='yes')
+			{
+			echo '<script>flagh();</script>';
+			
+			}
+
+?>
+
+<div class="add2"> 
+<li>
+<span>请选择栏目<strong>*</strong>：</span>
+<?php
+          if($row['typeid']<>'') $cid=$row['typeid'];
+		  if($typeid<>'') $cid=$typeid;
+          $typeOptions = GetOptionList_fabu($cid,$cuserLogin->getUserChannel(),$channelid);
+          echo "<select name='typeid' id='typeid' style='width:180px; height:20px;'>\r\n";
+          echo "<option value='0'>请选择栏目...</option>\r\n";
+          echo $typeOptions;
+          echo "</select>";
+			?>
+
+<span style="margin-left:20px;">副栏目：</span>
+ <span id='typeid2ct'></span><input type='text' name='typeid2' id='typeid2' value='<?php echo $row['typeid2'];?>' style='width:200px;' /> <?php echo gettypeid2($row['typeid2']);?> 
+         <input type="button" value="选择副栏目" onClick="ShowCatMap(event, this, <?php echo $channelid; ?>, 'typeid2');"> <a href="<?php echo $goto_url?>/help/3.htm#3" target="_blank">[?]</a>
+	
+</li>
+			</div>
+
+<div class="add2"> 
+<li>
+<span>SEO关键字 (keywords)：</span>
+ <input type='text' name="keywords" id="keywords" style="width:400px" value='<?php echo $row['keywords'];?>'/> 多个关键字用 , 分开
+&nbsp;&nbsp;&nbsp;&nbsp;<input name="autokey" type="checkbox" onClick="ShowHideOK('keywords');"; class="np" id="autokey" value="1"<?php if($cfg_arc_autokeyword=='Y') echo ' checked'; ?>>
+自动从标题获取。(相关线路根据此处关键字匹配)
+</div>	
+
+<div class="add2"> 
+<li>
+<span>SEO内容摘要 (description)：</span>
+<textarea name="description" rows="3" id="description" style="width:80%"><?php echo $row['description'];?></textarea>
+</div>			
+
+
+
+<div class="add2"> 
+<li>
+<span>自定义文件名：</span>
+<input type="text" name="filename" id="filename" value='<?php echo $row['filename'];?>'/>（不包括后缀名如.html等，设置成生成htm时生效，不改请留空） <a href="<?php echo $goto_url?>/help/3.htm#5" target="_blank">[?]</a>
+     
+</li>
+</div>
+<div class="add2"> 
+<li>
+<span>发布时间：</span>
+<?php
+			$nowtime = GetDateTimeMk(time());
+			echo "<input name=\"pubdate\" value=\"$nowtime\" type=\"text\" id=\"pubdate\" style=\"width:200\">";
+			?> 
+			
+			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击数：</span>
+<input type='text' name='clickk' value='<?php echo mt_rand(50, 200); ?>' style='width:40px;' />
+
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布选项：</span><input name="ismake" type="radio" class="np" value="1" <?php if($cfg_html=='Y' and $edt<>'ok') echo 'checked';?> <?php if($row['ismake']=='1') echo 'checked';?> >
+              生成HTML
+              <input type="radio" name="ismake" class="np" value="0" <?php if($cfg_html=='N' and $edt<>'ok') echo 'checked';?> <?php if($row['ismake']=='0') echo 'checked';?>>
+              仅动态浏览
+			  
+			  
+			  <input type="radio" name="ismake" class="np" value="2" <?php if($cfg_html_wjt=='Y' and $edt<>'ok') echo 'checked';?> <?php if($row['ismake']=='2') echo 'checked';?>>
+              伪静态
+			 <a href="sys_info.php?id=1">[统一设置]</a>   <a href="<?php echo $goto_url?>/help/3.htm#4" target="_blank">[?]</a>
+</li>
+
+</div>
+
+<div class="add3"><input value="下一步"  onClick='PostComment()' type="button" ></div>
+</form>
+
+<!--------------- 一步完------------------------------------------------------------------->
+<?php
+}
+else if($id==2)
+{
+?>
+
+
+<style>
+
+.add2_pic{ width:400px; border:1px dashed #ccc; text-align:center; background-color:#efefef; color:#999}
+.week{ margin-top:15px;}
+</style>
+<link rel="stylesheet" href="/ORG7188_DATA/rili/rili.css" type="text/css" media="screen" charset="utf-8">
+<script src="/ORG7188_DATA/rili/rili.js" type="text/javascript" charset="utf-8"></script>
+<script src="/ORG7188_DATA/rili/dhtmlxscheduler_serialize.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/ORG7188_sys_templets/swfupload/swfupload.js"></script>
+<script language='javascript' src='img/jquery.js'></script>
+<script type="text/javascript" src="js/handlers.js"></script>
+<script language="javascript1.2">
+var swfu = null;
+var vcc = 0;
+
+window.onload = function ()
+{
+            
+			swfu = new SWFUpload(
+			{
+				
+				// Backend Settings
+				upload_url: "swfupload.php",
+				post_params: {"PHPSESSID": "<?php echo session_id(); ?>", "dopost" : ""},
+
+				// File Upload Settings
+				file_size_limit : "2 MB",	// 2MB
+				file_types : "*.jpg; *.gif; *.png",
+				file_types_description : "选择 JPEG/GIF/PNG 格式图片",
+				file_upload_limit : "0",
+
+				file_queue_error_handler : fileQueueError,
+				file_dialog_complete_handler : fileDialogComplete,
+				upload_progress_handler : uploadProgress,
+				upload_error_handler : uploadError,
+				upload_success_handler : uploadSuccess,
+				upload_complete_handler : uploadComplete,
+
+				button_image_url : "",
+				button_placeholder_id : "spanButtonPlaceholder",
+				button_width: 316,
+				button_height: 30,
+				button_text : '<span class="button">点击选择本地图片 <span class="buttonSmall">(单图最大为 2 MB，支持多选)</span></span>',
+				button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 16pt;} .buttonSmall { font-size: 12pt; }',
+				button_text_top_padding: 0,
+				button_text_left_padding: 18,
+				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+				button_cursor: SWFUpload.CURSOR.HAND,
+				
+				// Flash Settings
+				flash_url : "/ORG7188_sys_templets/swfupload/swfupload.swf",
+
+				custom_settings : {
+					upload_target : "divFileProgressContainer"
+				},
+				
+				// Debug Settings
+				debug: false
+			});
+		
+};
+
+//删除已经上传的图片
+function DelAlbPic(pid)
+{
+	var tgobj = $Obj('albCtok'+pid);
+	var myajax = new ajaxx188(tgobj);
+	myajax.SendGet2('swfupload.php?dopost=del&id='+pid);
+	$Obj('thumbnails').removeChild(tgobj);
+}
+
+</script>
+<script type="text/javascript" charset="utf-8">
+	function init() {
+	
+		scheduler.config.xml_date="%Y-%m-%d %H:%i";
+		
+		scheduler.templates.month_date_class=function(date,today){
+			if (scheduler.locale.date.day_full[date.getDay()]=='星期日' || scheduler.locale.date.day_full[date.getDay()]=='星期六')
+				return "good_day";	
+			return "";
+		}
+		
+	
+		scheduler.init('scheduler_here',new Date(<?php echo date('Y',time());?>,<?php echo date('n',time())-1;?>,<?php echo date('j',time());?>),"month");
+		
+		
+		<?php 
+		
+		if($edt=='ok')
+		{
+		echo 'scheduler.load("/include/events.php?aid='.$aid.'&time="+ new Date().getTime());';
+		}
+		
+		
+		?>
+		
+	}
+
+	function goback(channelid,aid,id)
+	{
+//alert(aid);
+    var edt='ok';
+	window.location.href="add.php?channelid="+channelid+"&aid="+aid+"&id="+id+"&edt="+edt+""; //跳转
+	}
+</script>
+
+<script language="javascript">
+<!--
+
+
+
+
+function PostComment()
+{
+
+
+
+	    var f = document.form1;
+		var taget_obj = $DE('commetcontentNew');
+		var waithtml = "<div style='line-height:30px'>正在发送中...</div>";	
+		var bj=scheduler.toXML();
+		
+		
+		var myajax = new ajaxx188(taget_obj, true, true, '', '', waithtml);
+		var qtbjok;
+		
+
+     if(f.qtbjok.checked)
+	 { //判断复选框是否选中
+     qtbjok=f.qtbjok.value; //值的拼凑 
+	 }
+	 else
+	 {
+	 qtbjok='';
+	 }
+ 
+
+ 	var picc;
+	
+		$("input[name^=picinfo]").each(function(){
+		
+			
+	  if($(this).val()!='图片名称' && $(this).val()!='')
+	  {
+	
+	    picc+='@'+$(this).attr('id')+'~'+$(this).val();
+	  }
+	
+		});
+	
+
+		
+		myajax.sendlang = 'utf-8';
+		myajax.AddKeyN('dopost', 'send');
+		myajax.AddKeyN('id', f.id.value);
+		myajax.AddKeyN('aid', f.aid.value);
+		myajax.AddKeyN('typeid', f.typeid.value);
+		myajax.AddKeyN('channelid', f.channelid.value);
+		myajax.AddKeyN('postcode', f.postcode.value);
+		myajax.AddKeyN('edt', f.edt.value);
+		myajax.AddKeyN('qtbj', f.qtbj.value);
+		myajax.AddKeyN('bjj', bj);
+		myajax.AddKeyN('picc',picc);
+		myajax.AddKeyN('qtbjok', qtbjok);
+		myajax.AddKeyN('week1', f.week1.value);
+		myajax.AddKeyN('week2', f.week2.value);
+		myajax.AddKeyN('week3', f.week3.value);
+		myajax.AddKeyN('week4', f.week4.value);
+		myajax.AddKeyN('week5', f.week5.value);
+		myajax.AddKeyN('week6', f.week6.value);
+		myajax.AddKeyN('week7', f.week7.value);
+		myajax.SendPost2('add_post.php?time='+ new Date().getTime());
+
+
+var ret =  A188XHTTP.responseText;
+A188XHTTP = null;
+ if(ret.indexOf("ok")>0)
+  {
+   
+ document.getElementById('commetcontentNew').innerHTML="<div id=divinfo><img src=img/loading.gif>写入数据完成....进入下一步...</div>";
+
+  var str= new Array();
+  str=ret.split("!");
+    //document.getElementById('aid').value=str[0];
+ setTimeout(function(){ gogo();  },1000);
+ 
+  }
+
+}
+
+function gogo()
+{
+form1.action="add.php";      
+form1.submit();
+}
+-->
+
+</script>
+<div class="add1"><?php if($edt=='ok') echo '修改'; 
+                        else echo '添加';
+?> <b><?php echo add_type($channelid);?></b> <span>第 <?php echo $id?> 步</span>请 上传图片 <?php 
+
+if($channelid=='4')
+{
+echo '和 线路报价';
+}
+
+?>
+</div>
+
+
+<div id=divinfo><div id='commetcontentNew'></div></div>
+
+<div class="add2" style=" width:420px;">
+
+<span id="spanButtonPlaceholder"></span>
+<form name="form1" accept-charset="utf-8" method="post" id="form1">
+<div class="add2_pic">
+ 图片预览区
+ <div id="divFileProgressContainer"></div>
+<div id="thumbnails"></div>
+	
+
+       <?php
+       $j = 1;
+              $dsql->SetQuery("Select url,title  From `#@__uploads` where arcid='$aid' and (mediatype='0' or mediatype='1')");
+              $dsql->Execute();
+              while($row = $dsql->GetObject()) {      
+                     $fhtml = '';
+	   $fhtml .= "<div class='albCt albEdit' id='albold{$j}'>\r\n";
+	   $fhtml .= "	<input type='hidden' name='imgurl{$j}' value='{$row->url}' />\r\n";
+	   $fhtml .= "	<input type='hidden' name='imgddurl{$j}' value='swfupload.php?dopost=ddimg&img={$row->url}' />\r\n";
+	   $fhtml .= "<img src='{$row->url}' width='120' /><input type='text' name='picinfo[{$j}]' value='{$row->title}' id='{$row->url}' style='width:115px;float:left; margin-top:2px;'/><a href=\"javascript:DelAlbPicOld('{$row->url}', $j)\">[删除]</a>\r\n";
+		
+	   $fhtml .= "</div>\r\n";
+       	 	 	 	 echo $fhtml;
+                     $j++;
+       	 	} 
+       
+       ?>
+     
+</div>		   			
+</div>
+
+
+<div class="add2" style="width:450px;">
+
+
+
+<div style="float:left;">
+<span style="height:40px;">按日历报价：(单位/元)</span>
+<div id="scheduler_here" class="dhx_cal_container" style='width:450px; height:412px;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>		
+	</div>
+	
+</div>
+<script>
+init();
+</script>
+
+</div>
+
+<input type="hidden" value="<?php echo $channelid ?>" name="channelid">
+<input type="hidden" value="3" name="id">
+<input type="hidden"  name="typeid"  value="<?php echo $typeid; ?>" >
+<input type="hidden"  name="aid" id="aid" value="<?php echo $aid; ?>">
+<input type="hidden"  name="edt" id="edt" value="<?php echo $edt ?>">
+<input type="hidden" name="data" value="" id="data">
+<div class="add2" style="width:230px; margin-left:5px;">
+<span style="height:40px;">按星期报价：(单位/元)</span>
+
+<div class="week">星期一：<input name="week1" type="text" style="width:100px;" value="<?php echo $pbj['week1'];?>"/> 元</div>
+<div class="week">星期二：<input name="week2" type="text" style="width:100px;" value="<?php echo $pbj['week2'];?>"/> 元</div>
+<div class="week">星期三：<input name="week3" type="text" style="width:100px;" value="<?php echo $pbj['week3'];?>"/> 元</div>
+<div class="week">星期四：<input name="week4" type="text" style="width:100px;" value="<?php echo $pbj['week4'];?>"/> 元</div>
+<div class="week">星期五：<input name="week5" type="text" style="width:100px;" value="<?php echo $pbj['week5'];?>"/> 元</div>
+<div class="week">星期六：<input name="week6" type="text" style="width:100px;" value="<?php echo $pbj['week6'];?>"/> 元</div>
+<div class="week">星期天：<input name="week7" type="text" style="width:100px;" value="<?php echo $pbj['week7'];?>"/> 元</div>
+<br />
+
+<span style="height:40px;">其他方式：</span>
+<input type="checkbox" name="qtbjok" value="1" <?php if($ifbjj=='其他方式') echo 'checked';?>/> <input type="text" name="qtbj" value="<?php echo $pbjj;?>" style="width:100px;"/>
+<p>采取其他报价方式，请在上面打钩，并在后面填写报价方式，如：一团一议、请电询等，线路页面将会直接调用！</p>
+
+</div>
+
+
+
+
+</li>
+
+
+
+<?php
+session_start();              
+$code = mt_rand(0,1000);
+$_SESSION['postcode'] = $code;
+echo '<input type="hidden" name="postcode" id="postcode" value="'.$_SESSION['postcode'].'"  >';
+?>
+<li>
+
+<div class="add2">注意：报价的优先权限：其他方式 > 按星期报价 > 按日历报价，即比如有星期报价的话，日历报价会失效！</div>
+
+<div class="add3" style="width:100%"><input value="返回上一步" type="button" onclick="javascript:goback(<?php echo $channelid ?>,<?php echo $aid ?>,'1');return false;">&nbsp;&nbsp;&nbsp;&nbsp;<input value="下一步"  type="button" onClick='PostComment()'></div>
+</li>
+</form>
+
+</div>
+
+<!-----------------   线路第二步完 --------------->
+<?php
+}
+else if($id==3)
+{
+?>
+<style>
+#xingcheng-box 
+{
+ margin-top:5px; float:left;
+}
+
+h4{ margin:0px; padding:0px;}
+
+#t136 input{ width:70px;}
+#t137 input{ width:70px;}
+.xingcheng-by-dayt{ border-bottom:1px solid #aaa;}
+.xingcheng-by-day{ border:1px solid #ccc; padding:5px; float:left; margin-top:15px; width:1100px;}
+.xingcheng-by-day h4{ float:left; width:99%; background-color: #B3F570; border-bottom:1px solid #009900;font-size:14px; padding-left:10px; display:block}
+.xingcheng-by-day h4 a{ font-size:14px; color:#333;}
+</style>
+<script type="text/javascript" src="img/global.v24.js"></script>
+<script type="text/javascript" src="img/smart.v13.js"></script>
+<script type="text/javascript" src="img/base.v9.js"></script>
+<script charset="utf-8" src="ckce/kindeditor.js"></script>
+<script charset="utf-8" src="ckce/chce.js"></script>
+<script language='javascript' src='img/jquery.js'></script>
+<script language="javascript1.2">
+function sch_tc2(id)
+{
+
+
+if(id==0)
+{
+document.getElementById("aday").style.display='none';
+document.getElementById("aall").style.display='block';
+}
+
+if(id==1)
+{
+document.getElementById("aday").style.display='block';
+document.getElementById("aall").style.display='none';
+}
+
+
+}
+</script>
+<script language="javascript">
+<!--
+
+
+
+
+function PostComment()
+{
+
+
+
+	    var f = document.all.form1;
+		var days=f.days.value;
+		
+		var sch_tc=f.sch_tc.value;
+		  for(var i=0;i<f.sch_tc.length;i++)
+      {         
+            if(f.sch_tc[i].checked)
+            {
+              sch_tc=f.sch_tc[i].value;
+              
+            }
+      }   
+		
+		var xc=KE.html('xc');
+		xc=xc.replace("|","");
+
+		
+       var xchtml='';
+			//得到行程详情
+		for(var i=0;i<=days;i++)
+		{
+		
+		var t="attxingcheng"+i;
+		var y=KE.html(t).replace("|","");    
+		 xchtml=xchtml+y+'|';
+		
+		}
+		
+		
+	
+	    //得到其他的数据
+	    var dataPara =URLencode($("#form1").serialize());
+		xchtml=URLencode1(xchtml);
+		xc=URLencode1(xc);
+	
+      	var taget_obj = $DE('commetcontentNew');
+		var waithtml = "<div style='line-height:30px'>正在发送中...</div>";	
+		var myajax = new ajaxx188(taget_obj, true, true, '', '', waithtml);
+		myajax.sendlang = 'utf-8';
+		myajax.AddKeyN('dopost', 'send');
+		myajax.AddKeyN('id', f.id.value);
+		myajax.AddKeyN('aid', f.aid.value);
+		myajax.AddKeyN('typeid', f.typeid.value);
+		myajax.AddKeyN('channelid', f.channelid.value);
+		myajax.AddKeyN('postcode', f.postcode.value);
+		myajax.AddKeyN('edt', f.edt.value);
+		myajax.AddKeyN('days', days);
+		myajax.AddKeyN('sch_tc',sch_tc);
+		myajax.AddKeyN('xchtml', xchtml);
+		myajax.AddKeyN('dataPara', dataPara);
+		myajax.AddKeyN('xc', xc);
+		
+		
+		myajax.SendPost2('add_post.php?time='+ new Date().getTime());
+
+
+var ret =  A188XHTTP.responseText;
+A188XHTTP = null;
+ if(ret.indexOf("ok")>0)
+  {
+   
+ document.getElementById('commetcontentNew').innerHTML="<div id=divinfo><img src=img/loading.gif>写入数据完成....2秒后进入下一步...</div>";
+
+  var str= new Array();
+  str=ret.split("!");
+    //document.getElementById('aid').value=str[0];
+ setTimeout(function(){ gogo();  },2000);
+ 
+  }
+
+}
+
+function gogo()
+{
+
+form1.action="add.php";  
+   
+form1.submit();
+
+}
+	function goback(channelid,aid,id)
+	{
+//alert(aid);
+    var edt='ok';
+	window.location.href="add.php?channelid="+channelid+"&aid="+aid+"&id="+id+"&edt="+edt+""; //跳转
+	}
+
+
+
+function URLencode1(sStr) 
+{
+    return escape(sStr).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
+}
+-->
+</script>
+<div class="add1">添加 <b><?php echo add_type($channelid);?></b> <span>第 <?php echo $id?> 步</span>请 添加行程
+</div>
+<div id='commetcontentNew'></div>
+<form name="form1" id="form1"  method="post">
+<input type="hidden" value="<?php echo $channelid ?>" name="channelid">
+<input type="hidden" value="4" name="id">
+<input type="hidden"  name="typeid"  value="<?php echo $typeid; ?>" >
+<input type="hidden"  name="aid" id="aid" value="<?php echo $aid; ?>">
+<input type="hidden"  name="edt" id="edt" value="<?php echo $edt; ?>">
+<input type="hidden"  name="days" id="days" value="<?php if(empty($getxcts)) echo '0';
+                                                         else echo $getxcts-1; ?>">
+<?php
+session_start();              
+$code = mt_rand(0,1000);
+$_SESSION['postcode'] = $code;
+echo '<input type="hidden" name="postcode" id="postcode" value="'.$_SESSION['postcode'].'"/>';
+?>
+
+
+<div class="add2"><label><input type="radio" name="sch_tc" value="1" onclick="sch_tc2(1);" <?php if(ifxcc($row['xc'])=='按天编辑模式' or ifxcc($row['xc'])=='') echo 'checked';?> />按天编辑模式</label> 
+<label><input type="radio" name="sch_tc" value="0" onclick="sch_tc2(0);"  <?php if(ifxcc($row['xc'])=='统一编辑模式') echo 'checked';?> />统一编辑模式</label></div>
+
+<div id="aall" <?php if(ifxcc($row['xc'])=='按天编辑模式' or ifxcc($row['xc'])=='') echo 'style="display:none"';?>  >
+<textarea name="xc" style="width:100%; height:450px;" id="xc"><?php if(ifxcc($row['xc'])=='统一编辑模式') echo $row['xc'];?></textarea>
+</div>
+
+
+<div id="aday" <?php if(ifxcc($row['xc'])=='统一编辑模式') echo 'style="display:none"';?>>
+
+  
+          
+  <div id="xingcheng-box">
+  
+    <?php 
+			if(empty($getxcts)) $getxcts='1';
+            for($i=0;$i<$getxcts;$i++)
+            {
+			$a=$i;
+            $ii=$i+1;
+             ?>
+			   <div id="xingcheng-box"> 
+	      	      <div class="fieldset xingcheng-by-day">
+		<h4>第 <?php echo $ii;?> 天 
+		  &nbsp; 
+		  <?php
+		  if($i==0 or empty($getxcts) or $getxcts==0)
+		  {
+		  }
+		  else
+		  {
+		  ?>
+		  <a class="x-d-btn x-d-btn-0" href="#" onClick="xingcheng_remove_day(<?php echo $i?>);return false;">删除</a>
+		  <?php
+		  }
+		  ?>
+		  </h4>
+		<div>
+		<div style="float:left; margin-left:10px; margin-top:10px;">
+		行程标题：<input type="text" name="attfrom<?php echo $a?>" style="width:220px;" value="<?php echo $from[$ii];?>"/> ( <font color="#FF0000">*</font> <font color="#0000FF">必须填写</font> ) <!--到<input type="text" name="attto0"style="width:50px;" />--> &nbsp;&nbsp;交通工具：<select name="attby<?php echo $a?>">
+	<option value="火车" <?php if($by[$ii]=='火车') echo 'selected';?>>火车</option>
+        <option value="动车" <?php if($by[$ii]=='动车') echo 'selected';?>>动车</option>
+        <option value="飞机" <?php if($by[$ii]=='飞机') echo 'selected';?>>飞机</option>
+        <option value="汽车" <?php if($by[$ii]=='汽车') echo 'selected';?>>汽车</option>
+        <option value="轮船" <?php if($by[$ii]=='轮船') echo 'selected';?>>轮船</option>
+         <option value="行程中说明" <?php if($by[$ii]=='行程中说明') echo 'selected';?>>行程中说明</option>
+        </select>
+        
+         早餐：<select name="attzc<?php echo $a?>">
+	 <option value="包含" <?php if($zc[$ii]=='包含') echo 'selected';?>>包含</option>
+        <option value="敬请自理" <?php if($zc[$ii]=='敬请自理') echo 'selected';?>>敬请自理 </option>
+         <option value="行程中说明" <?php if($zc[$ii]=='行程中说明') echo 'selected';?>>行程中说明</option>
+        </select>
+        
+        中餐：<select name="attzhc<?php echo $a?>">
+         <option value="包含" <?php if($zhc[$ii]=='包含') echo 'selected';?>>包含</option>
+        <option value="敬请自理" <?php if($zhc[$ii]=='敬请自理') echo 'selected';?>>敬请自理 </option>
+         <option value="行程中说明" <?php if($wc[$ii]=='行程中说明') echo 'selected';?>>行程中说明</option>
+        </select>
+        
+         晚餐：<select name="attwc<?php echo $a?>">
+      <option value="包含" <?php if($wc[$ii]=='包含') echo 'selected';?>>包含</option>
+        <option value="敬请自理" <?php if($wc[$ii]=='敬请自理') echo 'selected';?>>敬请自理 </option>
+         <option value="行程中说明" <?php if($wc[$ii]=='行程中说明') echo 'selected';?>>行程中说明</option>
+        </select>
+ 
+        住宿：<input type="text" name="atthome<?php echo $a?>"style="width:50px;" value="<?php echo $home[$ii];?>"/>
+        
+        <br>
+   
+		  行程详情：<br><textarea name="attxingcheng<?php echo $a?>" id="attxingcheng<?php echo $a?>" style="width:100%; height:120px;"><?php echo stripslashes(stripslashes($xingcheng[$ii]));?></textarea>
+    
+		 </div>
+	      </div>
+		  </div>
+		  </div>
+	
+
+		     <?php  if($ii==$getxcts)
+       {   
+       ?>
+	      	      
+           <?php  }  ?>
+         <?php  }  ?>
+		 
+            <div class="clearfix">
+				  <br>
+		
+	
+         </div>
+         </div>
+           <script type="text/javascript">
+	      //<![CDATA[
+  
+    function xingcheng_add_day(){
+	var div = ge('xingcheng-box');
+
+	var i,days=0;
+	var last_set_node = null;
+	var ds = div.getElementsByTagName('DIV');
+
+	for(i=0;ds.length && i<ds.length;i++){
+	    var node = ds[i];
+	    if(has_css_class_name(node,'xingcheng-by-day')){
+		days++;
+		last_set_node = node;
+	    }
+	}
+	
+	var node = document.createElement('div');
+	node.className='fileset xingcheng-by-day';
+	node.setAttribute('style','');
+	node.innerHTML = ' <div id="xingcheng-box"><h4>第 '+(days+1)+' 天 &nbsp; <a class="x-d-btn x-d-btn-'+(days)+'" href="#" onclick="xingcheng_remove_day('+days+');return false;">删除</a> </h4>'
+	    +'<div>'
+		+'<div style="float:left; margin-left:10px; margin-top:10px;">行程标题：<input type="text" name="attfrom'+days+'" style="width:220px;"/>  ( <font color="#FF0000">*</font> <font color="#0000FF">必须填写</font> )<!--到<input type="text" name="attto'+days+'"style="width:50px;" />--> &nbsp;&nbsp;交通工具:<select name="attby'+days+'"><option value="汽车">汽车</option><option value="火车">火车</option><option value="动车">动车</option><option value="飞机">飞机</option><option value="轮船">轮船</option><option value="行程中说明">行程中说明</option></select> 早餐:<select name="attzc'+days+'"><option value="敬请自理">自理</option><option value="包含">包含</option><option value="行程中说明">行程中说明</option></select> 中餐:<select name="attzhc'+days+'"><option value="包含">包含</option><option value="敬请自理">敬请自理 </option><option value="行程中说明">行程中说明</option></select> 晚餐:<select name="attwc'+days+'"><option value="包含">包含</option><option value="敬请自理">敬请自理 </option><option value="行程中说明">行程中说明</option></select> 住宿:<input type="text" name="atthome'+days+'"style="width:50px;" /><br>'
+	    +" 行程详情：<br><textarea name=attxingcheng"+days+"     style='width:100%;height:120px'></textarea>"
+	    +'</div></div>';
+	div.insertBefore(node,last_set_node.nextSibling);
+
+$.getScript('ckce/kindeditor-min.js', function() {
+						KindEditor.create('attxingcheng'+days+'');
+						
+					});
+
+
+	
+	ge('xingcheng-next-day-no').innerHTML = days+2;
+	
+	document.getElementById("days").value=days;
+	
+	MP_SetCssText('x-d-btn','.x-d-btn {display:none;font-size:12px;font-weight:normal;} .x-d-btn-'+(days)+'{display:inline;}');
+	
+
+    }
+    function xingcheng_remove_day(day)
+    {
+	document.getElementById("days").value=day-1;
+
+
+	var div = ge('xingcheng-box');
+	KE.remove('attxingcheng'+day+'');
+	var i,days=0;
+	var last_set_node = null;
+	var ds = div.getElementsByTagName('div');
+	
+	for(i=0;ds.length && i<ds.length;i++){
+	    var node = ds[i];
+	    if(node.className.indexOf('xingcheng-by-day') > -1){
+		days++;
+		last_set_node = node;
+	    }
+	}
+	
+	if(days <= 1) return;
+	last_set_node.parentNode.removeChild(last_set_node);
+	
+	MP_SetCssText('x-d-btn','.x-d-btn {display:none;font-size:12px;font-weight:normal;} .x-d-btn-'+(days-2)+'{display:inline;}');
+	ge('xingcheng-next-day-no').innerHTML = days;
+
+    }
+
+	      //]]>
+	      </script>	
+           
+           </div>
+		<div style="float:left; width:1100px">
+		   <a href="#" onclick="xingcheng_add_day();return false;"><b>+</b>添加第 <b id="xingcheng-next-day-no"><?php echo $getxcts+1;?></b>天行程<b>+</b></a>
+		   </div>
+</div>
+<!---  按天报价 ----->
+
+
+<li>
+<div class="add3" style="width:100%"><input value="返回上一步" type="button" onclick="javascript:goback(<?php echo $channelid ?>,<?php echo $aid ?>,'2');return false;">&nbsp;&nbsp;&nbsp;&nbsp;<input value="下一步"  type="button" onClick='PostComment()'></div>
+</li>
+</form>		
+ <!---     第三步完       ---------------------------> 
+   
+<?php 
+}
+else if($id==4)
+{
+?>
+<script language='javascript' src='img/jquery.js'></script>
+<script charset="utf-8" src="ckce/kindeditor.js"></script>
+<script charset="utf-8" src="ckce/chce.js"></script>
+
+<script language="javascript">
+<!--
+
+
+
+
+function PostComment()
+{
+
+
+
+	     var f = document.all.form1;
+		 var dataPara =$("#form1").serialize();
+		 
+		 var str=f.org7188_addonfields.value;
+		 var strs= new Array(); //定义一数组
+		 var strs_= new Array(); //定义一数组
+		
+             strs=str.split(";"); //字符分割
+	     
+		 for(var i=0;i<strs.length;i++)
+         {
+		  
+		  if(strs[i].indexOf("htmltext")>0)
+		  {
+		   var ss=strs[i].split(",");
+		   pushed = strs_.push(ss[0]);
+		   }
+		    
+		 }   
+  
+	 
+	 
+		//alert(strs_);
+        var xchtml='';
+			//得到行程详情
+		for(var i=0;i<pushed;i++)
+		{
+		var t=strs_[i]; 
+		var y=KE.html(t).replace("|","");  
+		xchtml=xchtml+y+'|';
+	
+		}
+       
+	   	xchtml=URLencode1(xchtml);
+		
+
+		//alert(editor.document.getBody().getHtml());
+      	var taget_obj = $DE('commetcontentNew');
+		var waithtml = "<div style='line-height:30px'>正在发送中...</div>";	
+		var myajax = new ajaxx188(taget_obj, true, true, '', '', waithtml);
+		myajax.sendlang = 'utf-8';
+		myajax.AddKeyN('dopost', 'send');
+		myajax.AddKeyN('id', f.id.value);
+		myajax.AddKeyN('aid', f.aid.value);
+		myajax.AddKeyN('bx', f.bx.value);
+		myajax.AddKeyN('dfx', f.dfx.value);
+		myajax.AddKeyN('typeid', f.typeid.value);
+		myajax.AddKeyN('channelid', f.channelid.value);
+		myajax.AddKeyN('postcode', f.postcode.value);
+		myajax.AddKeyN('edt', f.edt.value);
+		myajax.AddKeyN('ziduan',strs_);
+		myajax.AddKeyN('xchtml', xchtml);
+		myajax.AddKeyN('dataPara', dataPara);	
+		myajax.SendPost2('add_post.php?time='+ new Date().getTime());
+
+
+var ret =  A188XHTTP.responseText;
+A188XHTTP = null;
+ if(ret.indexOf("ok")>0)
+  {
+   
+ document.getElementById('commetcontentNew').innerHTML="<div id=divinfo><img src=img/loading.gif>写入数据完成....进入下一步...</div>";
+
+  var str= new Array();
+  str=ret.split("!");
+    //document.getElementById('aid').value=str[0];
+ setTimeout(function(){ gogo();  },1000);
+ 
+  }
+
+}
+
+function gogo()
+{
+form1.action="add.php";      
+form1.submit();
+}
+
+function goback(channelid,aid,id)
+	{
+//alert(aid);
+    var edt='ok';
+	window.location.href="add.php?channelid="+channelid+"&aid="+aid+"&id="+id+"&edt="+edt+""; //跳转
+	}
+
+function URLencode1(sStr) 
+{
+    return escape(sStr).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
+}
+-->
+</script>
+<style>
+table{ margin-top:10px;}
+</style>
+
+<div class="add1">添加 <b><?php echo add_type($channelid);?></b> <span>第 <?php echo $id?> 步</span>请 添加自定义字段 
+</div>
+<div id='commetcontentNew'></div>
+<form name="form1" id="form1" method="post">
+<input type="hidden" value="<?php echo $channelid ?>" name="channelid">
+<input type="hidden" value="5" name="id">
+<input type="hidden"  name="typeid"  value="<?php echo $typeid; ?>" >
+<input type="hidden"  name="aid" id="aid" value="<?php echo $aid; ?>">
+<input type="hidden"  name="edt" id="edt" value="<?php echo $edt; ?>">
+<input type="hidden"  name="ok" id="ok" value="ok">
+<?php
+session_start();              
+$code = mt_rand(0,1000);
+$_SESSION['postcode'] = $code;
+echo '<input type="hidden" name="postcode" id="postcode" value="'.$_SESSION['postcode'].'"  >';
+?>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:3px;">
+       <tr> 
+        <td width="90" class="bline" height='24'>&nbsp;顾客保险：</td>
+
+ <td class="bline"><input type='text' name='bx' value='<?php echo $addRow['bx']; ?>' style='width:200px;' /> 险种|金额/人 (填写格式：险种名称|金额，如：太平洋意外险|5，填0为没有保险)
+</td>
+       </tr>    </table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:3px;">
+       <tr> 
+        <td width="90" class="bline" height='24'>&nbsp;单房差：</td>
+ <td class="bline"><input type='text' name='dfx' value='<?php echo $addRow['dfx']; ?>' style='width:40px;' /> 直接填金额数字  <a href="<?php echo $goto_url?>/help/3.htm#6" target="_blank">[?]</a>
+</td>
+       </tr>    </table>
+
+
+<?php 
+
+PrintAutoFieldsEdit($cInfos['fieldset'],$addRow,'','KindEditor'); ?>
+
+<li>
+<div class="add3" style="width:100%"><input value="返回上一步" type="button" onclick="javascript:goback(<?php echo $channelid ?>,<?php echo $aid ?>,'3');return false;">&nbsp;&nbsp;&nbsp;&nbsp;<input value="下一步"  type="button" onClick='PostComment()'></div>
+</li>
+</form>
+<?php
+}
+else if($id=='5' and $ok=='ok')
+{
+$backurl = !empty($_COOKIE['ENV_GOBACK_URL']) ? $_COOKIE['ENV_GOBACK_URL'] : '';
+?>
+<div id=divinfo>恭喜您，发布成功，您可以：<a href="add.php?id=1&channelid=4">[继续发布线路]</a>&nbsp;&nbsp;<a href="catalog_main.php?userChannel=4">[返回线路列表]</a>&nbsp;&nbsp;<a href="<?php echo $backurl;?>">[返回记忆的列表]</a>&nbsp;&nbsp;<a href="<?php echo aidgeturl($aid);?>" target="_blank">[预览一下]</a></div>
+<?php
+}
+?>
+</body>
+</html>

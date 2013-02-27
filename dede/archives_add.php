@@ -229,7 +229,15 @@ color,writer,source,litpic,pubdate,senddate,mid,voteid,notpost,description,keywo
     $backurl
   ";
     $msg = "<div style=\"line-height:36px;height:36px\">{$msg}</div>".GetUpdateTest();
-
+	if ($channelid == 17) {
+		$msg = "<div style=\"line-height:36px;height:36px;text-align: center;\">进入下一步完善旅行资料</div>";
+		$win = new OxWindow();
+		$win->AddTitle('成功发布文档：');
+		$win->AddMsgItem($msg);
+		$winform = $win->GetWindow('hand', '&nbsp;', false);
+		$win->Display();
+		exit('<meta http-equiv="refresh" content="2; url=' . urldecode("line_full.php?artid={$arcID}&dopost=show_1") . '"/>');
+	}
     $wintitle = '成功发布文档！';
     $wecome_info = '文档管理::发布文档';
     $win = new OxWindow();

@@ -473,7 +473,6 @@ function lib_arclistDone(&$refObj, &$ctag, $typeid=0, $row=10, $col=1, $titlelen
     $GLOBALS['autoindex'] = 0;
     $ids = array();
     $orderWeight = array();
-    
     for($i=0; $i<$line; $i++)
     {
         if($col>1) $artlist .= "<tr>\r\n";
