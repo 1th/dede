@@ -1,0 +1,33 @@
+<div class="layout">
+	<div class="header">
+		<div class="top removeshugang">
+			{dede:arclist  flag='t' typeid='1' channelid='1' row='10'}
+			<a href="[field:arcurl/]" title="[field:title/]">[field:title/]</a> <i class="shugang">|</i>
+			{/dede:arclist}
+			<span id="_login">
+				<a href="{dede:global.cfg_memberurl/}/index.php" title="登陆" class="login"><span class="hideme">登陆</span></a><a href="{dede:global.cfg_memberurl/}/index_do.php?fmdo=user&dopost=regnew" title="注册" class="reg"><span class="hideme">注册</span></a>
+			</span>
+		</div>
+		<div class="webinfo">
+			<h1 class="logo"><a href="{dede:global.cfg_indexurl/}"><span class="hideme">{dede:global.cfg_webname/}</span></a></h1>
+			<span class="tel400">{dede:global.cfg_tel/}</span>
+		</div>
+		<div class="menu">
+			<ul>
+				<li class="active"><a href="{dede:global.cfg_cmspath/}" title="首页">首页</a></li>
+				{dede:channel type='son' typeid='2' row='8'}
+				<li><a href='[field:typelink/]'>[field:typename/]</a></li>
+				{/dede:channel}
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="layout">
+	<div class="banner">
+		<div id="KinSlideshow" style="visibility: hidden;">
+			{dede:arclist  flag='c' typeid='14' channelid='18' row='10' imgwidth='960' imgheight='280' addfields='linkurl'}
+			<a href="[field:linkurl/]" title="[field:title/]">[field:image/]</a>
+			{/dede:arclist}
+		</div>
+	</div>
+</div>
