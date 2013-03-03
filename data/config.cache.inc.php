@@ -155,4 +155,5 @@ $cfg_feedback_guest = 'N';
 $cfg_tel = '400-600-8500';
 $cfg_weibo_sina = 'http://weibo.com';
 $cfg_weibo_tencent = 'http://t.qq.com';
+$cfg_linefile = 'tour';
 ?>

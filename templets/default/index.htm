@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/deploy.css" media="all">
 <script src="{dede:global.cfg_cmsurl/}/include/dedeajax2.js"></script>
 <script src="{dede:global.cfg_cmspath/}/static/js/jquery.js" ></script>
+<script src="{dede:global.cfg_cmspath/}/static/js/jquery.ui.min.js"></script>
+<link rel="stylesheet" href="{dede:global.cfg_cmspath/}/static/css/jquery-ui.min.css" media="all" />
 <script src="{dede:global.cfg_cmspath/}/static/js/jq_plugin/jquery.KinSlideshow.js" ></script>
 <script src="{dede:global.cfg_cmspath/}/static/js/swfobject/swfobject.js" ></script>
 <script>
@@ -28,46 +30,43 @@
 <div class="col-right">
 	<div layout="first">
 		<div class="infos w340 pull-left">
-			<h3><a href="" class="more">更多</a>信息标题</h3>
+			<h3>精品线路</h3>
 			<div class="content">
-				<ul class="idx-rlist-nonum idx-hasnum">
-					<li class="active">
-						<img src="style/image/bg_logo.jpg" style="width:107px;height:63px;" alt="">
-						<a href="">这里的山路十八弯, 这里的水路九连环</a>
-						<p>
-							<span class="old_price">￥:5530</span>
-							<span class="now_price">￥:5530</span>
+				<ul id="jp_line" class="idx-rlist-nonum idx-hasnum">
+					{dede:arclist channelid='17' flag='c' row='8' addfields='memberprice, price' }
+					<li>
+						<img class="l-icon" src="templets/default/image/bg_list_[field:global name='autoindex' /].gif"/>
+						<a class="dps" href="[field:arcurl/]"><img src="templets/default/image/bg_logo.jpg" style="width:107px;height:63px;" alt=""></a>
+						<a class="dps" href="[field:arcurl/]">[field:title/]</a>
+						<p class="dps">
+							<span class="old_price">￥:[field:price/]</span>
+							<span class="now_price">￥:[field:memberprice/]</span>
 						</p>
+						<dt class="dph">
+							<span class="price">￥:[field:memberprice/]</span><a href="[field:arcurl/]">[field:title/]</a>
+						</dt>
 					</li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
+					{/dede:arclist}
 				</ul>
 			</div>
 		</div>
 		<div class="infos w340 pull-right">
-			<h3><a href="" class="more">更多</a>信息标题</h3>
+			<h3>特价线路</h3>
 			<div class="content">
-				<ul class="idx-rlist-nonum">
-					<li class="active">
-						<img src="style/image/bg_logo.jpg" style="width:107px;height:63px;" alt="">
-						<a href="">这里的山路十八弯, 这里的水路九连环</a>
-						<p>
-							<span class="old_price">￥:5530</span>
-							<span class="now_price">￥:5530</span>
+				<ul id="tj_line" class="idx-rlist-nonum">
+					{dede:arclist channelid='17' flag='a' row='8' addfields='memberprice, price' }
+					<li>
+						<a class="dps" href="[field:arcurl/]"><img class="dps" src="templets/default/image/bg_logo.jpg" style="width:107px;height:63px;" alt=""></a>
+						<a class="dps" href="[field:arcurl/]">[field:title/]</a>
+						<p class="dps">
+							<span class="old_price">￥:[field:price/]</span>
+							<span class="now_price">￥:[field:memberprice/]</span>
 						</p>
+						<dt class="dph">
+							<span class="price">￥:[field:memberprice/]</span><a href="[field:arcurl/]">[field:title/]</a>
+						</dt>
 					</li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span class="price">￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
+					{/dede:arclist}
 				</ul>
 			</div>
 		</div>
@@ -75,28 +74,22 @@
 	</div>
 	<div class="mt10" layout="second">
 		<div class="infos w340 pull-left">
-			<h3><a href="" class="more">更多</a>信息标题</h3>
+			<h3>{dede:type typeid='33'}<a href="[field:typelink /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
 			<div class="content">
 				<ul class="idx-rlist">
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
+					{dede:arclist typeid='33' channelid='17' row='6' addfields='memberprice' }
+					<li><span>￥:[field:memberprice/]</span><a href="[field:arcurl/]" title="[field:title/]">[field:title/]</a></li>
+					{/dede:arclist}
 				</ul>
 			</div>
 		</div>
 		<div class="infos w340 pull-right">
-			<h3><a href="" class="more">更多</a>信息标题</h3>
+			<h3>{dede:type typeid='34'}<a href="[field:typelink /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
 			<div class="content">
 				<ul class="idx-rlist">
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
+					{dede:arclist typeid='34' channelid='17' row='6' addfields='memberprice' }
+					<li><span>￥:[field:memberprice/]</span><a href="[field:arcurl/]" title="[field:title/]">[field:title/]</a></li>
+					{/dede:arclist}
 				</ul>
 			</div>
 		</div>
@@ -104,28 +97,22 @@
 	</div>
 	<div class="mt10"  layout="third">
 		<div class="infos w340 pull-left">
-			<h3><a href="" class="more">更多</a>信息标题</h3>
+			<h3>{dede:type typeid='5'}<a href="[field:typelink /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
 			<div class="content">
 				<ul class="idx-rlist">
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
+					{dede:arclist typeid='5' channelid='17' row='6' addfields='memberprice' }
+					<li><span>￥:[field:memberprice/]</span><a href="[field:arcurl/]" title="[field:title/]">[field:title/]</a></li>
+					{/dede:arclist}
 				</ul>
 			</div>
 		</div>
 		<div class="infos w340 pull-right">
-			<h3><a href="" class="more">更多</a>信息标题</h3>
+			<h3>{dede:type typeid='6'}<a href="[field:typelink /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
 			<div class="content">
 				<ul class="idx-rlist">
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
-					<li><span>￥:5530</span><a href="">[宁波]这里的山路十八弯, 这里的水路九连环</a></li>
+					{dede:arclist typeid='6' channelid='17' row='6' addfields='memberprice' }
+					<li><span>￥:[field:memberprice/]</span><a href="[field:arcurl/]" title="[field:title/]">[field:title/]</a></li>
+					{/dede:arclist}
 				</ul>
 			</div>
 		</div>
@@ -168,7 +155,6 @@
 						</td>
 						<td>&nbsp;</td>
 						<td>
-
 							{dede:arclist typeid='30' channelid='1' row='5'}
 							<a href="[field:arcurl/]" title="[field:title/]">[field:title/]</a>
 							{/dede:arclist}

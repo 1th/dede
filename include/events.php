@@ -1,10 +1,8 @@
 <?php
 	include ('./connector/base_connector.php');
 	require_once ("common.inc.php");
-	var_dump($dsql);exit();
 
-
-	    $bj=$dsql->getone("select aid,bj from #@__line where aid='$aid'");
+	$bj=$dsql->getone("select bj from #@__line where aid='$aid'");
 		var_dump($bj);
 		if(ifbjj($bj['bj'])=='按日历报价')
 		{

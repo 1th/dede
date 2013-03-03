@@ -27,8 +27,10 @@ if($aid==0) die(" Request Error! ");
 
 $arc = new Archives($aid);
 if($arc->IsError) ParamError();
-
-
+if ($arc->ChannelUnit->ChannelID == 17) {
+	// 线路处理
+	include DEDEROOT.'/include/line.inc.php';
+}
 //检查阅读权限
 $needMoney = $arc->Fields['money'];
 $needRank = $arc->Fields['arcrank'];

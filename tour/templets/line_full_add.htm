@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $cfg_soft_lang; ?>">
+  <title>发布文档</title>
+  <style type="text/css">
+<!--
+body {
+	background-image: url(images/allbg.gif);
+}
+-->
+</style>
+  <link href="css/base.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.ui.min.js"></script>
+  <link rel="stylesheet" href="js/rili/rili.css" media="all" />
+  <link rel="stylesheet" href="css/jquery-ui.min.css" media="all" />
+  <script type="text/javascript" src="js/rili/rili.js"></script>
+  <script type="text/javascript" src="js/rili/dhtmlxscheduler_serialize.js"></script>
+  <script type="text/javascript" src="js/funs.js"></script>
+
+  <script language="javascript">
+	  function init() {
+		  scheduler.config.xml_date="%Y-%m-%d %H:%i";
+		  scheduler.templates.month_date_class=function(date,today){
+			  if (scheduler.locale.date.day_full[date.getDay()]=='星期日' || scheduler.locale.date.day_full[date.getDay()]=='星期六')
+				  return "good_day";
+			  return "";
+		  }
+		  scheduler.init('scheduler_here',new Date(<?php echo date('Y,');echo date('m')-1; echo date(',d'); ?>),"month");
+	  }
+  </script>
+  </head>
+  <body topmargin="8" onload="init();">
+
+<!-- Head -->
+<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" id="head1">
+	<tr>
+		<td colspan="2">
+			<table width="800" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="84" height="24" align="center" background="images/itemnote1.gif" id="head_time"><a href="#" onClick="showTime()">时间/价格</a></td>
+					<td width="84" align="center" background="images/itemnote2.gif" id="head_days"><a href="#" onClick="showDays()">日程管理</a></td>
+					<td>&nbsp;</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<form name="form1" action="line_full.php" enctype="multipart/form-data" method="post" onSubmit="return checkSubmit()">
+    <input type="hidden" name="channelid" value="<?php echo $channelid?>" />
+    <input type="hidden" name="artid" value="<?php echo $artid?>" />
+    <input type="hidden" name="do" value="ext_update" />
+	<input type="hidden" name="scheduler" value="" id="scheduler" />
+    <!--content_time-->
+    <table width="98%"  border="0" align="center" cellpadding="2" cellspacing="2" id="content_time" style="border:1px solid #cfcfcf;background:#ffffff;">
+	    <tr>
+		    <td height="24" colspan="4" class="bline">
+			    <table width="800" border="0" cellspacing="0" cellpadding="0">
+				    <tr>
+					    <td width="90">&nbsp;<label>市场价：</label></td>
+					    <td width='408'>
+						    <input type="text" name="price" value=""/>
+					    </td>
+					    <td width="90">&nbsp;</td>
+					    <td>&nbsp;</td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+	    <tr>
+		    <td height="24" colspan="4" class="bline">
+			    <table width="800" border="0" cellspacing="0" cellpadding="0">
+				    <tr>
+					    <td width="90">&nbsp;<label>会员价：</label></td>
+					    <td width='408'>
+						    <input type="text" name="memberprice" value=""/>
+					    </td>
+					    <td width="90">&nbsp;</td>
+					    <td>&nbsp;</td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+	    <tr>
+		    <td height="24" colspan="4" class="bline">
+			    <table width="800" border="0" cellspacing="0" cellpadding="0">
+				    <tr>
+					    <td width="90">&nbsp;<label>发班计划：</label></td>
+					    <td width='408'>
+						    <input type="text" name="plan" value=""/>
+					    </td>
+					    <td width="90">&nbsp;</td>
+					    <td>&nbsp;</td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+	    <tr>
+		    <td height="24" colspan="4" class="bline">
+			    <table width="800" border="0" cellspacing="0" cellpadding="0">
+				    <tr>
+					    <td width="90">&nbsp;<label>总人数：</label></td>
+					    <td width='408'>
+						    <input type="text" name="full_people" value="0"/><br />
+						    0为不限制
+					    </td>
+					    <td width="90">&nbsp;</td>
+					    <td>&nbsp;</td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+	    <tr>
+		    <td height="24" colspan="4" class="bline">
+			    <table width="800" border="0" cellspacing="0" cellpadding="0">
+				    <tr>
+					    <td width="90">&nbsp;<label>开始交通：</label></td>
+					    <td width='408'>
+						    <input type="text" name="start_trans" value="汽车"/>
+					    </td>
+					    <td width="90">&nbsp;</td>
+					    <td>&nbsp;</td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+	    <tr>
+		    <td height="24" colspan="4" class="bline">
+			    <table width="800" border="0" cellspacing="0" cellpadding="0">
+				    <tr>
+					    <td width="90">&nbsp;<label>返回交通：</label></td>
+					    <td width='408'>
+						    <input type="text" name="back_trans" value="飞机"/>
+					    </td>
+					    <td width="90">&nbsp;</td>
+					    <td>&nbsp;</td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+	    <tr>
+		    <td height="24" colspan="4" class="bline">
+			    <table width="800" border="0" cellspacing="0" cellpadding="0">
+				    <tr>
+					    <td width="90">&nbsp;日报价：</td>
+					    <td>
+						    <div id="scheduler_here" class="dhx_cal_container" style='width:450px; height:412px;'>
+							    <div class="dhx_cal_navline">
+								    <div class="dhx_cal_prev_button">&nbsp;</div>
+								    <div class="dhx_cal_next_button">&nbsp;</div>
+								    <div class="dhx_cal_today_button"></div>
+								    <div class="dhx_cal_date"></div>
+								    <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+							    </div>
+							    <div class="dhx_cal_header">
+							    </div>
+							    <div class="dhx_cal_data">
+							    </div>
+						    </div>
+					    </td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+	    <tr>
+		    <td height="24" colspan="4" class="bline">
+			    <table width="800" border="0" cellspacing="0" cellpadding="0">
+				    <tr>
+					    <td width="90">&nbsp;快捷添加：</td>
+					    <td style="padding-left: 20px;">
+						    <p>起始时间:
+							    <input type="text" id="start" value=""/>
+							    <input type="text" id="end" value=""/>
+						    </p>
+						    <p>
+							    <select name="week" id="week">
+								    <option value="1">周一</option>
+								    <option value="2">周二</option>
+								    <option value="3">周三</option>
+								    <option value="4">周四</option>
+								    <option value="5">周五</option>
+								    <option value="6">周六</option>
+								    <option value="0">周日</option>
+							    </select>
+							    ￥<input type="text" id="wkprices" name="wkprices"/> 元
+							    <button onclick="addQuickDates();return false;">快速添加周期</button>
+						    </p>
+					    </td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+	    <tr>
+		    <td colspan="4" class="bline">
+			    <table>
+				    <tr>
+					    <td width="90">&nbsp;人员说明：</td>
+					    <td>
+						    <textarea name="per_description" id="per_description" cols="60" rows="4"></textarea>
+						    <p>
+							    价格类型	门市价	会员价	人数	描述, 每行一个价格 <br />
+							    如单人则: 成人价|4500|{price}|1|单人成人价格
+						    </p>
+					    </td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+    </table>
+	<table width="98%"  border="0" align="center" cellpadding="2" cellspacing="2" id="content_days" style="display:none;border:1px solid #cfcfcf;background:#ffffff;">
+		<tr>
+			<td height="24" colspan="4" class="bline">
+				<table width="800" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="90">&nbsp;<label>接待标准：</label></td>
+						<td width='408'>
+							<textarea name="jdbz" cols="70" rows="6"></textarea>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td height="24" colspan="4" class="bline">
+				<table width="800" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="90">&nbsp;<label>特别提醒：</label></td>
+						<td width='408'>
+							<textarea name="tbtx" cols="70" rows="6"></textarea>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td height="24" colspan="4" class="bline">
+				<table width="800" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="90">&nbsp;<label>温馨提示：</label></td>
+						<td width='408'>
+							<textarea name="wxts" cols="70" rows="6"></textarea>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F9FCEF" style="border:1px solid #cfcfcf;border-top:none;">
+	    <tr>
+		    <td height="35">
+			    <table width="98%" border="0" cellspacing="1" cellpadding="1">
+				    <tr>
+					    <td width="17%">&nbsp;</td>
+					    <td width="83%">
+						    <table width="214" border="0" cellspacing="0" cellpadding="0">
+							    <tr>
+								    <td width="115"><input name="imageField" type="image" src="images/button_ok.gif" width="60" height="22" class="np" border="0" style="cursor:pointer; "></td>
+								    <td width="99"><img src="images/button_reset.gif" width="60" height="22" border="0" onClick="location.reload();" style="cursor:pointer; "></td>
+							    </tr>
+						    </table>
+					    </td>
+				    </tr>
+			    </table>
+		    </td>
+	    </tr>
+    </table>
+  </form>
+</body>
+</html>

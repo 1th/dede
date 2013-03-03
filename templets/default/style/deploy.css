@@ -684,7 +684,7 @@ body {
   border-bottom: 1px solid #aae8fd;
   padding: 5px;
 }
-.table-show .title {
+.table-show .tab-title {
   background-color: #f1faff;
   font-weight: bold;
   text-align: right;
@@ -761,10 +761,25 @@ body {
   color: #ff6602;
   padding-left: 10px;
 }
+.idx-rlist-nonum .l-icon {
+	float: left;
+	top: 4px;
+	position: relative;
+	padding-right: 4px;
+}
 .idx-rlist-nonum .active {
   height: 60px;
   background: #eee;
   margin-bottom: 14px;
+}
+.idx-rlist-nonum .dps{
+	display: none;
+}
+.idx-rlist-nonum .active .dps{
+	display: block;
+}
+.idx-rlist-nonum .active .dph{
+	display: none;
 }
 .idx-rlist-nonum .active a {
   vertical-align: top;
@@ -787,10 +802,10 @@ body {
   color: #ff6602;
 }
 .idx-hasnum {
-  background: url("../image/bg_list.jpg") no-repeat 0 2px;
+  /*background: url("../image/bg_list.jpg") no-repeat 0 2px;*/
 }
 .idx-hasnum li {
-  margin-left: 18px;
+  /*margin-left: 18px;*/
 }
 .idx-left .search {
   background: #ffffff url("../image/bg_search.jpg") no-repeat 2px 2px;
