@@ -127,13 +127,6 @@
 	        <li class="icon myinfo"><a href="../member/edit_fullinfo.php"><b></b><?php echo $cfg_ml->M_MbType; ?>资料</a></li>
 	        <li class="icon face"><a href="../member/edit_face.php"><b></b>头像设置</a></li>
         </ul>
-        <h2 class="menuTitle" onclick="menuShow('menuSec')" id="menuSec_t"><b></b>空间管理</h2>
-        <ul id="menuSec">
-        	<li class="icon mtypes"><a href="../member/mtypes.php"><b></b>分类管理</a></li>
-        	<li class="icon flink"><a href="../member/flink_main.php"><b></b>书签管理</a></li>
-        	<li class="icon info"><a href="../member/edit_space_info.php"><b></b>空间设置</a></li>
-        	<li class="icon spaceskin"><a href="../member/spaceskin.php"><b></b>风格选择</a></li>
-        </ul>
         
         <?php
       }

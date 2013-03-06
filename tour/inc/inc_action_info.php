@@ -497,7 +497,7 @@ $actionSearch[10] = array(
     )
 );
 $actionSearch[11] = array(
-    'toptitle' => '采集', 
+    'toptitle' => '批量',
     'title' => '采集管理',
     'description' => '内容采集管理操作',
     'soniterm' => array(

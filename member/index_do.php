@@ -93,7 +93,7 @@ else if($fmdo=='user')
         $uid = trim($uid);
         if($cktype==0)
         {
-            $msgtitle='用户笔名';
+            $msgtitle='用户昵称';
         }
         else
         {

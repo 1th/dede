@@ -5,7 +5,7 @@ $(document).ready(function()
 	if($('.usermtype2').attr("checked")==true) $('#uwname').text('公司名称：'); 
 	$('.usermtype').click(function()
 	{
-		$('#uwname').text('用户笔名：');
+		$('#uwname').text('用户昵称：');
 	});
 	$('.usermtype2').click(function()
 	{

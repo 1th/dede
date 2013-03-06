@@ -9,8 +9,8 @@
 
 // 报错级别设定,一般在开发环境中用E_ALL,这样能够看到所有错误提示
 // 系统正常运行后,直接设定为E_ALL || ~E_NOTICE,取消错误显示
-// error_reporting(E_ALL);
-error_reporting(E_ALL || ~E_NOTICE);
+ error_reporting(E_ALL);
+//error_reporting(E_ALL || ~E_NOTICE);
 define('IN_DEDE', true);
 define('DEDEINC', str_replace("\\", '/', dirname(__FILE__) ) );
 define('DEDEROOT', str_replace("\\", '/', substr(DEDEINC,0,-8) ) );
@@ -202,9 +202,9 @@ $cfg_version = 'V57_UTF8_SP1';
 $cfg_soft_lang = 'utf-8';
 $cfg_soft_public = 'base';
 
-$cfg_softname = '织梦内容管理系统';
-$cfg_soft_enname = 'DedeCMS';
-$cfg_soft_devteam = 'DedeCMS官方团队';
+$cfg_softname = '旅游管理系统';
+$cfg_soft_enname = 'Tour';
+$cfg_soft_devteam = 'Tour团队';
 
 //文档的默认命名规则
 $art_shortname = $cfg_df_ext = '.html';

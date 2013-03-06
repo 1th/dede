@@ -7,7 +7,7 @@
  * @link           http://www.dedecms.com
  */
 require_once(dirname(__FILE__)."/config.php");
-
+header('Location:operation.php');
 $uid=empty($uid)? "" : RemoveXSS($uid); 
 if(empty($action)) $action = '';
 if(empty($aid)) $aid = '';

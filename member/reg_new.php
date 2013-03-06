@@ -66,7 +66,7 @@ if($step == 1)
         }
         if(strlen($userid) > 20 || strlen($uname) > 36)
         {
-            ShowMsg('你的用户名或用户笔名过长，不允许注册！', '-1');
+            ShowMsg('你的用户名或用户昵称过长，不允许注册！', '-1');
             exit();
         }
         if(strlen($userid) < $cfg_mb_idmin || strlen($pwd) < $cfg_mb_pwdmin)
@@ -87,7 +87,7 @@ if($step == 1)
             $row = $dsql->GetOne("SELECT * FROM `#@__member` WHERE uname LIKE '$uname' ");
             if(is_array($row))
             {
-                ShowMsg('用户笔名或公司名称不能重复！', '-1');
+                ShowMsg('用户昵称或公司名称不能重复！', '-1');
                 exit();
             }
         }
