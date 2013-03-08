@@ -9,22 +9,35 @@
 
 // 报错级别设定,一般在开发环境中用E_ALL,这样能够看到所有错误提示
 // 系统正常运行后,直接设定为E_ALL || ~E_NOTICE,取消错误显示
- error_reporting(E_ALL);
-//error_reporting(E_ALL || ~E_NOTICE);
+if (isset($_GET['debug']) && $_GET['debug'] == '_mark') {
+	error_reporting(E_ALL);
+} else {
+	error_reporting(E_ALL || ~E_NOTICE);
+}
+/** 是否调用了dede文件 */
 define('IN_DEDE', true);
+/** DEDE的include文件夹 */
 define('DEDEINC', str_replace("\\", '/', dirname(__FILE__) ) );
+/** DEDE根目录 */
 define('DEDEROOT', str_replace("\\", '/', substr(DEDEINC,0,-8) ) );
+/** DEDE 的缓存目录 */
 define('DEDEDATA', DEDEROOT.'/data');
+/** DEDE的会员目录 */
 define('DEDEMEMBER', DEDEROOT.'/member');
+/** DEDE的缓存目录 */
 define('DEDETEMPLATE', DEDEROOT.'/templets');
 
 // ------------------------------------------------------------------------
+/** 模型 */
 define('DEDEMODEL', './model');
+/** DEDE控制器 */
 define('DEDECONTROL', './control');
+/** DEDE模版目录 */
 define('DEDEAPPTPL', './templates');
-
+/** DEBUG 级别 */
 define('DEBUG_LEVEL', FALSE);
 
+// set runtime
 if (version_compare(PHP_VERSION, '5.3.0', '<')) 
 {
     set_magic_quotes_runtime(0);
@@ -73,8 +86,7 @@ if (!defined('DEDEREQUEST'))
             }
         }
     }
-    
-    //var_dump($_REQUEST);exit;
+
     CheckRequest($_REQUEST);
 
     foreach(Array('_GET','_POST','_COOKIE') as $_request)
@@ -100,14 +112,14 @@ if( preg_match('/windows/i', @getenv('OS')) )
     $isSafeMode = false;
 }
 
-//Session保存路径
+/** Session保存路径 */
 $sessSavePath = DEDEDATA."/sessions/";
 if(is_writeable($sessSavePath) && is_readable($sessSavePath))
 {
     session_save_path($sessSavePath);
 }
 
-//系统配置参数
+//系统配置参数, 缓存生成的参数
 require_once(DEDEDATA."/config.cache.inc.php");
 
 //转换上传的文件相关的变量及安全处理、并引用前台通用的上传函数
@@ -144,10 +156,11 @@ $cfg_isUrlOpen = @ini_get("allow_url_fopen");
 //用户访问的网站host
 $cfg_clihost = 'http://'.$_SERVER['HTTP_HOST'];
 
-//站点根目录
+/** @var $cfg_basedir  站点根目录 */
 $cfg_basedir = preg_replace('#'.$cfg_cmspath.'\/include$#i', '', DEDEINC);
 if($cfg_multi_site == 'Y')
 {
+	/** @var $cfg_mainsite 主站地址 */
     $cfg_mainsite = $cfg_basehost;
 }
 else

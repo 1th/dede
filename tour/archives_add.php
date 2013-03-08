@@ -236,7 +236,7 @@ color,writer,source,litpic,pubdate,senddate,mid,voteid,notpost,description,keywo
 		$win->AddMsgItem($msg);
 		$winform = $win->GetWindow('hand', '&nbsp;', false);
 		$win->Display();
-		exit('<meta http-equiv="refresh" content="2; url=' . urldecode("line_full.php?artid={$arcID}&do=ext_add") . '"/>');
+		exit('<meta http-equiv="refresh" content="2; url=' . urldecode("line_full.php?artid={$arcID}&do=ext_edit") . '"/>');
 	}
     $wintitle = '成功发布文档！';
     $wecome_info = '文档管理::发布文档';

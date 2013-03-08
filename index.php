@@ -20,7 +20,8 @@ if(isset($_GET['upcache']) || !file_exists('index.html'))
     $row = $dsql->GetOne("Select * From `#@__homepageset`");
     $row['templet'] = MfTemplet($row['templet']);
     $pv = new PartView();
-    $pv->SetTemplet($cfg_basedir . $cfg_templets_dir . "/" . $row['templet']);
+	$_mk_tpl = $cfg_basedir . $cfg_templets_dir . "/" . $row['templet'];
+    $pv->SetTemplet($_mk_tpl);
     $row['showmod'] = isset($row['showmod'])? $row['showmod'] : 0;
     if ($row['showmod'] == 1)
     {

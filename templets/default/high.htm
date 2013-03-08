@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="{dede:global.cfg_soft_lang/}">
+	<title>{dede:global.cfg_webname/}</title>
+	<meta name="description" content="{dede:global.cfg_description/}" />
+	<meta name="keywords" content="{dede:global.cfg_keywords/}" />
+	<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/deploy.css" media="all">
+	<script src="{dede:global.cfg_cmsurl/}/include/dedeajax2.js"></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.ui.min.js"></script>
+	<link rel="stylesheet" href="{dede:global.cfg_cmspath/}/static/css/jquery-ui.min.css" media="all" />
+	<script src="{dede:global.cfg_cmspath/}/static/js/jq_plugin/jquery.KinSlideshow.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/swfobject/swfobject.js" ></script>
+	<script>
+		var project = project || {};
+		project.global = project.global || {};
+		project.global.cfg_cmspath = '{dede:global.cfg_cmspath/}';
+		project.typeid = 39;
+	</script>
+</head>
+<body>
+{dede:include filename="header.htm"/}
+<div class="layout mt10">
+	<div class="col-left idx-left">
+		{dede:include filename="side_search.htm"/}
+		{dede:include filename="side_weibo.htm"/}
+		{dede:include filename="side_article.htm"/}
+	</div>
+	<div class="col-right">
+		<div class="show">
+			<div class="show-block">
+				<h3>高端定制旅游</h3>
+				<div class="content">
+				<form action="/plus/diy.php" enctype="multipart/form-data" id="high_sub" onsubmit="return checkForm();" method="post">
+					<input type="hidden" name="action" value="post" />
+					<input type="hidden" name="diyid" value="1" />
+					<input type="hidden" name="do" value="2" />
+
+						<table class="table-show-detail">
+						<colgroup>
+							<col style="width:200px;">
+							<col style="width:600px;">
+						</colgroup>
+						<tr>
+							<th colspan="2">基本信息</th>
+						</tr>
+						<tbody>
+						<tr>
+							<td align="right" valign="top">姓名：</td>
+							<td><input type='text' name='name' id='name' style='width:100px'  class='intxt' value='' />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">手机：</td>
+							<td><input type='text' name='phone' id='phone' style='width:250px'  class='intxt' value='' />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">电话：</td>
+							<td><input type='text' name='tel' id='tel' style='width:250px'  class='intxt' value='' />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">Email：</td>
+							<td><input type='text' name='email' id='email' style='width:250px'  class='intxt' value='' />
+							</td>
+						</tr>
+						</tbody>
+						<tr>
+							<th colspan="2">旅游信息</th>
+						</tr>
+						<tr>
+							<td align="right" valign="top">出发地：</td>
+							<td><input type='text' name='start' id='start' style='width:100px'  class='intxt' value='' />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">目的地：</td>
+							<td><input type='text' name='aim' id='aim' style='width:100px'  class='intxt' value='' />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">出发日期：</td>
+							<td><input name="stime" value="" type="text" id="stime" style="width:100px" class="intxt"  /></td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">旅程天数：</td>
+							<td><input type='text' name='days' id='days' style='width:100px'  class='intxt' value='' />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">人数：</td>
+							<td><textarea name='person' id='person' style='width:70%;height:80px'></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">价格要求：</td>
+							<td><input type='text' name='price' id='price' style='width:250px'  class='intxt' value='' />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">必去景点：</td>
+							<td><textarea name='mustto' id='mustto' style='width:70%;height:80px'></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">餐饮要求：</td>
+							<td><textarea name='food' id='food' style='width:70%;height:80px'></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">机票仓位：</td>
+							<td><input type='radio' name='plane' class='np' value='头等舱' checked>头等舱
+								<input type='radio' name='plane' class='np' value='商务舱'>商务舱
+								<input type='radio' name='plane' class='np' value='经济舱'>经济舱
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">酒店级别：</td>
+							<td><input type='radio' name='mhotel' class='np' value='一星' checked>一星
+								<input type='radio' name='mhotel' class='np' value='二星'>二星
+								<input type='radio' name='mhotel' class='np' value='三星'>三星
+								<input type='radio' name='mhotel' class='np' value='四星'>四星
+								<input type='radio' name='mhotel' class='np' value='五星'>五星
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">旅行主题：</td>
+							<td><input type='checkbox' name='theme[]' class='np' value='亲子游'>亲子游
+								<input type='checkbox' name='theme[]' class='np' value='蜜月游'>蜜月游
+								<input type='checkbox' name='theme[]' class='np' value='夕阳红'>夕阳红
+								<input type='checkbox' name='theme[]' class='np' value='运动主题'>运动主题
+							</td>
+						</tr>
+						<tr>
+							<td align="right" valign="top">其它要求：</td>
+							<td><textarea name='other' id='other' style='width:70%;height:80px'></textarea>
+							</td>
+						</tr>
+						<input type="hidden" name="dede_fields" value="name,text;phone,text;tel,text;email,text;start,text;aim,text;stime,datetime;days,text;person,multitext;price,text;mustto,multitext;food,multitext;plane,radio;mhotel,radio;theme,checkbox;other,multitext" />
+						<input type="hidden" name="dede_fieldshash" value="36066dc3cc1958a4b6e7b7dd9e4f67f5" /></table>
+						<div align='center' style='height:30px;padding-top:10px;'>
+							<input type="submit" name="submit" value="提 交" class='coolbg' />
+							&nbsp;
+							<input type="reset" name="reset" value="重 置" class='coolbg' />
+						</div>
+					</table>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script>
+	$('#stime').datepicker();
+	function checkForm(){
+		if (!checkele('#name')){
+			return false;
+		}
+		if (!checkele('#phone')){
+			return false;
+		}
+		if (!checkele('#aim')){
+			return false;
+		}
+		if (!checkele('#days')){
+			return false;
+		}
+		if (!checkele('#email')){
+			return false;
+		}
+		if (!checkele('#food')){
+			return false;
+		}
+		if (!checkele('#mustto')){
+			return false;
+		}
+		if (!checkele('#other')){
+			return false;
+		}
+		if (!checkele('#person')){
+			return false;
+		}
+		if (!checkele('#phone')){
+			return false;
+		}
+		if (!checkele('#price')){
+			return false;
+		}
+		if (!checkele('#start')){
+			return false;
+		}
+		if (!checkele('#tel')){
+			return false;
+		}
+		if (!checkele('#stime')){
+			return false;
+		}
+		return true;
+		function checkele(e) {
+			var ele = $(e);
+			if (ele.val() == '') {
+				var str = ele.parents('tr').find('td').eq(0).text().replace(':','').replace('：', '');
+				alert(str+'不允许为空!');
+				ele.focus();
+				return false;
+			}
+			return true;
+		}
+	}
+
+</script>
+{dede:include filename="footer.htm"/}
+</body>
+</html>

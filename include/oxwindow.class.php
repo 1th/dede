@@ -239,7 +239,7 @@ class OxWindow
         global $cfg_templets_dir,$wecome_info,$cfg_basedir;
         if(empty($wecome_info))
         {
-            $wecome_info = "DedeCMS OX 通用对话框：";
+            $wecome_info = "提示消息：";
         }
         $ctp = new DedeTagParse();
         if($modfile=='')

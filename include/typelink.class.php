@@ -11,7 +11,7 @@
 require_once(DEDEINC."/channelunit.func.php");
 
 /**
- * 栏目连接类
+ * 栏目链接类
  *
  * @package          TypeLink
  * @subpackage       DedeCMS.Libraries

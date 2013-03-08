@@ -68,7 +68,7 @@ class SearchView
      * @param     string  $mid  会员ID
      * @return    string
      */
-    function __construct($typeid,$keyword,$orderby,$achanneltype="all",
+	function __construct($typeid,$keyword,$orderby,$achanneltype="all",
     $searchtype='',$starttime=0,$upagesize=20,$kwtype=1,$mid=0)
     {
         global $cfg_search_max,$cfg_search_maxrc,$cfg_search_time,$cfg_sphinx_article;

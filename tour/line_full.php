@@ -16,9 +16,6 @@ $line = $dsql->GetOne("SELECT * FROM `#@__line` WHERE aid='$artid'");
 $channelid = 17;
 // addhandle
 switch ($do) {
-	case 'ext_add':
-		include DedeInclude('templets/line_full_add.htm');
-	break;
 	case 'ext_edit':
 		include DedeInclude('templets/line_full_edit.htm');
 	break;

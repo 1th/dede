@@ -36,6 +36,7 @@ $(function(){
 			btn_borderHoverColor:"#1188c0",btn_borderWidth:1}
 	});
 	$('.removeshugang').find('.shugang:eq(-1)').hide();
+	$('#menu_'+project.typeid).addClass('active');
 })
 
 $(function(){
