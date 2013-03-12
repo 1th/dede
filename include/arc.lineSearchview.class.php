@@ -77,7 +77,7 @@ class LineSearchView
 //		$this->TempInfos['source'] = $this->dtp->SourceString;
 
 		$this->PageSize = 10;
-		$this->PageNo = $GLOBALS['PageNo'];
+		$this->PageNo = isset($GLOBALS['PageNo']) ? $GLOBALS['PageNo'] : 1;
 		$this->TotalPage = ceil($this->TotalResult/$this->PageSize);
 
 	}
