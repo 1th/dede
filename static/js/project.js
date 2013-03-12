@@ -58,3 +58,23 @@ $(function(){
 		}
 	})
 })
+
+function xdChangeAndLocation(param, value, tripFile) {
+	var stringObj = window.location.href;
+	typeof tripFile == 'undefined' ? tripFile = window.location.pathname : tripFile;
+	var lstr = "&";
+
+	if (stringObj.indexOf(tripFile+'?') == -1) {
+		lstr = "?";
+	}
+	var reg = new RegExp(param + "=[0-9a-zA-Z,]*", "g"); //创建正则RegExp对象
+	var urlGo = "";
+	var ch = stringObj.indexOf(param+'=');
+	if (ch == -1) {
+		urlGo = urlGo + stringObj + lstr + param + "=" + value;
+	}
+	if (ch != -1) {
+		urlGo = stringObj.replace(reg, param + "=" + value);
+	}
+	window.location = urlGo;
+}

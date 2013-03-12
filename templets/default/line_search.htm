@@ -16,44 +16,112 @@
 		var project = project || {};
 		project.global = project.global || {};
 		project.global.cfg_cmspath = '{dede:global.cfg_cmspath/}';
+		project.search = {};
+		project.search.s_typeid = {dede:global.s_typeid/};
+		project.search.s_prices = '{dede:global.s_prices/}';
+		project.search.s_days = '{dede:global.s_days/}';
 	</script>
 </head>
 <body>
 {dede:include filename="header.htm"/}
 <div class="layout mt10">
 	<div class="col-left idx-left">
-		{dede:include filename="side_search.htm"/}
+		<!--{dede:include filename="side_search.htm"/}-->
+
+		{dede:include filename="side_video.htm"/}
 		{dede:include filename="side_weibo.htm"/}
-		<div class="infos mt10">
-			<div class="block">
-				<h3>栏目类别</h3>
-				<div class="content">
-					<ul class="idx-llist">
-						{dede:channel type='son' currentstyle="<li><a href='~typelink~' class='thisclass'>~typename~</a></li>"}
-						<li><a href='[field:typeurl/]'>[field:typename/]</a></li>
-						{/dede:channel}
-					</ul>
-				</div>
-			</div>
-		</div>
+		{dede:include filename="side_article.htm"/}
 	</div>
 	<div class="col-right">
 		<div class="infos list-tour">
-			<h3>{dede:type}[field:typename /]{/dede:type}</h3>
+			<h3>线路筛选</h3>
+			<div class="content">
+				<form action="{dede:global.cfg_cmsurl/}/plus/linesearch.php" method="get">
+				<div class="filter">
+					<dl>
+						<dt>线路类型 : </dt>
+						<dd>
+							<a id="s_typeid_0" href="javascript:xdChangeAndLocation('s_typeid', 0);">全部</a>
+							{dede:types}
+							<a  id="s_typeid_[field:id/]" href="javascript:xdChangeAndLocation('s_typeid', [field:id/]);">[field:typename/]</a>
+							{/dede:types}
+						</dd>
+						<input type="hidden" name="s_typeid" value="{dede:global.s_typeid/}"/>
+					</dl>
+					<dl>
+						<dt>价格范围 : </dt>
+						<dd>
+							<a id="s_prices_0" href="javascript:xdChangeAndLocation('s_prices', 0);">全部</a>
+							<a id="s_prices_1000" href="javascript:xdChangeAndLocation('s_prices', 1000);">0-1000元</a>
+							<a id="s_prices_5000" href="javascript:xdChangeAndLocation('s_prices', 5000);">1000元-5000元</a>
+							<a id="s_prices_10000" href="javascript:xdChangeAndLocation('s_prices', 10000);">5000元-10000元</a>
+							<a id="s_prices_m10000" href="javascript:xdChangeAndLocation('s_prices', 'm10000');">10000元以上</a>
+						</dd>
+						<input type="hidden" name="s_prices" value="{dede:global.s_prices/}"/>
+					</dl>
+					<dl>
+						<dt>出行天数 : </dt>
+						<dd>
+							<a id="s_days_0" href="javascript:xdChangeAndLocation('s_days', 0);">全部</a>
+							<a id="s_days_5" href="javascript:xdChangeAndLocation('s_days', 5);">1-5天</a>
+							<a id="s_days_10" href="javascript:xdChangeAndLocation('s_days', 10);">5-10天</a>
+							<a id="s_days_15" href="javascript:xdChangeAndLocation('s_days', 15);">10-15天</a>
+							<a id="s_days_30" href="javascript:xdChangeAndLocation('s_days', 30);">15-30天</a>
+							<a id="s_days_m30" href="javascript:xdChangeAndLocation('s_days', 'm30');">30天以上</a>
+						</dd>
+						<input type="hidden" name="s_days" value="{dede:global.s_days/}"/>
+					</dl>
+					<dl>
+						<dt>目的地 : </dt>
+						<dd>
+							<input type="text" class="span5" name="s_aimPlace" value="{dede:global.s_aimPlace/}">
+						</dd>
+					</dl>
+					<dl>
+						<dt>出发日期 : </dt>
+						<dd>
+							<input type="text" class="span5" id="s_startDate" name="s_startDate" value="{dede:global.s_startDate/}"> 至
+							<input type="text" class="span5" id="s_endDate" name="s_endDate" value="{dede:global.s_endDate/}"> <button class="submit"> </button>
+						</dd>
+					</dl>
+				</div>
+				<script>
+					$(function(){
+						$('#s_startDate, #s_endDate').datepicker();
+						$('#s_typeid_'+project.search.s_typeid).addClass('select');
+						$('#s_days_'+project.search.s_days).addClass('select');
+						$('#s_prices_'+project.search.s_prices).addClass('select');
+					})
+				</script>
+				</form>
+			</div>
+
 			<div class="list-items">
 				<table width="100%">
 					<colgroup>
-						<col style="width:15px;">
-						<col style="width:545px;">
-						<col style="width:120px;">
+						<col style="width:395px;">
+						<col style="width:50px;">
+						<col style="width:80px;">
+						<col style="width:80px;">
+						<col style="width:95px;">
 					</colgroup>
-					{dede:list pagesize='10'}
-					<tr class="article">
-						<td>&nbsp;</td>
-						<td class="line"><a href="[field:arcurl/]">[field:title/]</a></td>
-						<td class="day">[field:pubdate function="date('m-d H:m', @me)"/]</td>
+					<tr>
+						<th class="title">线路名称</th>
+						<th>天数</th>
+						<th>门市价</th>
+						<th>会员价</th>
+						<th>行程预定</th>
 					</tr>
-					{/dede:list}
+					{dede:search}
+					<tr class="odd">
+						<td class="line"><a href="[sfield:linkurl/]">[sfield:title/]</a>[sfield:tag/]</td>
+						<td class="day">[sfield:day/]</td>
+						<td class="pricenow">￥:[sfield:price/]</td>
+						<td class="pricemember">￥:[sfield:memberprice/]</td>
+						<td class="bookit"><a href="[sfield:linkurl/]" class="book"></a><a href="[sfield:linkurl/]" class="show"></a></td>
+					</tr>
+					{/dede:search}
+
 				</table>
 			</div>
 			<div class="pages">

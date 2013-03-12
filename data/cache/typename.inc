@@ -15,11 +15,16 @@ $typeArr[16] = '资讯动态';
 $typeArr[17] = '旅游指南';
 $typeArr[18] = '旅游指南';
 $typeArr[34] = '山东旅游';
-$typeArr[33] = '国内线路';
+$typeArr[33] = '自由行';
 $typeArr[21] = '旅游攻略';
 $typeArr[31] = '首页主页广告';
 $typeArr[32] = '左侧视频';
+$typeArr[35] = '最新资讯';
+$typeArr[36] = '自驾游门票';
 $typeArr[28] = '网站使用流程';
 $typeArr[29] = '发票 合同 退款';
 $typeArr[30] = '会员积分相关';
+$typeArr[37] = '机票';
+$typeArr[38] = '酒店预订';
+$typeArr[39] = '高端定制旅游';
 ?>

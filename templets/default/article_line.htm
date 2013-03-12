@@ -6,6 +6,7 @@
 	<meta name="description" content="{dede:global.cfg_description/}" />
 	<meta name="keywords" content="{dede:global.cfg_keywords/}" />
 	<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/deploy.css" media="all">
+	<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/print.css" media="print" />
 	<script src="{dede:global.cfg_cmsurl/}/include/dedeajax2.js"></script>
 	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.js" ></script>
 	<script src="{dede:global.cfg_cmspath/}/static/js/jq_plugin/jquery.KinSlideshow.js" ></script>
@@ -60,8 +61,8 @@
 				<h3>精品线路</h3>
 				<div class="content">
 					<h4>
-						<a href="" class="icon-show-book icon-show-book-book pull-right"></a>
-						<a href="" class="icon-show-book icon-show-book-print pull-right mr10"></a>
+						<a  href="javascript:void(0)" onclick="window.print();"class="icon-show-book icon-show-book-book pull-right"></a>
+						<a  href="" class="icon-show-book icon-show-book-print pull-right mr10"></a>
 						{dede:field.title/}
 					</h4>
 					<table class="table-show">
