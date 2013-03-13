@@ -3,9 +3,14 @@ defined('IN_DEDE') or exit('Wrong info used for reject');
 include DEDEINC . '/line.func.php';
 $GLOBALS['line'] = $arc->addTableRow;
 //$aid 文章ID
+if ($godate){
+	$sql = "select godate, prices from `#@__line_time` WHERE aid = $aid and godate='{$godate}' limit 1";
+	$rs = $dsql->GetOne($sql);
+} else {
+	$sql = "select godate, prices from `#@__line_time` WHERE aid = $aid order by godate asc limit 1";
+	$rs = $dsql->GetOne($sql);
+}
 
-$sql = "select godate, prices from `#@__line_time` WHERE aid = $aid order by godate asc limit 1";
-$rs = $dsql->GetOne($sql);
 // 下次出行日期
 $GLOBALS['l_bookdate'] = $rs['godate'];
 // 返回日期

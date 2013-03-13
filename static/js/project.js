@@ -67,7 +67,7 @@ function xdChangeAndLocation(param, value, tripFile) {
 	if (stringObj.indexOf(tripFile+'?') == -1) {
 		lstr = "?";
 	}
-	var reg = new RegExp(param + "=[0-9a-zA-Z,]*", "g"); //创建正则RegExp对象
+	var reg = new RegExp(param + "=[0-9a-zA-Z,-]*", "g"); //创建正则RegExp对象
 	var urlGo = "";
 	var ch = stringObj.indexOf(param+'=');
 	if (ch == -1) {
@@ -77,4 +77,13 @@ function xdChangeAndLocation(param, value, tripFile) {
 		urlGo = stringObj.replace(reg, param + "=" + value);
 	}
 	window.location = urlGo;
+}
+
+
+function prebook($date){
+	xdChangeAndLocation('godate', $date);
+}
+
+function book(aid, date) {
+//	alert(aid);
 }
