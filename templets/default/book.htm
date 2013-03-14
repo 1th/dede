@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="{dede:global.cfg_soft_lang/}">
+	<title>{dede:global.cfg_webname/}</title>
+	<meta name="description" content="{dede:global.cfg_description/}" />
+	<meta name="keywords" content="{dede:global.cfg_keywords/}" />
+	<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/deploy.css" media="all">
+	<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/print.css" media="print" />
+	<script src="{dede:global.cfg_cmsurl/}/include/dedeajax2.js"></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jq_plugin/jquery.KinSlideshow.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/swfobject/swfobject.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.ui.min.js"></script>
+	<link rel="stylesheet" href="{dede:global.cfg_cmspath/}/static/css/jquery-ui.min.css" media="all" />
+	<link rel="stylesheet" href="{dede:global.cfg_cmspath/}/{dede:global.cfg_linefile/}/js/rili/a_rili.css">
+	<script type="text/javascript" src="{dede:global.cfg_cmspath/}/{dede:global.cfg_linefile/}/js/rili/a_rili.js"></script>
+	<script type="text/javascript" src="{dede:global.cfg_cmspath/}/{dede:global.cfg_linefile/}/js/rili/a_rili_next.js"></script>
+	<script>
+		var project = project || {};
+		project.global = project.global || {};
+		project.global.cfg_cmspath = '{dede:global.cfg_cmspath/}';
+		project.article = {};
+		project.bookDate = '{dede:global.godate/}';
+		project.aid = {dede:global.aid/};
+
+	</script>
+</head>
+<body>
+{dede:include filename="header.htm"/}
+<div class="layout mt10">
+	<div class="col-left idx-left">
+		{dede:include filename="side_search.htm"/}
+		{dede:include filename="side_weibo.htm"/}
+		{dede:include filename="side_article.htm"/}
+	</div>
+	<div class="col-right">
+		<div class="show">
+			<div class="show-block">
+				<h3>精品线路</h3>
+				<div class="content">
+					<h4>
+						{dede:global.title/}
+					</h4>
+					<table class="table-show">
+						<colgroup>
+							<col style="width:100px;">
+							<col style="width:250px;">
+							<col style="width:100px;">
+							<col style="width:250px;"></colgroup>
+						<tr>
+							<td class="tab-title">天数:</td>
+							<td>{dede:php}echo $line['days'];{/dede:php}天</td>
+							<td class="tab-title">发班计划:</td>
+							<td>{dede:php}echo $line['plan'];{/dede:php}</td>
+						</tr>
+						<tr>
+							<td class="tab-title">出发日期:</td>
+							<td>{dede:php}echo $l_bookdate;{/dede:php}</td>
+							<td class="tab-title">返回日期:</td>
+							<td>{dede:php}echo $l_returndate;{/dede:php}</td>
+						</tr>
+						<tr>
+							<td class="tab-title">可售人数:</td>
+							<td>
+								{dede:php}
+								if($line['available_people']<=0){
+									echo '不限人数';
+								}else{
+									echo $line['available_people'].'人';
+								}
+								{/dede:php}
+							</td>
+							<td class="tab-title">总人数:</td>
+							<td>
+								{dede:php}
+								if($line['full_people']<=0){
+									echo '不限人数';
+								}else{
+									echo $line['full_people'].'人';
+								}
+								{/dede:php}</td>
+						</tr>
+						<tr>
+							<td class="tab-title">开始交通:</td>
+							<td>{dede:php} echo $line['start_trans'];{/dede:php}</td>
+							<td class="tab-title">返回交通:</td>
+							<td>{dede:php} echo $line['back_trans'];{/dede:php}</td>
+						</tr>
+					</table>
+				</div>
+				<h3>价格清单</h3>
+				<div class="content">
+					<table class="table-show-detail">
+						<colgroup>
+							<col style="width:200px;">
+							<col style="width:80px;">
+							<col style="width:80px;">
+							<col style="width:50px;">
+							<col></colgroup>
+						<tr>
+							<th>价格类型</th>
+							<th>门市价</th>
+							<th>会员价</th>
+							<th>人数</th>
+							<th>描述</th>
+						</tr>
+						{dede:php}
+						foreach($descs as $k => $v){
+							echo "
+							<tr>
+								<td>{$v[0]}</td>
+								<td>￥:{$v[1]}</td>
+								<td>￥:{$v[2]}</td>
+								<td>{$v[3]}人</td>
+								<td>{$v[4]}</td>
+							</tr>";
+						}
+						{/dede:php}
+					</table>
+				</div>
+				<h3>出发日期</h3>
+				<div class="content">
+					<table>
+						<tr>
+							<td>
+								<div id="scheduler_first" class="dhx_cal_container" style='width:330px; height:310px;'>
+									<div class="dhx_cal_navline">
+										<div class="dhx_cal_prev_button">&nbsp;</div>
+										<div class="dhx_cal_next_button">&nbsp;</div>
+										<div class="dhx_cal_today_button"></div>
+										<div class="dhx_cal_date" style="left: 255px;"></div>
+										<div class="dhx_cal_tab" name="month_tab" style="right:76px;display: none;"></div>
+									</div>
+									<div class="dhx_cal_header">
+									</div>
+									<div class="dhx_cal_data">
+									</div>
+								</div>
+							</td>
+							<td>
+								<div id="scheduler_second" class="dhx_cal_container" style='width:330px; height:310px;'>
+									<div class="dhx_cal_navline">
+										<div class="dhx_cal_prev_button">&nbsp;</div>
+										<div class="dhx_cal_next_button">&nbsp;</div>
+										<div class="dhx_cal_today_button"></div>
+										<div class="dhx_cal_date"></div>
+										<div class="dhx_cal_tab" name="month_tab" style="right:76px;display: none;"></div>
+									</div>
+									<div class="dhx_cal_header">
+									</div>
+									<div class="dhx_cal_data">
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<h3>行程安排</h3>
+				<div class="content">
+					{dede:php} echo $line['journey'];{/dede:php}
+				</div>
+				<h3>接待标准</h3>
+				<div class="content">
+					{dede:php} echo $line['jdbz'];{/dede:php}
+				</div>
+				<h3>特别提醒</h3>
+				<div class="content">
+					{dede:php} echo $line['tbtx'];{/dede:php}
+				</div>
+				<h3>温馨提示</h3>
+				<div class="content">
+					{dede:php} echo $line['wxts'];{/dede:php}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+{dede:include filename="footer.htm"/}
+</body>
+</html>

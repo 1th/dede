@@ -84,6 +84,7 @@ function prebook($date){
 	xdChangeAndLocation('godate', $date);
 }
 
-function book(aid, date) {
+function book(aid, godate) {
 //	alert(aid);
+	window.location.href=project.global.cfg_cmspath+'/plus/book.php?aid='+aid+'&godate='+godate;
 }

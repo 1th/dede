@@ -29,7 +29,6 @@ class LineSearchView
 	private $dsql;
 	private $dtp;
 	private $dtp2;
-//	private $TempInfos;
 	private $PageSize;
 	private $TotalPage;
 	private $PageNo;
@@ -73,8 +72,6 @@ class LineSearchView
 			exit();
 		}
 		$this->dtp->LoadTemplate($tempfile);
-//		$this->TempInfos['tags'] = $this->dtp->CTags;
-//		$this->TempInfos['source'] = $this->dtp->SourceString;
 
 		$this->PageSize = 10;
 		$this->PageNo = isset($GLOBALS['PageNo']) ? $GLOBALS['PageNo'] : 1;
