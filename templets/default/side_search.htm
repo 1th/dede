@@ -10,6 +10,7 @@
 				<th>价格范围</th>
 				<td>
 					<select name="s_prices" id="s_price">
+						<option value="0">不限</option>
 						<option value="1000">0-1000</option>
 						<option value="5000">1000-5000</option>
 						<option value="10000">5000-10000</option>
@@ -20,14 +21,15 @@
 			<tr>
 				<th style="vertical-align: top;">出发日期</th>
 				<td>
-					<input type="text" name="s_startDate" class="span5" id="s_startdate">
-					<input type="text" name="s_endDate" class="span5" id="s_enddate" style="margin-top:4px;">
+					<input type="text" style="color:#666666;font-size: 12px;font-family: '微软雅黑';" name="s_startDate" class="span5" id="s_startdate" value="最早出发日期">
+					<input type="text" name="s_endDate" class="span5" id="s_enddate" style="margin-top:4px;color:#666666;font-size: 12px;font-family: '微软雅黑';" value="最晚出发日期">
 				</td>
 			</tr>
 			<tr>
 				<th>出现天数</th>
 				<td>
 					<select name="s_days" id="_day">
+						<option value="0">请选择</option>
 						<option value="5">1-5天</option>
 						<option value="10">5-10天</option>
 						<option value="15">10-15天</option>

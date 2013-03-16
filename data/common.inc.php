@@ -6,6 +6,3 @@ $cfg_dbuser = 'root';
 $cfg_dbpwd = '';
 $cfg_dbprefix = 'dede_';
 $cfg_db_language = 'utf8';
-
-
-?>

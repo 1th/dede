@@ -1,5 +1,5 @@
 <?php
-$cfg_basehost = 'http://www.dd.cc';
+$cfg_basehost = 'http://riley.maniuke.cn';
 $cfg_cmspath = '';
 $cfg_cookie_encode = 'OxAMu1390K';
 $cfg_indexurl = '/';
@@ -26,7 +26,7 @@ $cfg_fck_xhtml = 'N';
 $cfg_df_style = 'default';
 $cfg_multi_site = 'N';
 $cfg_dede_log = 'N';
-$cfg_powerby = 'Copyright &copy; 2002-2011';
+$cfg_powerby = 'Copyright &copy; 2002-2011 <a href="http://www.go766.com">唐人途旅行社</a>';
 $cfg_arcsptitle = 'N';
 $cfg_arcautosp = 'N';
 $cfg_arcautosp_size = 5;

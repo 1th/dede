@@ -626,7 +626,9 @@ body {
   margin: 0;
 }
 .footer .help dt {
-  margin: 1em 0 ;
+	font-family: '微软雅黑';
+	font-size: 14px;
+  margin: 1em 0 1.5em ;
   font-weight: bold;
 }
 .footer .help dd a {
@@ -768,9 +770,16 @@ body {
 	padding-right: 4px;
 }
 .idx-rlist-nonum .active {
-  height: 60px;
-  background: #eee;
-  margin-bottom: 14px;
+	height: 60px;
+	padding-bottom: 14px;
+	border-bottom: 1px solid #bbb;
+}
+.idx-rlist-nonum .info {
+	float: right;
+	width: 160px;
+	background: #eee;
+	padding: 0 0 0 4px;
+	height: 63px;
 }
 .idx-rlist-nonum .dps{
 	display: none;
@@ -788,7 +797,7 @@ body {
 }
 .idx-rlist-nonum .active img {
   float: left;
-  padding-right: 10px;
+  padding-right: 2px;
 }
 .idx-rlist-nonum .active p {
   margin: 0;
@@ -805,7 +814,13 @@ body {
   /*background: url("../image/bg_list.jpg") no-repeat 0 2px;*/
 }
 .idx-hasnum li {
-  /*margin-left: 18px;*/
+	position: relative;
+	padding-left: 18px;
+}
+.idx-hasnum li .l-icon{
+	position: absolute;
+	left:0;
+	top: 5px;
 }
 .idx-left .search {
   background: #ffffff url("../image/bg_search.jpg") no-repeat 2px 2px;
@@ -825,6 +840,10 @@ body {
   color: #0e578a;
   text-align: right;
   width: 75px;
+	font-family: '微软雅黑';
+}
+.idx-left .search .block tr select {
+	width: 149px;
 }
 .idx-left .search .block tr td {
   padding-left: 5px;
