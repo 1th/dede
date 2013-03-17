@@ -34,6 +34,7 @@ if($dopost=='')
         showmsg('模型表单不存在', '-1');
         exit();
     }
+	$sql = "SELECT * FROM ".$modelform['table']." WHERE mid=$cfg_ml->M_ID";
     $row = $dsql->GetOne("SELECT * FROM ".$modelform['table']." WHERE mid=$cfg_ml->M_ID");
     if(!is_array($row))
     {

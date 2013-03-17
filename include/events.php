@@ -3,7 +3,6 @@
 	require_once ("common.inc.php");
 
 	$bj=$dsql->getone("select bj from #@__line where aid='$aid'");
-		var_dump($bj);
 		if(ifbjj($bj['bj'])=='按日历报价')
 		{
 		$get_c_str = new get_c_str;

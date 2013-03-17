@@ -16,9 +16,12 @@ if(!$godate)
 	ShowMsg("你的日期格式填写不正确, 请重新填写!","-1");
 	exit();
 }
-$sp = new Book($aid, $godate);
-$line       = $sp->getArc();
-$title = $line['title'];
-$lineTime   = $sp->getLineTime();
+if (!$step) {
+	$step = 1;
+}
+$sp = new Book($aid, $godate, $step);
+
+$descs = $sp->getDescs();
+
 $sp->Display();
 exit();

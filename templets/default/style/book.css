@@ -1,0 +1,40 @@
+.step {
+	width:550px;
+	height:30px;
+	margin-bottom:10px;
+	text-align:left;
+	font-size:14px;
+}
+.step li {
+	width:183px;
+	display:inline-block;
+	float:left;
+	color:#555;
+	text-align:center;
+	line-height:30px;
+}
+.sbg1 , .sbg2 , .sbg3 {
+	background:url(../image/step.gif) no-repeat;
+}
+.sbg1 {
+	background-position:0 0;
+}
+.sbg2 {
+	background-position:0 -30px;
+}
+.sbg3 {
+	background-position:0 -60px;
+}
+
+.sbg1 .s1 {
+	color:#fff;
+	font-weight:bold;
+}
+.sbg2 .s2 {
+	color:#fff;
+	font-weight:bold;
+}
+.sbg3 .s3 {
+	color:#fff;
+	font-weight:bold;
+}

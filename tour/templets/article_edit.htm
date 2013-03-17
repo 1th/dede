@@ -352,7 +352,6 @@ if($cfg_need_typeid2=='Y') {
           
           <div id="thumbnailsEdit" style="width: 254px; height: 535px; background-color: rgb(255, 255, 255); overflow-y: scroll;">
           <?php
-           //var_dump("SELECT * FROM `#@__uploads` WHERE arcid = {$addRow['aid']}");
             $dsql->SetQuery("SELECT * FROM `#@__uploads` WHERE arcid = {$addRow['aid']}");
             $dsql->Execute();
             while($trow = $dsql->GetArray())

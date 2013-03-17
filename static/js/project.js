@@ -92,5 +92,39 @@ function prebook($date){
 
 function book(aid, godate) {
 //	alert(aid);
-	window.location.href=project.global.cfg_cmspath+'/plus/book.php?aid='+aid+'&godate='+godate;
+
+	$.getJSON(project.global.cfg_cmspath+'/plus/bookAjax.php?aid='+aid+'&godate='+godate, {}, function(data){
+		var str = '<select id="book">';
+		if (data.isOk) {
+			for(var i in data.date) {
+				var item = data.date[i];
+				var strSelect = '';
+				if (godate == item.godate) {
+					strSelect = " selected='selected' ";
+				} else {
+					strSelect = '';
+				}
+				str += "<option value='"+item.godate+"'"+strSelect+">"+item.godate+"["+item.week+"]</option>";
+			}
+			str += '</select>';
+			$('#book_select_w').html(str);
+			$( "#dialog-book" ).dialog({
+				height:180,
+				width:380,
+				draggable:false,
+				modal: true
+			});
+			$('#button').click(function(){
+				window.location.href=project.global.cfg_cmspath+'/plus/book.php?aid='+aid+'&godate='+$('#book').val();
+			})
+		}
+	})
+//	window.location.href=project.global.cfg_cmspath+'/plus/book.php?aid='+aid+'&godate='+godate;
+}
+
+function bookLogin(){
+	var taget_obj = document.getElementById('_book_userlogin');
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	myajax.SendGet2(project.global.cfg_cmspath + "/member/ajax_loginbook.php");
+	DedeXHTTP = null;
 }

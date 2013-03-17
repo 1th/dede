@@ -103,11 +103,11 @@ else if($fmdo=='user')
                 $ucresult = uc_user_checkname($uid);
                 if($ucresult > 0)
                 {
-                    echo "<font color='#4E7504'><b>√用户名可用</b></font>";
+                    echo "<font color='#4E7504'><b>√手机号可用</b></font>";
                 }
                 elseif($ucresult == -1)
                 {
-                    echo "<font color='red'><b>×用户名不合法</b></font>";
+                    echo "<font color='red'><b>×手机号不合法</b></font>";
                 }
                 elseif($ucresult == -2)
                 {
@@ -115,12 +115,12 @@ else if($fmdo=='user')
                 }
                 elseif($ucresult == -3)
                 {
-                    echo "<font color='red'><b>×用户名已经存在</b></font>";
+                    echo "<font color='red'><b>×手机号已经存在</b></font>";
                 }
                 exit();
             }
             #/aip}}            
-            $msgtitle='用户名';
+            $msgtitle='手机号';
         }
         if($cktype!=0 || $cfg_mb_wnameone=='N') {
             $msg = CheckUserID($uid, $msgtitle);

@@ -31,9 +31,9 @@ function CheckUserID($uid, $msgtitle='用户名', $ckhas=TRUE)
             return $msgtitle.'为系统禁止的标识！';
         }
     }
-    if($cfg_md_idurl=='Y' && preg_match("/[^a-z0-9]/i",$uid))
+    if($cfg_md_idurl=='Y' && preg_match("/[^0-9]/i",$uid))
     {
-        return $msgtitle.'必须由英文字母或数字组成！';
+        return $msgtitle.'必须由数字组成！';
     }
 
     if($cfg_soft_lang=='utf-8')
@@ -133,7 +133,7 @@ class MemberLogin
     var $M_Scores;
     var $M_UserName;
     var $M_Rank;
-     var $M_Face;
+    var $M_Face;
     var $M_LoginTime;
     var $M_KeepTime;
     var $M_Spacesta;
@@ -144,6 +144,8 @@ class MemberLogin
     var $M_HasDay;
     var $M_JoinTime;
     var $M_Honor = '';
+	var $M_EXT;
+	var $M_EMAIL;
     var $memberCache='memberlogin';
 
     //php5构造函数
@@ -165,7 +167,6 @@ class MemberLogin
             $this->ResetUser();
         }else{
             $this->M_ID = intval($this->M_ID);
-            
             if ($cache)
             {
                 $this->fields = GetCache($this->memberCache, $this->M_ID);
@@ -201,6 +202,7 @@ class MemberLogin
                     PutCookie("DedeLoginTime",time(),$this->M_KeepTime);
                 }
                 $this->M_LoginID = $this->fields['userid'];
+                $this->M_EMAIL = $this->fields['email'];
                 $this->M_MbType = $this->fields['mtype'];
                 $this->M_Money = $this->fields['money'];
                 $this->M_UserName = $this->fields['uname'];
@@ -216,6 +218,13 @@ class MemberLogin
                 $this->M_UpTime = $this->fields['uptime'];
                 $this->M_ExpTime = $this->fields['exptime'];
                 $this->M_JoinTime = MyDate('Y-m-d',$this->fields['jointime']);
+
+
+	            $query = "SELECT * FROM #@__member_model WHERE name='{$this->M_MbType}'";
+	            $membermodel = $GLOBALS['dsql']->GetOne($query);
+	            $modelform = $dsql->GetOne("SELECT * FROM #@__member_model WHERE id='{$membermodel['id']}'");
+	            $modeltable = $modelform['table'];
+				$this->M_EXT = $dsql->GetOne("SELECT * FROM {$modeltable} WHERE mid='{$this->M_ID}'");
                 if($this->M_Rank>10 && $this->M_UpTime>0){
                     $this->M_HasDay = $this->Judgemember();
                 }

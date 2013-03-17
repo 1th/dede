@@ -64,16 +64,16 @@ function CheckRank($rank=0, $money=0, $needinfo=TRUE)
 //                exit;
 //            }
 //        }
-        if($cfg_mb_spacesta == '-10')
-        {
-            //如果启用注册邮件验证
-            if($cfg_ml->fields['spacesta'] == '-10')
-            {
-                  $msg="您尚未进行邮件验证，请到邮箱查阅...</br>重新发送邮件验证 <a href='/member/index_do.php?fmdo=sendMail'><font color='red'>点击此处</font></a>";
-                ShowMsg($msg,"-1",0,5000);
-                exit;
-            }
-        }
+//        if($cfg_mb_spacesta == '-10')
+//        {
+//            //如果启用注册邮件验证
+//            if($cfg_ml->fields['spacesta'] == '-10')
+//            {
+//                  $msg="您尚未进行邮件验证，请到邮箱查阅...</br>重新发送邮件验证 <a href='/member/index_do.php?fmdo=sendMail'><font color='red'>点击此处</font></a>";
+//                ShowMsg($msg,"-1",0,5000);
+//                exit;
+//            }
+//        }
         if($cfg_ml->M_Rank < $rank)
         {
             $needname = "";

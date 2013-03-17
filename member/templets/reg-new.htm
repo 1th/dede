@@ -10,13 +10,7 @@
 	<script type="text/javascript" language="javascript" src='templets/js/reg_new.js'></script>
 	<script type="text/javascript" language="javascript">
 		<!--
-		var reMethod = "<?php echo ($cfg_soft_lang == 'utf-8') ? 'POST' : 'GET';?>", pwdmin =
-		<
-		? php echo
-		$cfg_mb_pwdmin;
-		?
-		>
-		;
+		var reMethod = "<?php echo ($cfg_soft_lang == 'utf-8') ? 'POST' : 'GET';?>", pwdmin =<?php echo $cfg_mb_pwdmin;?>;
 
 		function changeAuthCode() {
 			var num = new Date().getTime();
@@ -89,7 +83,7 @@
 			<ul>
 				<li><span>手机号：</span>
 					<input type="text" class="intxt w200" id="txtUsername" name="userid"/>
-					<i class="red">*</i> <em id="_userid">(可以使用中文，但禁止除[@][.]以外的特殊符号)</em></li>
+					<i class="red">*</i> <em id="_userid"></em></li>
 				<li><span id="uwname">用户昵称：</span>
 					<input type="text" class="intxt w200" size="20" id="uname" name="uname"/>
 					<i class="red">*</i> <em id="_uname"/></li>

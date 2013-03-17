@@ -1,4 +1,3 @@
-<!--
 $(document).ready(function()
 {
 	//用户类型
@@ -18,9 +17,9 @@ $(document).ready(function()
 			alert("你必须同意注册协议！");
 			return false;
 		}
-		if($('#txtUsername').val()==""){
+		if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($('#txtUsername').val()))){
 			$('#txtUsername').focus();
-			alert("用户名不能为空！");
+			alert("手机号填写错误!");
 			return false;
 		}
 		if($('#txtPassword').val()=="")
@@ -123,4 +122,3 @@ $(document).ready(function()
 		return false;
 	});
 });
--->

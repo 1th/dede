@@ -6,7 +6,7 @@
 <title><?php echo $cfg_webname; ?>- 注册成功</title>
 <link href="<?php echo $cfg_cmspath; ?>/member/templets/style/login.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
-var time = 10;
+var time = 1;
 function returnUrlByTime() {
    window.setTimeout('returnUrlByTime()', 1000);
    time = time - 1;
@@ -30,17 +30,15 @@ function returnUrlByTime() {
 <div class="bgheng">
 	<div class="wrapper loginbar">注册完成</div>
 </div>
-<div class="bor"><div class="<?php echo ($cfg_mb_reginfo == 'Y')? '' : 's';?>tip3"></div>
-  <p class="success" style="margin-top: 25px;">注册成功!
-  <font color="#ff6600"><span id="loadtime" style=" font-weight:bold">10</span></font>秒钟后自动转到会员中心！<br />
-<a href="<?php echo $cfg_cmspath; ?>/member/">马上进入会员中心</a>&nbsp;&nbsp;<a href="<?php echo $cfg_cmspath; ?>/">返回网站首页</a></p></div>
-<script language="javascript" type="text/javascript">
-	window.onload=function (){
-		setInterval("document.getElementById('time').innerHTML=new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());",1000);
-	}
-</script>
-<div class="footer bor">
-  <div class="fRight mR10" id="time"></div>
+<div class="bgheng">
+	<div class="wrapper loginbar">
+		<p class="success" style="margin-top: 25px;">注册成功!
+			<span id="loadtime" style=" font-weight:bold">1</span>秒钟后自动转到会员中心！<br />
+			<a href="<?php echo $cfg_cmspath; ?>/member/">会员中心</a>&nbsp;&nbsp;
+			<a href="<?php echo $cfg_cmspath; ?>/">网站首页</a>
+		</p>
+	</div>
 </div>
+
 </body>
 </html>

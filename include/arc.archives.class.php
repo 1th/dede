@@ -671,15 +671,12 @@ class Archives
         MakeOneTag($this->dtp, $this, 'N');
     }
 
-    /**
-     *  解析模板，对内容里的变动进行赋值
-     *
-     * @access    public
-     * @param     string  $pageNo  页码数
-     * @param     string  $ismake  是否生成
-     * @return    string
-     */
-    function ParseDMFields($pageNo, $ismake=1)
+	/**
+	 * 解析模板，对内容里的变动进行赋值
+	 * @param     $pageNo
+	 * @param int $ismake
+	 */
+	function ParseDMFields($pageNo, $ismake=1)
     {
         $this->NowPage = $pageNo;
         $this->Fields['nowpage'] = $this->NowPage;
