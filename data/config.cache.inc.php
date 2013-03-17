@@ -1,5 +1,5 @@
 <?php
-$cfg_basehost = 'http://riley.maniuke.cn';
+$cfg_basehost = 'http://www.dd.cc';
 $cfg_cmspath = '';
 $cfg_cookie_encode = 'OxAMu1390K';
 $cfg_indexurl = '/';
@@ -26,7 +26,7 @@ $cfg_fck_xhtml = 'N';
 $cfg_df_style = 'default';
 $cfg_multi_site = 'N';
 $cfg_dede_log = 'N';
-$cfg_powerby = 'Copyright &copy; 2002-2011 <a href="http://www.go766.com">唐人途旅行社</a>';
+$cfg_powerby = 'Copyright &copy; 2002-2011';
 $cfg_arcsptitle = 'N';
 $cfg_arcautosp = 'N';
 $cfg_arcautosp_size = 5;
@@ -88,7 +88,7 @@ $cfg_search_maxrc = 300;
 $cfg_search_time = 3;
 $cfg_baidunews_limit = '100';
 $cfg_updateperi = '15';
-$cfg_sendmail_bysmtp = 'Y';
+$cfg_sendmail_bysmtp = 'N';
 $cfg_smtp_server = 'smtp.qq.com';
 $cfg_smtp_port = '25';
 $cfg_smtp_usermail = 'desdev@vip.qq.com';

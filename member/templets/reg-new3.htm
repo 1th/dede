@@ -16,31 +16,19 @@ function returnUrlByTime() {
 </head>
 <body>
 <div class="header">
-  <div class="auto960">
-    <ul class="userMenu fRight">
-      <li> <a title="网站主页" href="<?php echo $cfg_cmspath; ?>/">网站主页</a> </li>
-      <li> <a title="注册" href="../member/index_do.php?fmdo=user&dopost=regnew">注册</a> </li>
-      <li> <a title="登录" href="../member/login.php">登录</a> </li>
-    </ul>
-    <span>
-    <script type="text/javascript">
- var now=(new Date()).getHours();
- if(now>0&&now<=6){
-document.write("午夜好，");
- }else if(now>6&&now<=11){
- document.write("早上好，");
- }else if(now>11&&now<=14){
- document.write("中午好，");
- }else if(now>14&&now<=18){
- document.write("下午好，");
- }else{
- document.write("晚上好，");
- }
-</script>
-    <i class="green">游客</i> 你可以选择到 </span> </div>
+	<div class="auto960">
+		<ul class="userMenu fRight">
+			<li><a title="网站主页" href="../">网站主页</a></li>
+			<li><a title="注册" href="../member/index_do.php?fmdo=user&dopost=regnew">注册</a></li>
+			<li><a title="登录" href="../member/login.php">登录</a></li>
+		</ul>
+	</div>
+	<div class="auto960">
+		<img src="../member/templets/images/bg_logo.jpg" style="border: none;top: 24px;position: relative;">
+	</div>
 </div>
-<div class="wrapper">
-  <div class="logo fLeft"> <a href="<?php echo $cfg_cmspath; ?>/member/"> <img  style="margin:8px 0 0 25px;"alt="会员中心" src="../member/templets/images/login_logo.gif"/></a></div>
+<div class="bgheng">
+	<div class="wrapper loginbar">注册完成</div>
 </div>
 <div class="bor"><div class="<?php echo ($cfg_mb_reginfo == 'Y')? '' : 's';?>tip3"></div>
   <p class="success" style="margin-top: 25px;">注册成功!

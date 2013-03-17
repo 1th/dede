@@ -125,7 +125,6 @@
         <ul id="menuFirst">
         	<li class="icon baseinfo"><a href="../member/edit_baseinfo.php"><b></b>基本资料</a></li>
 	        <li class="icon myinfo"><a href="../member/edit_fullinfo.php"><b></b><?php echo $cfg_ml->M_MbType; ?>资料</a></li>
-	        <li class="icon face"><a href="../member/edit_face.php"><b></b>头像设置</a></li>
         </ul>
         
         <?php

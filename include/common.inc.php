@@ -211,13 +211,13 @@ $cfg_soft_dir = $cfg_medias_dir.'/soft';
 $cfg_other_medias = $cfg_medias_dir.'/media';
 
 //软件摘要信息，****请不要删除本项**** 否则系统无法正确接收系统漏洞或升级信息
-$cfg_version = 'V57_UTF8_SP1';
+$cfg_version = '@copy 2013';
 $cfg_soft_lang = 'utf-8';
 $cfg_soft_public = 'base';
 
-$cfg_softname = '旅游管理系统';
-$cfg_soft_enname = 'Tour';
-$cfg_soft_devteam = 'Tour团队';
+$cfg_softname = '唐人途旅行社';
+$cfg_soft_enname = '唐人途旅行社';
+$cfg_soft_devteam = '唐人途旅行社';
 
 //文档的默认命名规则
 $art_shortname = $cfg_df_ext = '.html';

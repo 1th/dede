@@ -2,9 +2,11 @@
 /* CSS Document */
 @import url("base.css");
 body {
-	background-color:#f5f5f5;
+	/*background-color:#f5f5f5;*/
 	color:#333;
 	padding-bottom:10px;
+	font-family: '微软雅黑';
+	background: #ffffff url("../images/bg_body.jpg") no-repeat center top;
 }
 button{
 border-style: none;
@@ -17,9 +19,18 @@ border-style: none;
 	padding-bottom: 6px;
 	overflow: hidden;
 }
+.bgheng{
+	height: 40px;
+}
+.bgheng .loginbar{
+	font-size: 16px;
+	font-weight: bold;
+	color: #fff;
+	line-height: 40px;
+	padding: 0 0 0 2em;
+}
 .header {
-	background: url(../images/topbar_bg.gif) repeat;
-	height: 30px;
+	height: 110px;
 }
 .header span {
 	float: right;
@@ -83,16 +94,17 @@ border-style: none;
 	float:left;
 	text-align:right;
 	width:85px;
+	font-size: 14px;
 }
 
 .text{
-	background:url(../images/bg_button.png) repeat-x 0 0;
+	/*background:url(../images/bg_button.png) repeat-x 0 0;*/
 	width:224px;
-	height:19px!important;
-	height:22px;
-	line-height: 22px;
+	height:25px!important;
+	height:28px;
+	line-height: 25px;
 	float: left;
-	font-size: 12px;
+	font-size: 14px;
 	margin-right: 5px;
 	padding-right: 3px;
 	padding-left: 3px;
@@ -276,11 +288,15 @@ text-decoration:none;
 	float: left;
 	text-align: right;
 	overflow:hidden;
+	font-size: 14px;
+	line-height: 29px;
 }
 #login .theme .lform{
-	float:right;
-	width:720px;
-	}
+	float: right;
+	width: 720px;
+	line-height: 28px;
+	font-size: 14px;
+}
 #login .theme .lform label{
 	float:left;
 	width:80px;
