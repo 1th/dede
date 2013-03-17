@@ -20,6 +20,7 @@
 		project.search.s_typeid = {dede:global.s_typeid/};
 		project.search.s_prices = '{dede:global.s_prices/}';
 		project.search.s_days = '{dede:global.s_days/}';
+		project.search.s_flags = '{dede:global.s_flags/}';
 	</script>
 </head>
 <body>
@@ -41,9 +42,9 @@
 					<dl>
 						<dt>线路类型 : </dt>
 						<dd>
-							<a id="s_typeid_0" href="javascript:xdChangeAndLocation('s_typeid', 0);">全部</a>
+							<a id="s_typeid_0" href="javascript:l('s_typeid', 0);">全部</a>
 							{dede:types}
-							<a  id="s_typeid_[field:id/]" href="javascript:xdChangeAndLocation('s_typeid', [field:id/]);">[field:typename/]</a>
+							<a  id="s_typeid_[field:id/]" href="javascript:l('s_typeid', [field:id/]);">[field:typename/]</a>
 							{/dede:types}
 						</dd>
 						<input type="hidden" name="s_typeid" value="{dede:global.s_typeid/}"/>
@@ -51,25 +52,38 @@
 					<dl>
 						<dt>价格范围 : </dt>
 						<dd>
-							<a id="s_prices_0" href="javascript:xdChangeAndLocation('s_prices', 0);">全部</a>
-							<a id="s_prices_1000" href="javascript:xdChangeAndLocation('s_prices', 1000);">0-1000元</a>
-							<a id="s_prices_5000" href="javascript:xdChangeAndLocation('s_prices', 5000);">1000元-5000元</a>
-							<a id="s_prices_10000" href="javascript:xdChangeAndLocation('s_prices', 10000);">5000元-10000元</a>
-							<a id="s_prices_m10000" href="javascript:xdChangeAndLocation('s_prices', 'm10000');">10000元以上</a>
+							<a id="s_prices_0" href="javascript:l('s_prices', 0);">全部</a>
+							<a id="s_prices_100" href="javascript:l('s_prices', 100);">100元以下</a>
+							<a id="s_prices_500" href="javascript:l('s_prices', 500);">101元-500元</a>
+							<a id="s_prices_1000" href="javascript:l('s_prices', 1000);">501元-1000元</a>
+							<a id="s_prices_3000" href="javascript:l('s_prices', 3000);">1001元-3000元</a>
+							<a id="s_prices_m3000" href="javascript:l('s_prices', 'm3000');">3000元以上</a>
 						</dd>
 						<input type="hidden" name="s_prices" value="{dede:global.s_prices/}"/>
 					</dl>
 					<dl>
 						<dt>出行天数 : </dt>
 						<dd>
-							<a id="s_days_0" href="javascript:xdChangeAndLocation('s_days', 0);">全部</a>
-							<a id="s_days_5" href="javascript:xdChangeAndLocation('s_days', 5);">1-5天</a>
-							<a id="s_days_10" href="javascript:xdChangeAndLocation('s_days', 10);">5-10天</a>
-							<a id="s_days_15" href="javascript:xdChangeAndLocation('s_days', 15);">10-15天</a>
-							<a id="s_days_30" href="javascript:xdChangeAndLocation('s_days', 30);">15-30天</a>
-							<a id="s_days_m30" href="javascript:xdChangeAndLocation('s_days', 'm30');">30天以上</a>
+							<a id="s_days_0" href="javascript:l('s_days', 0);">全部</a>
+							<a id="s_days_1" href="javascript:l('s_days', 1);">1天</a>
+							<a id="s_days_3" href="javascript:l('s_days', 3);">2-3天</a>
+							<a id="s_days_5" href="javascript:l('s_days', 5);">4-5天</a>
+							<a id="s_days_7" href="javascript:l('s_days', 7);">6-7天</a>
+							<a id="s_days_m7" href="javascript:l('s_days', 'm7');">7天以上</a>
 						</dd>
 						<input type="hidden" name="s_days" value="{dede:global.s_days/}"/>
+					</dl>
+					<dl>
+						<dt>线路类型 : </dt>
+						<dd>
+							<a id="s_flags_0" href="javascript:l('s_flags', 0);">全部</a>
+							<a id="s_flags_h" href="javascript:l('s_flags', 'h');">精品</a>
+							<a id="s_flags_c" href="javascript:l('s_flags', 'c');">特价</a>
+							<a id="s_flags_f" href="javascript:l('s_flags', 'f');">常规</a>
+							<a id="s_flags_a" href="javascript:l('s_flags', 'a');">主推</a>
+							<a id="s_flags_s" href="javascript:l('s_flags', 's');">热卖</a>
+						</dd>
+						<input type="hidden" name="s_days" value="{dede:global.s_flags/}"/>
 					</dl>
 					<dl>
 						<dt>目的地 : </dt>
@@ -89,8 +103,10 @@
 					$(function(){
 						$('#s_startDate, #s_endDate').datepicker();
 						$('#s_typeid_'+project.search.s_typeid).addClass('select');
+						$('#menu_'+project.search.s_typeid).addClass('active');
 						$('#s_days_'+project.search.s_days).addClass('select');
 						$('#s_prices_'+project.search.s_prices).addClass('select');
+						$('#s_flags_'+project.search.s_flags).addClass('select');
 					})
 				</script>
 				</form>

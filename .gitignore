@@ -3,7 +3,6 @@
 /data/cache/listcache
 /data/cache/diggCache
 /data/cache/memberlogin
-
 /data/cache/*.inc
-
 /data/sessions/*
+/data/payment/*.php

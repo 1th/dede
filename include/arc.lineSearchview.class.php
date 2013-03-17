@@ -39,8 +39,9 @@ class LineSearchView
 	private $Days;
 	private $EndDate;
 	private $StartDate;
+	private $Flag;
 
-	function __construct($s_prices, $s_aimPlace, $s_days, $s_endDate, $s_startDate, $s_typeid)
+	function __construct($s_prices, $s_aimPlace, $s_days, $s_endDate, $s_startDate, $s_typeid, $s_flag)
 	{
 
 		$this->Price     = $s_prices;
@@ -49,7 +50,7 @@ class LineSearchView
 		$this->TypeID    = $s_typeid;
 		$this->StartDate = $s_startDate;
 		$this->EndDate   = $s_endDate;
-
+		$this->Flag      = $s_flag;
 		//system
 		$this->dsql = $GLOBALS['dsql'];
 		$this->dtp = new DedeTagParse();
@@ -82,17 +83,23 @@ class LineSearchView
 	public function getPriceSql()
 	{
 		switch ($this->Price) {
+			case 100:
+				return "and l.price between 1 and 100";
+			break;
+			case 500:
+				return 'and l.price between 101 and 500';
+			break;
 			case 1000:
-				return "and l.price between 0 and 1000 or l.price=''";
+				return 'and l.price between 501 and 1000';
 			break;
-			case 5000:
-				return 'and l.price between 1000 and 5000';
+			case 3000:
+				return 'and l.price between 1001 and 3000';
 			break;
-			case 10000:
-				return 'and l.price between 5000 and 10000';
+			case 'm3000':
+				return 'and l.price > 3000';
 			break;
-			case 'm10000':
-				return 'and l.price > 10000';
+			default :
+				return '';
 			break;
 		}
 	}
@@ -100,17 +107,20 @@ class LineSearchView
 	public function getDaysSql()
 	{
 		switch ($this->Price) {
-			case 1000:
-				return 'and l.days between 0 and 1000';
+			case 1:
+				return 'and l.days=1';
 				break;
-			case 5000:
-				return 'and l.days between 1000 and 5000';
+			case 3:
+				return 'and l.days between 2 and 3';
 				break;
-			case 10000:
-				return 'and l.days between 5000 and 10000';
+			case 5:
+				return 'and l.days between 4 and 5';
 				break;
-			case 'm10000':
-				return 'and l.days > 10000';
+			case 7:
+				return 'and l.days between 6 and 7';
+				break;
+			case 'm7':
+				return 'and l.days > 7';
 				break;
 			default:
 				return '';
@@ -125,24 +135,41 @@ class LineSearchView
 		} else {
 			return '';
 		}
-
 	}
 
-	public function getAids()
+	public function getFlagSql()
 	{
-		$sql = " godate > '" . date('Y-m-d')."'";
-		if ($this->StartDate) {
-			$sql .= " and godate > '$this->StartDate'";
+		if ($this->Flag) {
+			return " and arc.flag like '%{$this->Flag}%'";
+		} else {
+			return '';
 		}
-		if ($this->EndDate) {
-			$sql .= " and godate < '$this->EndDate'";
-		}
-		$sql = "select distinct aid from `#@__line_time` where $sql";
-		$this->dsql->SetQuery($sql);
-		$this->dsql->Execute("st");
-		$return = array();
-		while($row = $this->dsql->GetArray("st")) {
-			$return[] = $row['aid'];
+	}
+
+	public function getAidsSql()
+	{
+		if ($this->StartDate || $this->EndDate) {
+			$sql = " godate > '" . date('Y-m-d')."'";
+			if ($this->StartDate) {
+				$sql .= " and godate > '$this->StartDate'";
+			}
+			if ($this->EndDate) {
+				$sql .= " and godate < '$this->EndDate'";
+			}
+			$sql = "select distinct aid from `#@__line_time` where $sql";
+			$this->dsql->SetQuery($sql);
+			$this->dsql->Execute("st");
+			$aids = array();
+			while($row = $this->dsql->GetArray("st")) {
+				$aids[] = $row['aid'];
+			}
+			if ($aids) {
+				$return = " and l.aid in (" . implode(',', $aids) . ')';
+			} else {
+				$return = ' and l.aid in (0)';
+			}
+		} else {
+			$return  = '';
 		}
 		return $return;
 	}
@@ -251,36 +278,29 @@ class LineSearchView
 
 	public function  getLimitSql()
 	{
-		return 'Limit '. ($this->PageNo-1)*$this->PageSize .','.$this->PageSize;
+		return ' LIMIT '. ($this->PageNo-1)*$this->PageSize .','.$this->PageSize;
 	}
 
 	public function getSearchList($innerText)
 	{
-
-		$aids = $this->getAids();
-		if (!$aids) {
-			$GLOBALS['search_result'] = 0;
-			return '';
-		} else {
-
-
-
-			$cnt  = "select count(aid) as cnt from `#@__line` l, `#@__archives` arc where l.aid = arc.id and aid in (" . implode(',', $aids) . ')';
-			$cnt .= $this->getAimPlaceSql();
-			$cnt .= $this->getDaysSql();
-			$cnt .= $this->getPriceSql();
-			$cnt .= $this->getTypeSql();
-
-			$rs = $this->dsql->GetOne($cnt);
-			$this->TotalResult = $rs['cnt'];
-
-			$sql = "select l.aid,l.days,l.price,arc.flag, l.memberprice, arc.title from `#@__line` l, `#@__archives` arc where l.aid = arc.id and aid in (" . implode(',', $aids) . ')';
+		$cnt  = "select count(aid) as cnt from `#@__line` l, `#@__archives` arc where l.aid = arc.id ";
+		$cnt .= $this->getAidsSql();
+		$cnt .= $this->getAimPlaceSql();
+		$cnt .= $this->getDaysSql();
+		$cnt .= $this->getPriceSql();
+		$cnt .= $this->getTypeSql();
+		$cnt .= $this->getFlagSql();
+		$rs = $this->dsql->GetOne($cnt);
+		$this->TotalResult = $rs['cnt'];
+		if ($this->TotalResult) {
+			$sql = "select l.aid,l.days,l.price,arc.flag, l.memberprice, arc.title from `#@__line` l, `#@__archives` arc where l.aid = arc.id ";
+			$sql .= $this->getAidsSql();
 			$sql .= $this->getAimPlaceSql();
 			$sql .= $this->getDaysSql();
 			$sql .= $this->getPriceSql();
 			$sql .= $this->getTypeSql();
+			$sql .= $this->getFlagSql();
 			$sql .= $this->getLimitSql();
-
 			$this->dsql->SetQuery($sql);
 			$this->dsql->Execute("al");
 			$this->dtp3->LoadSource($innerText);
@@ -288,44 +308,36 @@ class LineSearchView
 			while($row = $this->dsql->GetArray("al")) {
 				$row['linkurl'] = $GLOBALS['cfg_cmsurl'].'/plus/view.php?aid='.$row['aid'];
 				$tag = '';
-				if (strpos($row['flag'], 'c') !== false) {
+				if (strpos($row['flag'], 's') !== false) {
 					$tag .='<i class="mark mark-hot"></i>';
 				}
-				if (strpos($row['flag'], 'p') !== false) {
+				if (strpos($row['flag'], 'h') !== false) {
 					$tag .='<i class="mark mark-jing"></i>';
 				}
 				if (strpos($row['flag'], 'a') !== false) {
 					$tag .='<i class="mark mark-main"></i>';
 				}
 				$row['tag'] = $tag;
-				if(is_array($this->dtp3->CTags))
-				{
-					foreach($this->dtp3->CTags as $k=>$ctag)
-					{
-						if($ctag->GetName()=='array')
-						{
+				if(is_array($this->dtp3->CTags)) {
+					foreach($this->dtp3->CTags as $k=>$ctag) {
+						if($ctag->GetName()=='array') {
 							//传递整个数组，在runphp模式中有特殊作用
 							$this->dtp3->Assign($k,$row);
-						}
-						else
-						{
-							if(isset($row[$ctag->GetName()]))
-							{
+						} else {
+							if(isset($row[$ctag->GetName()])) {
 								$this->dtp3->Assign($k,$row[$ctag->GetName()]);
-							}
-							else
-							{
+							} else {
 								$this->dtp3->Assign($k,'');
 							}
 						}
 					}
 				}
 				$artlist .= $this->dtp3->GetResult();
-
 			}
 			return $artlist;
+		}  else {
+			return '';
 		}
-
 	}
 
 
@@ -358,40 +370,59 @@ class LineSearchView
 		$purl = $this->GetCurUrl();
 
 
-		$infos = "<td>共找到<b>".$this->TotalResult."</b>条记录/最大显示<b>{$totalpage}</b>页 </td>\r\n";
-		$geturl = "s_aimPlace=".urlencode($this->AimPlace);
-		$hidenform = "<input type='hidden' name='s_aimPlace' value='".rawurldecode($this->AimPlace)."'>\r\n";
-		$geturl .= "&s_prices=".$this->Price;
-		$hidenform .= "<input type='hidden' name='s_prices' value='".$this->Price."'>\r\n";
-		$geturl .= "&s_days=".$this->Days;
-		$hidenform .= "<input type='hidden' name='s_days' value='".$this->Days."'>\r\n";
-		$geturl .= "&typeid=".$this->TypeID;
-		$hidenform .= "<input type='hidden' name='typeid' value='".$this->TypeID."'>\r\n";
-		$geturl .= "&PageNo=".$this->PageNo;
-		$hidenform .= "<input type='hidden' name='PageNo' value='".$this->PageNo."'>\r\n";
-		$geturl .= "&s_startDate=".$this->StartDate."&s_endDate=".$this->EndDate."&";
-		$hidenform .= "<input type='hidden' name='s_startDate' value='".$this->StartDate."'>\r\n";
-		$hidenform .= "<input type='hidden' name='s_endDate' value='".$this->EndDate."'>\r\n";
+		$infos = "<td style='padding:0 10px;'>共找到<b>".$this->TotalResult."</b>条记录/最大显示<b>{$totalpage}</b>页 </td>\r\n";
+		if ($this->AimPlace) {
+			$geturl = "s_aimPlace=".urlencode($this->AimPlace);
+			$hidenform = "<input type='hidden' name='s_aimPlace' value='".rawurldecode($this->AimPlace)."'>\r\n";
+		}
+		if ($this->Price) {
+			$geturl .= "&s_prices=".$this->Price;
+			$hidenform .= "<input type='hidden' name='s_prices' value='".$this->Price."'>\r\n";
+		}
+		if ($this->Days) {
+			$geturl .= "&s_days=".$this->Days;
+			$hidenform .= "<input type='hidden' name='s_days' value='".$this->Days."'>\r\n";
+		}
+		if ($this->TypeID) {
+			$geturl .= "&s_typeid=".$this->TypeID;
+			$hidenform .= "<input type='hidden' name='s_typeid' value='".$this->TypeID."'>\r\n";
+		}
+		// if ($this->PageNo) {
+		// 	$geturl .= "&PageNo=".$this->PageNo;
+		// 	$hidenform .= "<input type='hidden' name='PageNo' value='".$this->PageNo."'>\r\n";
+		// }
+		if ($this->StartDate) {
+			$geturl .= "&s_startDate=".$this->StartDate;
+			$hidenform .= "<input type='hidden' name='s_startDate' value='".$this->StartDate."'>\r\n";
+		}
+		if ($this->EndDate) {
+			$geturl .= "&s_endDate=".$this->EndDate."&";
+			$hidenform .= "<input type='hidden' name='s_endDate' value='".$this->EndDate."'>\r\n";
+		}
+		if ($this->Flag) {
+			$geturl .= "&s_flags=".$this->Flag."&";
+			$hidenform .= "<input type='hidden' name='s_flags' value='".$this->Flag."'>\r\n";
+		}
 		$purl .= "?".$geturl;
 
 		//获得上一页和下一页的链接
 		if($this->PageNo != 1)
 		{
-			$prepage.="<td width='60'><a href='".$purl."PageNo=$prepagenum'>上一页</a></td>\r\n";
-			$indexpage="<td width='40'><a href='".$purl."PageNo=1'>首页</a></td>\r\n";
+			$prepage.="<td width='60'><a href='".$purl."&PageNo=$prepagenum'>上一页</a></td>\r\n";
+			$indexpage="<td width='40'><a href='".$purl."&PageNo=1'>首页</a></td>\r\n";
 		}
 		else
 		{
-			$indexpage="<td width='40'>首页</td>\r\n";
+			$indexpage="<td><span>首页</span>&nbsp;</td>\r\n";
 		}
 		if($this->PageNo!=$totalpage && $totalpage>1)
 		{
-			$nextpage.="<td width='60'><a href='".$purl."PageNo=$nextpagenum'>下一页</a></td>\r\n";
-			$endpage="<td width='40'><a href='".$purl."PageNo=$totalpage'>末页</a></td>\r\n";
+			$nextpage.="<td width='60'><a href='".$purl."&PageNo=$nextpagenum'>下一页</a></td>\r\n";
+			$endpage="<td width='40'><a href='".$purl."&PageNo=$totalpage'>末页</a></td>\r\n";
 		}
 		else
 		{
-			$endpage="<td width='40'>末页</td>\r\n";
+			$endpage="<td><span>末页</span>&nbsp;</td>\r\n";
 		}
 
 		//获得数字链接
@@ -418,11 +449,11 @@ class LineSearchView
 		{
 			if($j == $this->PageNo)
 			{
-				$listdd.= "<td>$j&nbsp;</td>\r\n";
+				$listdd.= "<td><span>$j</span>&nbsp;</td>\r\n";
 			}
 			else
 			{
-				$listdd.="<td><a href='".$purl."PageNo=$j'>[".$j."]</a>&nbsp;</td>\r\n";
+				$listdd.="<td><a href='".$purl."&PageNo=$j'> ".$j." </a>&nbsp;</td>\r\n";
 			}
 		}
 		$plist  =  "<table border='0' cellpadding='0' cellspacing='0'>\r\n";

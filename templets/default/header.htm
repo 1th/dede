@@ -16,7 +16,7 @@
 			<ul>
 				<li id="menu_0"><a href="{dede:global.cfg_basehost/}" title="首页">首页</a></li>
 				{dede:channel type='son' typeid='2' row='8'}
-				<li id="menu_[field:id /]"><a href='[field:typelink/]'>[field:typename/]</a></li>
+				<li id="menu_[field:id /]"><a href='/plus/linesearch.php?s_typeid=[field:id /]'>[field:typename/]</a></li>
 				{/dede:channel}
 			</ul>
 		</div>
@@ -25,7 +25,7 @@
 <div class="layout">
 	<div class="banner">
 		<div id="KinSlideshow" style="visibility: hidden;">
-			{dede:arclist  flag='c' typeid='14' channelid='18' row='10' imgwidth='980' imgheight='280' addfields='linkurl'}
+			{dede:arclist typeid='14' channelid='18' row='10' imgwidth='980' imgheight='280' addfields='linkurl'}
 			<a href="[field:linkurl/]" title="[field:title/]">[field:image/]</a>
 			{/dede:arclist}
 		</div>

@@ -31,10 +31,10 @@
 <div class="col-right">
 	<div layout="first">
 		<div class="infos w340 pull-left">
-			<h3>精品线路</h3>
+			<h3><a href="/plus/linesearch.php?s_flags=h" class="more">更多</a>精品线路</h3>
 			<div class="content">
 				<ul id="jp_line" class="idx-rlist-nonum idx-hasnum">
-					{dede:arclist channelid='17'  titlelen='50' flag='c' row='8' addfields='memberprice, price' }
+					{dede:arclist channelid='17'  titlelen='50' flag='h' row='8' addfields='memberprice, price' }
 					<li>
 						<img class="l-icon" src="templets/default/image/bg_list_[field:global name='autoindex' /].gif"/>
 						<a class="dps" href="[field:arcurl/]"><img src="templets/default/image/bg_logo.jpg" style="width:107px;height:63px;" alt=""></a>
@@ -54,10 +54,10 @@
 			</div>
 		</div>
 		<div class="infos w340 pull-right">
-			<h3>特价线路</h3>
+			<h3><a href="/plus/linesearch.php?s_flags=c" class="more">更多</a>特价线路</h3>
 			<div class="content">
 				<ul id="tj_line" class="idx-rlist-nonum">
-					{dede:arclist channelid='17' titlelen='50' flag='a' row='8' addfields='memberprice, price' }
+					{dede:arclist channelid='17' titlelen='50' flag='c' row='8' addfields='memberprice, price' }
 					<li>
 						<a class="dps" href="[field:arcurl/]"><img class="dps" src="templets/default/image/bg_logo.jpg" style="width:107px;height:63px;" alt=""></a>
 						<a class="dps" href="[field:arcurl/]">[field:title/]</a>
@@ -77,7 +77,7 @@
 	</div>
 	<div class="mt10" layout="second">
 		<div class="infos w340 pull-left">
-			<h3>{dede:type typeid='41'}<a href="[field:typelink /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
+			<h3>{dede:type typeid='41'}<a href="/plus/linesearch.php?s_typeid=[field:id /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
 			<div class="content">
 				<ul class="idx-rlist">
 					{dede:arclist typeid='41' titlelen='50' channelid='17' row='6' addfields='memberprice' }
@@ -87,7 +87,7 @@
 			</div>
 		</div>
 		<div class="infos w340 pull-right">
-			<h3>{dede:type typeid='34'}<a href="[field:typelink /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
+			<h3>{dede:type typeid='34'}<a href="/plus/linesearch.php?s_typeid=[field:id /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
 			<div class="content">
 				<ul class="idx-rlist">
 					{dede:arclist typeid='34' titlelen='50' channelid='17' row='6' addfields='memberprice' }
@@ -100,7 +100,7 @@
 	</div>
 	<div class="mt10"  layout="third">
 		<div class="infos w340 pull-left">
-			<h3>{dede:type typeid='40'}<a href="[field:typelink /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
+			<h3>{dede:type typeid='40'}<a href="/plus/linesearch.php?s_typeid=[field:id /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
 			<div class="content">
 				<ul class="idx-rlist">
 					{dede:arclist typeid='40' titlelen='50' channelid='17' row='6' addfields='memberprice' }
@@ -110,7 +110,7 @@
 			</div>
 		</div>
 		<div class="infos w340 pull-right">
-			<h3>{dede:type typeid='42'}<a href="[field:typelink /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
+			<h3>{dede:type typeid='42'}<a href="/plus/linesearch.php?s_typeid=[field:id /]" class="more">更多</a>[field:typename /]{/dede:type}</h3>
 			<div class="content">
 				<ul class="idx-rlist">
 					{dede:arclist typeid='42' titlelen='50' channelid='17' row='6' addfields='memberprice' }

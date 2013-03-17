@@ -1,6 +1,6 @@
 <div class="search">
 	<div class="block">
-		<form action="{dede:global.cfg_cmsurl/}/plus/lineSearch.php">
+		<form action="{dede:global.cfg_cmsurl/}/plus/lineSearch.php" method="get">
 		<table>
 			<tr>
 				<th>目的地</th>
@@ -11,10 +11,11 @@
 				<td>
 					<select name="s_prices" id="s_price">
 						<option value="0">不限</option>
-						<option value="1000">0-1000</option>
-						<option value="5000">1000-5000</option>
-						<option value="10000">5000-10000</option>
-						<option value="m10000">10000以上</option>
+						<option value="100">100元以下</option>
+						<option value="500">101元-500元</option>
+						<option value="1000">501元-1000元</option>
+						<option value="3000">1001元-3000元</option>
+						<option value="m3000">3000元以上</option>
 					</select>
 				</td>
 			</tr>
@@ -30,11 +31,11 @@
 				<td>
 					<select name="s_days" id="_day">
 						<option value="0">请选择</option>
-						<option value="5">1-5天</option>
-						<option value="10">5-10天</option>
-						<option value="15">10-15天</option>
-						<option value="30">15-30天</option>
-						<option value="m30">30天以上</option>
+						<option value="1">1天</option>
+						<option value="3">2天-3天</option>
+						<option value="5">4天-5天</option>
+						<option value="7">6天-7天</option>
+						<option value="m7">7天以上</option>
 					</select>
 				</td>
 			</tr>

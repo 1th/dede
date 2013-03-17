@@ -56,17 +56,20 @@ $(function(){
 		onSelect:function(dateText,inst){
 			$("#s_startdate").datepicker("option","maxDate",dateText);
 		}
-	})
-})
+	});
+});
 
 function xdChangeAndLocation(param, value, tripFile) {
 	var stringObj = window.location.href;
-	typeof tripFile == 'undefined' ? tripFile = window.location.pathname : tripFile;
+	if (typeof tripFile == 'undefined'){
+		tripFile = window.location.pathname;
+	}
 	var lstr = "&";
 
 	if (stringObj.indexOf(tripFile+'?') == -1) {
 		lstr = "?";
 	}
+	stringObj = stringObj.replace(/PageNo=[0-9]*/, '');
 	var reg = new RegExp(param + "=[0-9a-zA-Z,-]*", "g"); //创建正则RegExp对象
 	var urlGo = "";
 	var ch = stringObj.indexOf(param+'=');
@@ -79,6 +82,9 @@ function xdChangeAndLocation(param, value, tripFile) {
 	window.location = urlGo;
 }
 
+function l(p, v, f){
+	xdChangeAndLocation(p, v, f);
+}
 
 function prebook($date){
 	xdChangeAndLocation('godate', $date);

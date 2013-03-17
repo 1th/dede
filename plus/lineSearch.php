@@ -17,12 +17,12 @@ $pagesize = (isset($pagesize) && is_numeric($pagesize)) ? $pagesize : 10;
 $channeltype = 17;
 
 $s_typeid   = (isset($s_typeid) && is_numeric($s_typeid)) ? $s_typeid : 0;
-$s_prices = isset($s_prices) ? strval($s_prices) : '';
-$s_days   = isset($s_days) ? strval($s_days) : '';
+$s_prices = isset($s_prices) ? strval($s_prices) : '0';
+$s_days   = isset($s_days) ? strval($s_days) : '0';
 $s_aimPlace = isset($s_aimPlace) ? strval($s_aimPlace) : '';
 $s_startDate = isset($s_startDate) ? strval($s_startDate) : '';
 $s_endDate = isset($s_endDate) ? strval($s_endDate) : '';
-
-$sp = new LineSearchView($s_prices, $s_aimPlace, $s_days, $s_endDate, $s_startDate, $s_typeid);
+$s_flags = isset($s_flags) ? strval($s_flags) : '0';
+$sp = new LineSearchView($s_prices, $s_aimPlace, $s_days, $s_endDate, $s_startDate, $s_typeid, $s_flags);
 $sp->Display();
 exit();
