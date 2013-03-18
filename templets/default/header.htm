@@ -15,8 +15,19 @@
 		<div class="menu">
 			<ul>
 				<li id="menu_0"><a href="{dede:global.cfg_basehost/}" title="首页">首页</a></li>
-				{dede:channel type='son' typeid='2' row='8'}
-				<li id="menu_[field:id /]"><a href='/plus/linesearch.php?s_typeid=[field:id /]'>[field:typename/]</a></li>
+				{dede:channel type='son' typeid='2' row='9'}
+				<li id="menu_[field:id /]">
+					<a href='
+					[field:id runphp='yes']
+					if (@me==42 || @me ==34) {
+					    @me='/plus/list.php?tid='.@me;
+					} else {
+						@me='/plus/linesearch.php?s_typeid='.@me;
+					}
+					[/field:id]'>
+					[field:typename/]
+					</a>
+				</li>
 				{/dede:channel}
 			</ul>
 		</div>

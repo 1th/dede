@@ -243,7 +243,12 @@ class LineSearchView
 
 	public function getSearchTypes($innerText)
 	{
-		$sql = "select * from `#@__arctype` where channeltype=17 and ispart=0";
+//		if (in_array($this->TypeID, array(42, 34))) {
+//			$condition = ' and reid='.$this->TypeID;
+//		} else {
+//			$condition = ' and reid=2';
+//		}
+		$sql = "select * from `#@__arctype` where channeltype=17 and ispart=0 {$condition}";
 		$this->dsql->SetQuery($sql);
 		$this->dsql->Execute("st");
 		$this->dtp2->LoadSource($innerText);

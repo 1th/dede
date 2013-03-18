@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="{dede:global.cfg_soft_lang/}">
+	<title>{dede:global.cfg_webname/}</title>
+	<meta name="description" content="{dede:global.cfg_description/}" />
+	<meta name="keywords" content="{dede:global.cfg_keywords/}" />
+	<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/deploy.css" media="all">
+	<script src="{dede:global.cfg_cmsurl/}/include/dedeajax2.js"></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.ui.min.js"></script>
+	<link rel="stylesheet" href="{dede:global.cfg_cmspath/}/static/css/jquery-ui.min.css" media="all" />
+	<script src="{dede:global.cfg_cmspath/}/static/js/jq_plugin/jquery.KinSlideshow.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/swfobject/swfobject.js" ></script>
+	<script>
+		var project = project || {};
+		project.global = project.global || {};
+		project.global.cfg_cmspath = '{dede:global.cfg_cmspath/}';
+		project.typeid = {dede:global.tid/};
+
+	</script>
+</head>
+<body>
+{dede:include filename="header.htm"/}
+
+<div class="layout mt10 cf">
+	<div class="col-left idx-left">
+		{dede:include filename="side_search.htm"/}
+		{dede:include filename="side_weibo.htm"/}
+		{dede:include filename="side_video.htm"/}
+		{dede:include filename="side_article.htm"/}
+	</div>
+	<div class="col-right">
+		<div class="infos list-tour">
+			<h3>地区选择</h3>
+			<div class="content">
+				<div class="filter">
+					<dl>
+						<dt>线路类型 : </dt>
+						<dd>
+							{dede:channel type='son'}
+							<a href="/plus/lineSearch.php?s_typeid=[field:id/]">[field:typename/]</a>
+							{/dede:channel}
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<div class="mt10 cf">
+			{dede:channelartlist}
+			<div class="infos w340 pull-left mt10" {dede:global name=itemindex runphp="yes"} if(@me%2==0){@me='style="margin-left:10px"';}{/dede:global}>
+				<h3><a href="/plus/linesearch.php?s_typeid={dede:field name='typeid'/}" class="more">更多</a>{dede:field name='typename'/}</h3>
+				<div class="content">
+					<ul class="idx-rlist">
+						{dede:arclist titlelen='60' row='6' addfields='memberprice' }
+						<li><span class="date">￥:[field:memberprice/]</span><a href="[field:arcurl /]">[field:title /]</a></li>
+						{/dede:arclist}
+					</ul>
+				</div>
+			</div>
+			{/dede:channelartlist}
+		</div>
+	</div>
+</div>
+{dede:include filename="footer.htm"/}
+</body>
+</html>
