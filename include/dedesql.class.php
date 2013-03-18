@@ -130,7 +130,7 @@ class DedeSql
         //处理错误，成功连接则选择数据库
         if(!$this->linkID)
         {
-            $this->DisplayError("DedeCms错误警告：<font color='red'>连接数据库失败，可能数据库密码不对或数据库服务器出错！</font>");
+            $this->DisplayError("错误警告：<font color='red'>连接数据库失败，可能数据库密码不对或数据库服务器出错！</font>");
             exit();
         }
 		$this->isInit = TRUE;
@@ -546,8 +546,8 @@ EOT;
             @unlink(dirname(__FILE__).'/../data/mysql_error_trace.php');
         }
         $emsg = '';
-        $emsg .= "<div><h3>DedeCMS Error Warning!</h3>\r\n";
-        $emsg .= "<div><a href='http://bbs.dedecms.com' target='_blank' style='color:red'>Technical Support: http://bbs.dedecms.com</a></div>";
+        $emsg .= "<div><h3>Error Warning!</h3>\r\n";
+        $emsg .= "<div><a href='#' target='_blank' style='color:red'>Technical Support: http://bbs.dedecms.com</a></div>";
         $emsg .= "<div style='line-helght:160%;font-size:14px;color:green'>\r\n";
         $emsg .= "<div style='color:blue'><br />Error page: <font color='red'>".$this->GetCurUrl()."</font></div>\r\n";
         $emsg .= "<div>Error infos: {$msg}</div>\r\n";

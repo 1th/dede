@@ -629,8 +629,8 @@ class FTP {
     {
         $errorTrackFile = dirname(__FILE__).'/../data/ftp_error_trace.inc';
         $emsg = '';
-        $emsg .= "<div><h3>DedeCMS Error Warning!</h3>\r\n";
-        $emsg .= "<div><a href='http://bbs.dedecms.com' target='_blank' style='color:red'>Technical Support: http://bbs.dedecms.com</a></div>";
+        $emsg .= "<div><h3>Error Warning!</h3>\r\n";
+        $emsg .= "<div><a href='#' target='_blank' style='color:red'>Technical Support: http://bbs.dedecms.com</a></div>";
         $emsg .= "<div style='line-helght:160%;font-size:14px;color:green'>\r\n";
         $emsg .= "<div style='color:blue'><br />Error page: <font color='red'>".$this->GetCurUrl()."</font></div>\r\n";
         $emsg .= "<div>Error infos: {$msg}</div>\r\n";
