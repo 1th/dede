@@ -64,26 +64,35 @@
 				</table>
 				<h4>联系人信息</h4>
 				<div id="_book_userlogin">
-					<form name="userlogin" action="{dede:global.cfg_memberurl/}/index_do.php" method="POST">
-						<input type="hidden" name="fmdo" value="login" />
-						<input type="hidden" name="dopost" value="login" />
-						<input type="hidden" name="keeptime" value="604800" />
-						<input type="hidden" name="gourl" value="{dede:php}echo $_SERVER['REQUEST_URI'];{/dede:php}" />
-						<table class="table-show" style="width:97%;">
-							<colgroup>
-								<col style="width:25%;">
-								<col style="width:25%;">
-								<col style="width:25%;">
-								<col style="width:25%;">
-							</colgroup>
-							<tr>
-								<td>用户名:<input type="text" name="userid" class="text" style="width:120px"/></td>
-								<td>密码:<input type="password" name="pwd" class="text" style="width:120px"/></td>
-								<td>验证码：<input type="text" name="vdcode" class="text" style="width:40px"/> <img id="vdimgck" align="absmiddle" onClick="this.src=this.src+'?'" style="cursor: pointer; margin-left: 0px;" alt="看不清？点击更换" src="../include/vdimgck.php"/></td>
-								<td><button type="submit" class="btn-1">登录</button></td>
-							</tr>
-						</table>
-					</form>
+					<table class="table-show" style="width:97%;">
+						<colgroup>
+							<col style="width:15%;">
+							<col style="width:35%;">
+							<col style="width:15%;">
+							<col style="width:35%;">
+						</colgroup>
+						<tr>
+							<td class="tab-title"><span class="color_red">*</span>姓名:</td>
+							<td><input type="text" name="truename" value=""/></td>
+							<td class="tab-title"><span class="color_red">*</span>手机号：</td>
+							<td><input type="text" name="telphone" value="" /></td>
+						</tr>
+						<tr>
+							<td class="tab-title">
+								<span class="color_red">*</span>证件号
+							</td>
+							<td>
+								<select name="idtype" id="idtype">
+									<option value="身份证">身份证</option>
+									<option value="军官证">军官证</option>
+									<option value="护照">护照</option>
+								</select>
+								<input type="text" name="idno" value=""/>
+							</td>
+							<td class="tab-title">邮箱:</td>
+							<td><input type="text" name="email" value="" /></td>
+						</tr>
+					</table>
 				</div>
 				<script language="javascript" type="text/javascript">
 					$(function(){
@@ -99,7 +108,7 @@
 						<col style="width:80px;">
 						<col style="width:80px;">
 						<col style="width:50px;">
-						<col></colgroup>
+						<col style="width:510px;"></colgroup>
 					<tr>
 						<th>价格类型</th>
 						<th>门市价</th>
@@ -114,65 +123,86 @@
 							<td>{$v[0]}</td>
 							<td>￥:{$v[1]}</td>
 							<td>￥:{$v[2]}</td>
-							<td>{$v[3]}人</td>
+							<td><input class='spinner' style='width:20px' name='p_{$k}' value='0'  /></td>
 							<td>{$v[4]}</td>
+							<input type='hidden' name='pr_{$k}' value='{$v[2]}'/>
 						</tr>";
 					}
 					{/dede:php}
 				</table>
 			</div>
-			<h3>出发日期</h3>
+			<script>
+				$(function(){
+					$( ".spinner" ).spinner({
+					  	change: function( event, ui ) {}
+					});
+				})
+			</script>
+			<h3>集合地点</h3>
 			<div class="content">
-				<table>
+				{dede:field.gatherplace/}
+			</div>
+			<h3>单房差</h3>
+			<div class="content">
+				<table class="table-show-detail">
+					<colgroup>
+						<col style="width:400px;">
+						<col style="width:80px;">
+						<col style="width:50px;">
+						<col style="width:500px;">
+					</colgroup>
 					<tr>
-						<td>
-							<div id="scheduler_first" class="dhx_cal_container" style='width:330px; height:310px;'>
-								<div class="dhx_cal_navline">
-									<div class="dhx_cal_prev_button">&nbsp;</div>
-									<div class="dhx_cal_next_button">&nbsp;</div>
-									<div class="dhx_cal_today_button"></div>
-									<div class="dhx_cal_date" style="left: 255px;"></div>
-									<div class="dhx_cal_tab" name="month_tab" style="right:76px;display: none;"></div>
-								</div>
-								<div class="dhx_cal_header">
-								</div>
-								<div class="dhx_cal_data">
-								</div>
-							</div>
-						</td>
-						<td>
-							<div id="scheduler_second" class="dhx_cal_container" style='width:330px; height:310px;'>
-								<div class="dhx_cal_navline">
-									<div class="dhx_cal_prev_button">&nbsp;</div>
-									<div class="dhx_cal_next_button">&nbsp;</div>
-									<div class="dhx_cal_today_button"></div>
-									<div class="dhx_cal_date"></div>
-									<div class="dhx_cal_tab" name="month_tab" style="right:76px;display: none;"></div>
-								</div>
-								<div class="dhx_cal_header">
-								</div>
-								<div class="dhx_cal_data">
-								</div>
-							</div>
-						</td>
+						<th>名称</th>
+						<th>单房差</th>
+						<th>类型</th>
+						<th>小计</th>
+					</tr>
+					<tr>
+						<td>预付单房差</td>
+						<td>￥:{dede:field.hotelprice/}</td>
+						<td style="text-align: center;"><input type="radio" name="hotelpricesel" value="1"/></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>尽量安排同性团友拼房，无法安排时再现补给导游</td>
+						<td>&nbsp;</td>
+						<td style="text-align: center;"><input checked="checked" type="radio" name="hotelpricesel" value="0"/></td>
+						<td>&nbsp;</td>
 					</tr>
 				</table>
 			</div>
-			<h3>行程安排</h3>
+			<h3>游客信息</h3>
 			<div class="content">
-				{dede:php} echo $line['journey'];{/dede:php}
+				<table class="table-show-detail">
+					<colgroup>
+						<col style="width:100px;">
+						<col style="width:50px;">
+						<col style="width:400px;">
+						<col style="width:300px;">
+					</colgroup>
+					<tr>
+						<th>姓名</th>
+						<th>性别</th>
+						<th>身份证/军官证</th>
+						<th>手机号</th>
+					</tr>
+					<tr>
+						<td><input type="text" name="name[]"/></td>
+						<td><select name="sex[]" >
+							<option value="男">男</option>
+							<option value="女">女</option>
+						</select></td>
+						<td style="text-align: center;"><input style="width:360px" type="text" name="id[]"/></td>
+						<td><input style="width:200px" type="text" name="tel[]"/></td>
+					</tr>
+				</table>
 			</div>
-			<h3>接待标准</h3>
-			<div class="content">
-				{dede:php} echo $line['jdbz'];{/dede:php}
+			<h3>价格总计</h3>
+			<div class="content cf">
+				<span class="book_price" id="book_price">￥:0.0</span>
 			</div>
-			<h3>特别提醒</h3>
-			<div class="content">
-				{dede:php} echo $line['tbtx'];{/dede:php}
-			</div>
-			<h3>温馨提示</h3>
-			<div class="content">
-				{dede:php} echo $line['wxts'];{/dede:php}
+			<div class="content cf">
+				<p class="book_submit"><button type="submit"> 提交 </button></p>
 			</div>
 		</div>
 	</div>

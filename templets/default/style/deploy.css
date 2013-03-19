@@ -1095,3 +1095,23 @@ body {
 	font-size: 14px;
 	line-height: 2em;
 }
+.content .book_price{
+  float:right;
+  color:#ff6602;
+  font-size: 30px;
+  font-weight: bold;
+  padding-right: 20px;
+}
+.content .book_submit{
+  padding-right: 30px;
+}
+.content .book_submit button{
+  float:right;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+.content .book_submit button:hover{
+  border:1px solid #ff6602;
+  color:#666;
+}
