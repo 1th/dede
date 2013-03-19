@@ -23,15 +23,24 @@
 {dede:include filename="header.htm"/}
 <div class="layout mt10">
 	<div class="col-left idx-left">
-		{dede:include filename="side_search.htm"/}
-		{dede:include filename="side_weibo.htm"/}
-		{dede:include filename="side_article.htm"/}
+		{dede:include filename="side_high.htm"/}
 	</div>
 	<div class="col-right">
-		<div class="show">
+		<div class="show high">
 			<div class="show-block">
 				<h3>高端定制旅游</h3>
-				<div class="content">
+				<div class="content mt10 mb10 ml10 mr10">
+					<ul>
+						<li>1、专门为公务团体、商务团体、家庭及小团体量身定做的极高端私人旅游服务。</li>
+						<li>2、只为您和您的家人、您的团队设计，没有任何其他游客参团，按您的时间出发，想走就走。</li>
+						<li>3、价格昂贵，一般比市面上的常规散拼团价格高50%到100%。</li>
+					</ul>
+				</div>
+				<div class="content mt10 mb10 ml10 mr10">
+					如您喜欢，请填写下列表格，让我们了解您的具体要求，
+					我们会在24小时内为您奉上完美的旅游方案供您选择。
+				</div>
+				<div class="content" style="border:none;">
 				<form action="/plus/diy.php" enctype="multipart/form-data" id="high_sub" onsubmit="return checkForm();" method="post">
 					<input type="hidden" name="action" value="post" />
 					<input type="hidden" name="diyid" value="1" />

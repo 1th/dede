@@ -1088,3 +1088,10 @@ body {
   color: #bc0000;
   font-weight: bold;
 }
+.high .content {
+	border: 1px solid #bad7e7;
+	border-top-width: 2px;
+	padding: 17px 23px;
+	font-size: 14px;
+	line-height: 2em;
+}
