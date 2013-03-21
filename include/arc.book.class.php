@@ -53,8 +53,6 @@ class Book
 		$this->Step = $step;
 		// template
 		$this->Fields = array();
-
-
 		$this->_init();
 	}
 

@@ -123,9 +123,9 @@
 							<td>{$v[0]}</td>
 							<td>￥:{$v[1]}</td>
 							<td>￥:{$v[2]}</td>
-							<td><input class='spinner' style='width:20px' name='p_{$k}' value='0'  /></td>
+							<td><input class='spinner' style='width:20px' name='p_{$k}' price='pr_{$k}' value='{$v[3]}'  /></td>
 							<td>{$v[4]}</td>
-							<input type='hidden' name='pr_{$k}' value='{$v[2]}'/>
+							<input type='hidden' name='pr_{$k}' id='pr_{$k}' value='{$v[2]}'/>
 						</tr>";
 					}
 					{/dede:php}
@@ -134,8 +134,18 @@
 			<script>
 				$(function(){
 					$( ".spinner" ).spinner({
-					  	change: function( event, ui ) {}
+					  	change: function( event, ui ) {
+						    calPrice();
+						    calInfos();
+					    },
+						min:0
 					});
+					$('input[name=hotelpricesel]').change(function(){
+						calPrice();
+						calInfos();
+					});
+					calPrice();
+					calInfos();
 				})
 			</script>
 			<h3>集合地点</h3>
@@ -160,20 +170,21 @@
 					<tr>
 						<td>预付单房差</td>
 						<td>￥:{dede:field.hotelprice/}</td>
+						<input type="hidden" id="hotelprice" name="hotelprice" value="{dede:field.hotelprice/}">
 						<td style="text-align: center;"><input type="radio" name="hotelpricesel" value="1"/></td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td>尽量安排同性团友拼房，无法安排时再现补给导游</td>
 						<td>&nbsp;</td>
-						<td style="text-align: center;"><input checked="checked" type="radio" name="hotelpricesel" value="0"/></td>
+						<td style="text-align: center;"><input id="hotelpricesel" checked="checked" type="radio" name="hotelpricesel" value="0"/></td>
 						<td>&nbsp;</td>
 					</tr>
 				</table>
 			</div>
 			<h3>游客信息</h3>
 			<div class="content">
-				<table class="table-show-detail">
+				<table id="infos" class="table-show-detail">
 					<colgroup>
 						<col style="width:100px;">
 						<col style="width:50px;">
@@ -186,7 +197,7 @@
 						<th>身份证/军官证</th>
 						<th>手机号</th>
 					</tr>
-					<tr>
+					<tr class="info">
 						<td><input type="text" name="name[]"/></td>
 						<td><select name="sex[]" >
 							<option value="男">男</option>

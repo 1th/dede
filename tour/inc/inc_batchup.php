@@ -79,7 +79,7 @@ function DelArc($aid, $type='ON', $onlyfile=FALSE,$recycle=0)
     //$issystem==-1 是单表模型，不使用回收站
     if($issystem == -1) $type = 'OK';
     if(!is_array($arcRow)) return FALSE;
-    
+//	var_dump($cfg_delete, $type);exit();
     /** 删除到回收站 **/
     if($cfg_delete == 'Y' && $type == 'ON')
     {
@@ -98,9 +98,11 @@ function DelArc($aid, $type='ON', $onlyfile=FALSE,$recycle=0)
                 $dsql->ExecuteNoneQuery("Delete From `#@__member_stow` where aid='$aid' ");
                 $dsql->ExecuteNoneQuery("Delete From `#@__taglist` where aid='$aid' ");
                 $dsql->ExecuteNoneQuery("Delete From `#@__erradd` where aid='$aid' ");
+
                 if($addtable != '')
                 {
-                    $dsql->ExecuteNoneQuery("Delete From `$addtable` where aid='$aid'");//2011.7.3 根据论坛反馈，修复删除文章时无法清除附加表中对应的数据 (by：织梦的鱼)
+                    $dsql->ExecuteNoneQuery("Delete From `$addtable` where aid='$aid'");
+                    //2011.7.3 根据论坛反馈，修复删除文章时无法清除附加表中对应的数据 (by：织梦的鱼)
                 }
                 if($issystem != -1)
                 {

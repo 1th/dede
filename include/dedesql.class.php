@@ -477,6 +477,22 @@ class DedeSql
         }
     }
 
+	/**
+	 * 获取所有数组
+	 * @param $sql
+	 * @return array
+	 */
+	function GetAll($sql)
+	{
+		global $dsql;
+		$dsql ->Execute("me",$sql);
+		$array = array();
+		while($row = $dsql->GetArray()){
+			$array[] = $row;
+		}
+		return $array;
+	}
+
     //获取上一步INSERT操作产生的ID
     function GetLastID()
     {

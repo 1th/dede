@@ -29,7 +29,7 @@ $cfg_Cs[30]=array(21,1,1,'5Lya5ZGY56ev5YiG55u45YWz');
 $cfg_Cs[37]=array(2,17,1,'5py656Wo');
 $cfg_Cs[38]=array(2,17,1,'6YWS5bqX6aKE6K6i');
 $cfg_Cs[39]=array(2,17,1,'6auY56uv5a6a5Yi25peF5ri4');
-$cfg_Cs[40]=array(2,17,1,'5Y+w5rm+5peF5ri4');
+$cfg_Cs[80]=array(5,17,1,'6aaZ5riv');
 $cfg_Cs[41]=array(2,17,1,'5bGx5Lic5peF5ri4');
 $cfg_Cs[42]=array(2,17,1,'5Ye65aKD5ri4');
 $cfg_Cs[43]=array(42,17,1,'IOazsOWbveWMheacug==');
@@ -69,4 +69,6 @@ $cfg_Cs[76]=array(34,17,1,'5LqR5Y2X');
 $cfg_Cs[77]=array(34,17,1,'IOilv+iXjw==');
 $cfg_Cs[78]=array(34,17,1,'5rW35Y2X');
 $cfg_Cs[79]=array(2,17,1,'57uT5Ly05ZCM5ri4');
+$cfg_Cs[81]=array(5,17,1,'5r6z6Zeo');
+$cfg_Cs[82]=array(5,17,1,'5Y+w5rm+');
 ?>

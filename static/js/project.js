@@ -122,9 +122,53 @@ function book(aid, godate) {
 //	window.location.href=project.global.cfg_cmspath+'/plus/book.php?aid='+aid+'&godate='+godate;
 }
 
+// book
 function bookLogin(){
 	var taget_obj = document.getElementById('_book_userlogin');
 	myajax = new DedeAjax(taget_obj,false,false,'','','');
 	myajax.SendGet2(project.global.cfg_cmspath + "/member/ajax_loginbook.php");
 	DedeXHTTP = null;
+}
+
+function calPrice(){
+	var price = 0;
+	$('.spinner').each(function(i, ele){
+		var na = $(ele).attr('price');
+		var pr = $('#'+na).val();
+		price += $(ele).val()*pr;
+		parseInt(price);
+	})
+	// 房价差
+	if ($('input[name=hotelpricesel]').val()) {
+		price += parseInt($('#hotelprice').val());
+	}
+	$('#book_price').html('￥:'+price+'元');
+}
+function calInfos(){
+	var info =
+	'<tr class="info">'+
+		'<td><input type="text" name="name[]"/></td>'+
+		'<td><select name="sex[]" >'+
+			'<option value="男">男</option>'+
+			'<option value="女">女</option>'+
+			'</select></td>'+
+		'<td style="text-align: center;"><input style="width:360px" type="text" name="id[]"/></td>'+
+		'<td><input style="width:200px" type="text" name="tel[]"/></td>'+
+	'</tr>';
+	var num = 0;
+	$('.spinner').each(function(i, ele){
+		num += parseInt($(ele).val());
+	})
+	var curnum = $('#infos').find('.info').length;
+	var gutter = num-curnum;
+	if (gutter<0) {
+		for(var i= 0;i<Math.abs(gutter);i++) {
+			$('#infos').find('.info').eq(-1).remove();
+		}
+	}
+	if (gutter>0) {
+		for(var j= 0;j<Math.abs(gutter);j++) {
+			$('#infos').append(info);
+		}
+	}
 }

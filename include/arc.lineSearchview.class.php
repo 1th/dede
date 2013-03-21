@@ -14,6 +14,7 @@ require_once(DEDEINC."/splitword.class.php");
 require_once(DEDEINC."/taglib/hotwords.lib.php");
 require_once(DEDEINC."/taglib/channel.lib.php");
 
+
 @set_time_limit(0);
 @ini_set('memory_limit', '512M');
 
@@ -39,6 +40,7 @@ class LineSearchView
 	private $Days;
 	private $EndDate;
 	private $StartDate;
+	private $TempSource;
 	private $Flag;
 
 	function __construct($s_prices, $s_aimPlace, $s_days, $s_endDate, $s_startDate, $s_typeid, $s_flag)
@@ -66,13 +68,6 @@ class LineSearchView
 		}
 
 
-		$tempfile = $GLOBALS['cfg_basedir'].$GLOBALS['cfg_templets_dir']."/".$GLOBALS['cfg_df_style']."/line_search.htm";
-		if(!file_exists($tempfile)||!is_file($tempfile))
-		{
-			echo "模板文件不存在，无法解析！";
-			exit();
-		}
-		$this->dtp->LoadTemplate($tempfile);
 
 		$this->PageSize = 10;
 		$this->PageNo = isset($GLOBALS['PageNo']) ? $GLOBALS['PageNo'] : 1;
@@ -80,7 +75,22 @@ class LineSearchView
 
 	}
 
-	public function getPriceSql()
+	private function _loadTemplate()
+	{
+		if ($this->TempSource == '') {
+			$tempfile = $GLOBALS['cfg_basedir'] . $GLOBALS['cfg_templets_dir'] . "/" . $GLOBALS['cfg_df_style'] . "/line_search.htm";
+			if (!file_exists($tempfile) || !is_file($tempfile)) {
+				echo "模板文件不存在，无法解析文档！";
+				exit();
+			}
+			$this->dtp->LoadTemplate($tempfile);
+			$this->TempSource = $this->dtp->SourceString;
+		} else {
+			$this->dtp->LoadSource($this->TempSource);
+		}
+	}
+
+	private function _getPriceSql()
 	{
 		switch ($this->Price) {
 			case 100:
@@ -104,7 +114,7 @@ class LineSearchView
 		}
 	}
 
-	public function getDaysSql()
+	private  function _getDaysSql()
 	{
 		switch ($this->Price) {
 			case 1:
@@ -128,7 +138,7 @@ class LineSearchView
 		}
 	}
 
-	public function getAimPlaceSql()
+	private function _getAimPlaceSql()
 	{
 		if ($this->AimPlace) {
 			return " and l.aimplace = '{$this->AimPlace}'";
@@ -137,7 +147,7 @@ class LineSearchView
 		}
 	}
 
-	public function getFlagSql()
+	private  function _getFlagSql()
 	{
 		if ($this->Flag) {
 			return " and arc.flag like '%{$this->Flag}%'";
@@ -146,7 +156,7 @@ class LineSearchView
 		}
 	}
 
-	public function getAidsSql()
+	private function _getAidsSql()
 	{
 		if ($this->StartDate || $this->EndDate) {
 			$sql = " godate > '" . date('Y-m-d')."'";
@@ -174,21 +184,19 @@ class LineSearchView
 		return $return;
 	}
 
-	public function getTypeSql(){
+	private  function _getTypeSql(){
 		if ($this->TypeID) {
 			return " and l.typeid = $this->TypeID";
 		} else {
 			return '';
 		}
 	}
-	//关闭相关资源
-	function Close()
-	{
-	}
 
 
 	function Display()
 	{
+		$this->_loadTemplate();
+		$this->_parseTempletsFirst();
 		foreach($this->dtp->CTags as $tagid=>$ctag)
 		{
 			$tagname = $ctag->GetName();
@@ -241,19 +249,35 @@ class LineSearchView
 		$this->dtp->Display();
 	}
 
+	/**
+	 *  解析模板，对固定的标记进行初始给值
+	 * @access    public
+	 * @return    void
+	 */
+	private function _parseTempletsFirst()
+	{
+		MakeOneTag($this->dtp, $this, 'N');
+	}
+
 	public function getSearchTypes($innerText)
 	{
-//		if (in_array($this->TypeID, array(42, 34))) {
-//			$condition = ' and reid='.$this->TypeID;
-//		} else {
-//			$condition = ' and reid=2';
-//		}
-		$sql = "select * from `#@__arctype` where channeltype=17 and ispart=0 {$condition}";
-		$this->dsql->SetQuery($sql);
-		$this->dsql->Execute("st");
+		$typesql = "select * from `#@__arctype` where  id={$this->TypeID}";
+		$type = $this->dsql->GetOne($typesql);
+
+		// 获取子类
+		if ($type['reid'] == 2) {
+			$typesql = "select * from `#@__arctype` where  reid={$type['id']}";
+			$types = $this->dsql->GetAll($typesql);
+		}
+		// 获取同级别类
+		if ($type['reid'] != 2) {
+			$typesql = "select * from `#@__arctype` where  reid={$type['reid']}";
+			$types = $this->dsql->GetAll($typesql);
+		}
+
 		$this->dtp2->LoadSource($innerText);
 		$return = '';
-		while($row = $this->dsql->GetArray("st")) {
+		foreach($types as $k => $row) {
 			if(is_array($this->dtp2->CTags))
 			{
 				foreach($this->dtp2->CTags as $k=>$ctag)
@@ -281,7 +305,7 @@ class LineSearchView
 		return $return;
 	}
 
-	public function  getLimitSql()
+	private  function  _getLimitSql()
 	{
 		return ' LIMIT '. ($this->PageNo-1)*$this->PageSize .','.$this->PageSize;
 	}
@@ -289,23 +313,23 @@ class LineSearchView
 	public function getSearchList($innerText)
 	{
 		$cnt  = "select count(aid) as cnt from `#@__line` l, `#@__archives` arc where l.aid = arc.id ";
-		$cnt .= $this->getAidsSql();
-		$cnt .= $this->getAimPlaceSql();
-		$cnt .= $this->getDaysSql();
-		$cnt .= $this->getPriceSql();
-		$cnt .= $this->getTypeSql();
-		$cnt .= $this->getFlagSql();
+		$cnt .= $this->_getAidsSql();
+		$cnt .= $this->_getAimPlaceSql();
+		$cnt .= $this->_getDaysSql();
+		$cnt .= $this->_getPriceSql();
+		$cnt .= $this->_getTypeSql();
+		$cnt .= $this->_getFlagSql();
 		$rs = $this->dsql->GetOne($cnt);
 		$this->TotalResult = $rs['cnt'];
 		if ($this->TotalResult) {
 			$sql = "select l.aid,l.days,l.price,arc.flag, l.memberprice, arc.title from `#@__line` l, `#@__archives` arc where l.aid = arc.id ";
-			$sql .= $this->getAidsSql();
-			$sql .= $this->getAimPlaceSql();
-			$sql .= $this->getDaysSql();
-			$sql .= $this->getPriceSql();
-			$sql .= $this->getTypeSql();
-			$sql .= $this->getFlagSql();
-			$sql .= $this->getLimitSql();
+			$sql .= $this->_getAidsSql();
+			$sql .= $this->_getAimPlaceSql();
+			$sql .= $this->_getDaysSql();
+			$sql .= $this->_getPriceSql();
+			$sql .= $this->_getTypeSql();
+			$sql .= $this->_getFlagSql();
+			$sql .= $this->_getLimitSql();
 			$this->dsql->SetQuery($sql);
 			$this->dsql->Execute("al");
 			$this->dtp3->LoadSource($innerText);

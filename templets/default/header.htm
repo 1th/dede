@@ -17,13 +17,7 @@
 				<li id="menu_0"><a href="{dede:global.cfg_basehost/}" title="首页">首页</a></li>
 				{dede:channel type='son' typeid='2' row='9'}
 				<li id="menu_[field:id /]">
-					<a href='
-					[field:typelink runphp=yes]
-						$id =  substr( @me , strpos( @me, '=')+1);
-						if ($id == 5 || $id == 33 || $id == 79) {
-							@me = '/plus/lineSearch.php?s_typeid='.$id;
-						}
-					[/field:typelink]'>
+					<a href='[field:typelink/]'>
 					[field:typename/]
 					</a>
 				</li>
