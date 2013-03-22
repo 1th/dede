@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $cfg_soft_lang; ?>"/>
+	<title>订单详情浏览 - 会员中心 - <?php echo $cfg_webname; ?></title>
+	<link href="templets/style/base.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="templets/js/j.js"></script>
+	<script type="text/javascript" src="templets/js/load.js"></script>
+	<script type="text/javascript" src="templets/js/table_function.js"></script>
+	<script type="text/javascript" src="templets/js/leftmenu.js"></script>
+</head>
+<body>
+<div id="main">
+	<?php include(DEDEMEMBER."/templets/head.htm"); ?>
+	<div id="content" class="w960 clearfix">
+		<div id="mcpmain" style="width:95%;">
+			<div id="appTab">
+				<ul>
+					<li class="thisTab"><a href="operation.php">订单详情</a></li>
+					<!--<li><a href="shops_orders.php">商品定单</a></li>-->
+				</ul>
+			</div>
+			<div id="mainCp">
+				<!--内容消息提示 -->
+				<h3 class="meTitle">会员定单</h3>
+				<table class="table-show-detail" width="100%" border="0" cellpadding="0" cellspacing="0" class="list">
+					<form name='form1' action="pay.php" method="post">
+						<tr>
+							<th>订单号</th>
+							<td> <?php echo $line['buyid'] ?></td>
+						</tr>
+						<tr>
+							<th>线路名称</th>
+							<td><?php echo $line['title'] ?></td>
+						</tr>
+						<tr>
+							<th>联系人姓名</th>
+							<td><?php echo $line['truename'] ?></td>
+						</tr>
+						<tr>
+							<th>证件:</th>
+							<td><?php echo $line['idtype'] ?> : <?php echo $line['identity'] ?></td>
+						</tr>
+						<tr>
+							<th>总价格:</th>
+							<td>
+								<span style="font-size: 16px;font-weight: bold;color: #000;padding-right: 50px;">￥(人民币):<?php echo $line['price']; ?></span>
+								 <?php if(!$line['ischeck']) { ?>
+								<a href="http://www.alipay.com"><img src="templets/images/pay/alipay.jpg" alt=""></a>
+								 <?php  } else { ?>
+									echo "已支付";
+								 <?php } ?>
+							</td>
+						</tr>
+						<tr>
+							<th>详细价格:</th>
+							<td>
+								<?php $desc = json_decode($line['descs']); ?>
+								<table class="table-show-detail">
+									<colgroup>
+										<col style="width:150px;">
+										<col style="width:80px;">
+										<col style="width:80px;">
+										<col style="width:50px;">
+										<col style="width:200px;">
+										<col style="width:50px;">
+										<col>
+									</colgroup>
+									<tbody><tr>
+										<th>价格类型</th>
+										<th>门市价</th>
+										<th>会员价</th>
+										<th>人数</th>
+										<th>描述</th>
+										<th>小计</th>
+									</tr>
+									{dede:php}
+									foreach($desc as $k => $v) {
+										echo "<tr>
+										<th>$v[0]</th>
+										<th>￥:$v[1]</th>
+										<th>￥:{$v[2]}</th>
+										<th>{$v[3]}人</th>
+										<th>{$v[4]}</th>
+										<th>{$v[5]}</th>
+									</tr>";
+									}
+									{/dede:php}
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<th>单房价差:</th>
+							<td><?php if ( $line['hoteltype']) { echo $line['hotelfee'].'元';} else { echo '无';}?></td>
+						</tr>
+
+						<tr>
+							<th>下单时间</th>
+							<td><?php echo date('Y-m-d H:i:s', $line['addtime']);?></td>
+						</tr>
+						<tr>
+							<th>用户信息</th>
+							<td>
+								<?php $userinfo = json_decode($line['userinfo']); ?>
+								<table class="table-show-detail" style="font-weight: normal">
+									<colgroup>
+										<col style="width:180px;">
+										<col style="width:40px;">
+										<col style="width:280px;">
+										<col style="width:200px;">
+										<col>
+									</colgroup>
+									<tbody><tr>
+										<th>姓名</th>
+										<th>性别</th>
+										<th>证件号</th>
+										<th>手机号</th>
+									</tr>
+									{dede:php}
+									foreach($userinfo as $k => $v) {
+									echo "<tr>
+										<th>{$v->name}</th>
+										<th>{$v->sex}</th>
+										<th>{$v->id}</th>
+										<th>{$v->tel}</th>
+									</tr>";
+									}
+									{/dede:php}
+									</tbody>
+								</table>
+
+							</td>
+						</tr>
+					</form>
+				</table>
+			</div>
+			<!--主操作区域 -->
+		</div>
+	</div>
+	<?php include(DEDEMEMBER."/templets/foot.htm"); ?>
+</div>
+</body>
+</html>

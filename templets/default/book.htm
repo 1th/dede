@@ -38,6 +38,7 @@
 	</div>
 	<div class="show">
 		<div class="show-block">
+			<form action="/plus/order.php" method="post" onsubmit="return checkBook();">
 			<h3>线路预订 </h3>
 			<div class="content">
 				<h4>线路信息</h4>
@@ -56,6 +57,8 @@
 						<th>返程日期</th>
 					</tr>
 					<tr>
+						<input type="hidden" name="aid" value="{dede:global.aid/}">
+						<input type="hidden" name="godate" value="{dede:field.startDate/}">
 						<td><span style="font-weight: bold;color: #ff6600">{dede:field.title/} </span></td>
 						<td>{dede:field.startDate/}</td>
 						<td>{dede:field.days/}</td>
@@ -73,9 +76,9 @@
 						</colgroup>
 						<tr>
 							<td class="tab-title"><span class="color_red">*</span>姓名:</td>
-							<td><input type="text" name="truename" value=""/></td>
+							<td><input type="text" id="truename" name="truename" value=""/></td>
 							<td class="tab-title"><span class="color_red">*</span>手机号：</td>
-							<td><input type="text" name="telphone" value="" /></td>
+							<td><input type="text" id="telphone" name="telphone" value="" /></td>
 						</tr>
 						<tr>
 							<td class="tab-title">
@@ -87,10 +90,10 @@
 									<option value="军官证">军官证</option>
 									<option value="护照">护照</option>
 								</select>
-								<input type="text" name="idno" value=""/>
+								<input type="text" id="idno" name="idno" value=""/>
 							</td>
 							<td class="tab-title">邮箱:</td>
-							<td><input type="text" name="email" value="" /></td>
+							<td><input type="text" id="email" name="email" value="" /></td>
 						</tr>
 					</table>
 				</div>
@@ -123,7 +126,7 @@
 							<td>{$v[0]}</td>
 							<td>￥:{$v[1]}</td>
 							<td>￥:{$v[2]}</td>
-							<td><input class='spinner' style='width:20px' name='p_{$k}' price='pr_{$k}' value='{$v[3]}'  /></td>
+							<td><input class='spinner' id='p_{$k}' style='width:20px' name='p_{$k}' price='pr_{$k}' value='{$v[3]}'  /></td>
 							<td>{$v[4]}</td>
 							<input type='hidden' name='pr_{$k}' id='pr_{$k}' value='{$v[2]}'/>
 						</tr>";
@@ -151,6 +154,7 @@
 			<h3>集合地点</h3>
 			<div class="content">
 				{dede:field.gatherplace/}
+				<input type="hidden" name="gatherplace" value="{dede:field.gatherplace/}">
 			</div>
 			<h3>单房差</h3>
 			<div class="content">
@@ -215,6 +219,7 @@
 			<div class="content cf">
 				<p class="book_submit"><button type="submit"> 提交 </button></p>
 			</div>
+			</form>
 		</div>
 	</div>
 </div>

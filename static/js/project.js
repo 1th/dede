@@ -172,3 +172,28 @@ function calInfos(){
 		}
 	}
 }
+
+
+function checkBook(){
+	var f;
+	f = $('#truename').val();
+	if (!f) {
+		alert('请填写联系人姓名!');
+		return false;
+	}
+	f = $('#telphone').val();
+	if (!f) {
+		alert('请填写联系电话!');
+		return false;
+	}
+	f = $('#idno').val();
+	if (!f) {
+		alert('请填写联系人身份信息!');
+		return false;
+	}
+	if (!$('#p_0').val()){
+		alert('请填写报名人数!');
+		return false;
+	}
+	return true;
+}

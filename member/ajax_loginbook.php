@@ -19,9 +19,9 @@ if($myurl == '') exit('');
 	</colgroup>
 	<tr>
 		<td class="tab-title"><span class="color_red">*</span>姓名:</td>
-		<td><input type="text" name="truename" value="<?php echo $cfg_ml->M_EXT['uname']; ?>"/></td>
+		<td><input type="text" name="truename" id="truename" value="<?php echo $cfg_ml->M_EXT['uname']; ?>"/></td>
 		<td class="tab-title"><span class="color_red">*</span>手机号：</td>
-		<td><input type="text" name="telphone" value="<?php echo $cfg_ml->M_LoginID; ?>" /></td>
+		<td><input type="text" name="telphone" id="telphone" value="<?php echo $cfg_ml->M_LoginID; ?>" /></td>
 	</tr>
 	<tr>
 		<td class="tab-title">
@@ -33,9 +33,9 @@ if($myurl == '') exit('');
 				<option value="军官证" <?php if ($cfg_ml->M_EXT['idtype'] =='军官证') {echo 'selected="selected"';} ?>>军官证</option>
 				<option value="护照"   <?php if ($cfg_ml->M_EXT['idtype'] =='护照') {echo 'selected="selected"';} ?>>护照</option>
 			</select>
-			<input type="text" name="idno" value="<?php echo $cfg_ml->M_EXT['idno']; ?>"/>
+			<input type="text" name="idno" id="idno" value="<?php echo $cfg_ml->M_EXT['idno']; ?>"/>
 		</td>
 		<td class="tab-title">邮箱:</td>
-		<td><input type="text" name="email" value="<?php echo $cfg_ml->M_EMAIL; ?>" /></td>
+		<td><input type="text" name="email" id="email" value="<?php echo $cfg_ml->M_EMAIL; ?>" /></td>
 	</tr>
 </table>

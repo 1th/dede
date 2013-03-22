@@ -101,7 +101,7 @@ class Book
 			ShowMsg("你的来源不正确, 请重新填写!", "-1");
 		}
 		return preg_split('/\s+/', trim($prices['prices']));
-		;
+
 	}
 
 

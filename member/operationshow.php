@@ -9,12 +9,14 @@
  * @link           http://www.dedecms.com
  */
 require_once(dirname(__FILE__)."/config.php");
-require_once(DEDEINC."/datalistcp.class.php");
+require_once(DEDEINC."/operationshow.class.php");
 CheckRank(0,0);
 $menutype = 'mydede';
 $menutype_son = 'op';
 setcookie("ENV_GOBACK_URL",GetCurUrl(),time()+3600,"/");
-if(!isset($dopost)) $dopost = '';
+if (!$orderid) {
+	ShowMsg("订单信息为空, 请重新打开", '-1');exit();
+}
 
 /**
  *  获取状态
@@ -28,20 +30,11 @@ function GetSta($sta){
     else return '已完成';
 }
 
-if($dopost=='')
-{
-    $sql = "SELECT * FROM `#@__line_order` WHERE userid='".$cfg_ml->M_ID."' ORDER BY aid DESC";
-    $dlist = new DataListCP();
-    $dlist->pageSize = 20;
-    $dlist->SetTemplate(DEDEMEMBER."/templets/operation.htm");    
-    $dlist->SetSource($sql);
-    $dlist->Display(); 
+$sql = "SELECT * FROM `#@__line_order` WHERE buyid='".$orderid."'";
+$dlist = new operationshow($orderid);
+$line = $dlist->getLine();
+if (!$line) {
+	ShowMsg("订单信息为空, 请重新打开", '-1');exit();
 }
-else if($dopost=='del')
-{
-    $ids = preg_replace("#[^0-9,]#", "", $ids);
-    $query = "DELETE FROM `#@__line_order` WHERE id IN($ids) and ischeck = 0";
-    $dsql->ExecuteNoneQuery($query);
-    ShowMsg("成功删除指定的交易记录, 已付款的交易不会被删除!","operation.php");
-    exit();
-}
+$dlist->SetTemplate(DEDEMEMBER."/templets/operation_show.htm");
+$dlist->Display();
