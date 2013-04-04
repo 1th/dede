@@ -139,7 +139,7 @@ function calPrice(){
 		parseInt(price);
 	})
 	// 房价差
-	if ($('input[name=hotelpricesel]').val()) {
+	if ($('input[name=hotelpricesel]:checked').val() != 0) {
 		price += parseInt($('#hotelprice').val());
 	}
 	$('#book_price').html('￥:'+price+'元');
