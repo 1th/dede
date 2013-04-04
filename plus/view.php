@@ -39,11 +39,11 @@ $needRank = $arc->Fields['arcrank'];
 require_once(DEDEINC.'/memberlogin.class.php');
 $cfg_ml = new MemberLogin();
 
-if($needRank < 0 && $arc->Fields['mid'] != $cfg_ml->M_ID)
-{
-    ShowMsg('文章尚未审核,非作者本人无权查看!', 'javascript:;');
-    exit();
-}
+//if($needRank < 0 && $arc->Fields['mid'] != $cfg_ml->M_ID)
+//{
+//    ShowMsg('文章尚未审核,非作者本人无权查看!', 'javascript:;');
+//    exit();
+//}
 
 //设置了权限限制的文章
 //arctitle msgtitle moremsg

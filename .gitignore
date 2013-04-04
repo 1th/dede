@@ -6,3 +6,4 @@
 /data/cache/*.inc
 /data/sessions/*
 /data/payment/*.php
+/data/*.php
