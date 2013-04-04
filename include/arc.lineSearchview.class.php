@@ -141,7 +141,7 @@ class LineSearchView
 	private function _getAimPlaceSql()
 	{
 		if ($this->AimPlace) {
-			return " and l.aimplace = '{$this->AimPlace}'";
+			return " and l.aimplace like '%{$this->AimPlace}%'";
 		} else {
 			return '';
 		}
