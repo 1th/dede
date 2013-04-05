@@ -21,10 +21,10 @@ if(isset($dopost))
         $wh = '';
         foreach($nids as $n)
         {
-            if($wh=='') $wh = " WHERE oid='$n' ";
-            else $wh .= " OR oid='$n' ";
+            if($wh=='') $wh = " WHERE id='$n' ";
+            else $wh .= " OR id='$n' ";
         }
-        $sql="UPDATE #@__shops_orders SET `state`='1' $wh ";
+        $sql="UPDATE #@__line_order SET `ischeck`='1' $wh ";
         $dsql->ExecuteNoneQuery($sql);
     }
     else if ($dopost == 'push')
@@ -33,10 +33,10 @@ if(isset($dopost))
         $wh = '';
         foreach($nids as $n)
         {
-            if($wh=='') $wh = " WHERE oid='$n' ";
-            else $wh .= " OR oid='$n' ";
+            if($wh=='') $wh = " WHERE id='$n' ";
+            else $wh .= " OR id='$n' ";
         }
-        $sql="UPDATE #@__shops_orders SET `state`='2' $wh ";
+        $sql="UPDATE #@__line_order SET `ischeck`='2' $wh ";
         $dsql->ExecuteNoneQuery($sql);
     }
     else if ($dopost == 'ok')
@@ -45,10 +45,10 @@ if(isset($dopost))
         $wh = '';
         foreach($nids as $n)
         {
-            if($wh=='') $wh = " WHERE oid='$n' ";
-            else $wh .= " OR oid='$n' ";
+            if($wh=='') $wh = " WHERE id='$n' ";
+            else $wh .= " OR id='$n' ";
         }
-        $sql="UPDATE #@__shops_orders SET `state`='4' $wh ";
+        $sql="UPDATE #@__line_order SET `ischeck`='4' $wh ";
         $dsql->ExecuteNoneQuery($sql);
     }
     else if ($dopost == 'delete')
@@ -56,12 +56,12 @@ if(isset($dopost))
         $nids = explode('`', $nid);
         foreach($nids as $n)
         {
-            $query = "DELETE FROM `#@__shops_products` WHERE oid='$n'";
-            $query2 = "DELETE FROM `#@__shops_orders` WHERE oid='$n'";
-            $query3 = "DELETE FROM `#@__shops_userinfo` WHERE oid='$n'";
-            $dsql->ExecuteNoneQuery($query);
+//            $query = "DELETE FROM `#@__shops_products` WHERE oid='$n'";
+            $query2 = "DELETE FROM `#@__line_order` WHERE id='$n'";
+//            $query3 = "DELETE FROM `#@__shops_userinfo` WHERE oid='$n'";
+//            $dsql->ExecuteNoneQuery($query);
             $dsql->ExecuteNoneQuery($query2);
-            $dsql->ExecuteNoneQuery($query3);
+//            $dsql->ExecuteNoneQuery($query3);
         }
         ShowMsg("成功删除指定的订单记录！",$ENV_GOBACK_URL);
         exit();
@@ -81,17 +81,17 @@ setcookie("ENV_GOBACK_URL",$dedeNowurl,time()+3600,"/");
 if(isset($buyid))
 {
     $buyid  = preg_replace("#[^-0-9A-Z]#", "", $buyid);
-    $addsql = "WHERE s.oid='".$buyid."'";
+    $addsql = "WHERE s.buyid='".$buyid."'";
 }
 if(isset($sta))
 {
-    $addsql = "WHERE s.`state`='$sta'";
+    $addsql = "WHERE s.`ischeck`='$sta'";
 }
-$sql = "SELECT s.`oid`,s.`cartcount`,s.`price`,s.`state`,s.`stime`,s.priceCount,s.dprice,s.paytype,u.`consignee`,u.`tel`,s.`userid` FROM #@__shops_orders AS s LEFT JOIN #@__shops_userinfo AS u ON s.oid=u.oid $addsql ORDER BY `stime` DESC";
+$sql = "SELECT s.* FROM #@__line_order AS s LEFT JOIN #@__member AS u ON s.userid=u.mid $addsql ORDER BY s.buyid DESC";
 
 $dlist = new DataListCP();
-$dlist->SetParameter("oid",$oid);
-if(isset($sta)) $dlist->SetParameter("sta",$sta);
+$dlist->SetParameter("buyid",$oid);
+if(isset($sta)) $dlist->SetParameter("ischeck",$sta);
 $tplfile = DEDEADMIN."/templets/shops_operations.htm";
 
 //这两句的顺序不能更换

@@ -110,12 +110,8 @@ function OpenMyWinN(surl,w,h){
     <td width="8%" align="center">选择</td>
     <td width="25%" align="center">订单号</td>
     <td align="center">收货人</td>
-    <td align="center">数量</td>
     <td width="22%" align="center">生成日期</td>
     <td align="center">订单价</td>
-    <td align="center">配送费</td>
-    <td align="center">总计</td>
-    <td align="center">支付方式</td>
     <td align="center">状态</td>
     <td align="center">用户</td>
   </tr>
@@ -123,32 +119,19 @@ function OpenMyWinN(surl,w,h){
 {dede:datalist}
     <tr bgcolor="#FFFFFF" height="26" align="center" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';">
       <td align="center">
-<input type='checkbox' name='aids' value='<?php echo $fields['oid']?>' class='np'></td>
+<input type='checkbox' name='aids' value='<?php echo $fields['buyid']?>' class='np'></td>
       <td align="center">
-        <?php echo $fields['oid'];?>
+	      <a href="javascript:OpenMyWinN('shops_operations_userinfo.php?oid=<?php echo $fields['buyid']?>',500,350);" > <?php echo $fields['buyid'];?></a>
       </td>
       <td align="center">
-        <a href="javascript:OpenMyWinN('shops_operations_userinfo.php?oid=<?php echo $fields['oid']?>',500,350);" ><?php echo $fields['consignee']?></a>
+        <?php echo $fields['truename']?>
       </td>
       <td align="center">
-        <?php echo $fields['cartcount']?>
-        <a href="javascript:OpenMyWinN('shops_operations_cart.php?oid=<?php echo $fields['oid']?>',680,450);" >[详情]</a>
-      </td>
-      <td align="center">
-        <?php echo GetDateTimeMk($fields['stime'])?>
-        (<font color="#FF0000">{dede:field.stime function="floorTime(time()-@me,@me)"/}</font>)
+        <?php echo GetDateTimeMk($fields['addtime'])?>
+        (<font color="#FF0000">{dede:field.addtime function="floorTime(time()-@me,@me)"/}</font>)
       </td>
       <td align="center">
         <?php echo $fields['price']?>
-      </td>
-      <td align="center">
-        <?php echo $fields['dprice']?>
-      </td>
-      <td align="center">
-        <?php echo $fields['priceCount']?>
-      </td>
-      <td align="center">
-        <?php echo GetsType($fields['paytype'])?>
       </td>
       <td align="center">
         <?php echo GetSta($fields['state'])?>
