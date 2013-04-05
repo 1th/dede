@@ -2823,7 +2823,7 @@ scheduler1.init_templates=function(){
 			var day= ev.start_date.getDate();
 			day=day < 10 ? "0" + day : day;
 			var ss=s[0];
-			s='<i onclick=prebook("'+ev.start_date.getFullYear()+'-'+month+'-'+day+'") class="calendar_bg_ffffcc">￥'+s[0]+'</i>';
+			s='<i onclick=prebook("'+ev.start_date.getFullYear()+'-'+month+'-'+day+'") class="calendar_bg_ffffcc"><span style="font-size:9px;">￥</span>'+s[0]+'</i>';
 
 			var ytime=ev.start_date.getTime();
 			var now=new Date();
