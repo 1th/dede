@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="{dede:global.cfg_soft_lang/}">
+	<title>{dede:global.cfg_webname/}</title>
+	<meta name="description" content="{dede:global.cfg_description/}" />
+	<meta name="keywords" content="{dede:global.cfg_keywords/}" />
+	<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/deploy.css" media="all">
+	<script src="{dede:global.cfg_cmsurl/}/include/dedeajax2.js"></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.ui.min.js"></script>
+	<link rel="stylesheet" href="{dede:global.cfg_cmspath/}/static/css/jquery-ui.min.css" media="all" />
+	<script src="{dede:global.cfg_cmspath/}/static/js/jq_plugin/jquery.KinSlideshow.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/swfobject/swfobject.js" ></script>
+	<script>
+		var project = project || {};
+		project.global = project.global || {};
+		project.global.cfg_cmspath = '{dede:global.cfg_cmspath/}';
+		project.search = {};
+		project.search.s_typeid = {dede:global.s_typeid/};
+		project.search.s_over = '{dede:global.s_over/}';
+		project.search.s_sex = '{dede:global.s_sex/}';
+		project.search.s_im = '{dede:global.s_im/}';
+	</script>
+	<style type="text/css">
+		.list-companion{
+			padding-top: 10px;
+			line-height: 30px;
+		}
+		.list-companion li{
+			padding-left:20px;
+		}
+		.list-companion a{
+			color: #666;
+		}
+		.list-companion a:hover{
+			color:#0000ff;
+		}
+	</style>
+</head>
+<body>
+{dede:include filename="header.htm"/}
+<div class="layout mt10">
+	<div class="col-left idx-left">
+		<!--{dede:include filename="side_search.htm"/}-->
+
+		{dede:include filename="side_video.htm"/}
+		{dede:include filename="side_weibo.htm"/}
+		{dede:include filename="side_article.htm"/}
+	</div>
+	<div class="col-right">
+		<div class="infos list-tour">
+			<h3>线路筛选</h3>
+			<div class="content">
+				<form action="{dede:global.cfg_cmsurl/}/plus/linesearch.php" method="get">
+				<div class="filter">
+					<dl>
+						<dt>出发地点 : </dt>
+						<dd>
+							{dede:types}
+							<a  id="s_typeid_[field:id/]" href="javascript:l('s_typeid', [field:id/]);">[field:typename/]</a>
+							{/dede:types}
+						</dd>
+						<input type="hidden" name="s_typeid" value="{dede:global.s_typeid/}"/>
+					</dl>
+					<dl>
+						<dt>帖子类型 : </dt>
+						<dd>
+							<a id="s_im_-" href="javascript:l('s_im', '-');">全部</a>
+							<a id="s_im_0" href="javascript:l('s_im', 0);">立即结伴帖</a>
+							<a id="s_im_1" href="javascript:l('s_im', 1);">期望结伴帖</a>
+						</dd>
+						<input type="hidden" name="s_im" value="{dede:global.s_im/}"/>
+					</dl>
+					<dl>
+						<dt>帖子状态 : </dt>
+						<dd>
+							<a id="s_over_-" href="javascript:l('s_im', '-');">全部</a>
+							<a id="s_over_0" href="javascript:l('s_im', 0);">未完成结伴帖</a>
+							<a id="s_over_1" href="javascript:l('s_im', 1);">已完成结伴帖</a>
+						</dd>
+						<input type="hidden" name="s_over" value="{dede:global.s_over/}"/>
+					</dl>
+					<dl>
+						<dt>寻伴性别 : </dt>
+						<dd>
+							<a id="s_sex_-" href="javascript:l('s_sex', '-');">全部</a>
+							<a id="s_sex_0" href="javascript:l('s_sex', 0);">寻女伴同游帖</a>
+							<a id="s_sex_1" href="javascript:l('s_sex', 1);">寻男伴同游帖</a>
+						</dd>
+						<input type="hidden" name="s_sex" value="{dede:global.s_sex/}"/>
+					</dl>
+				</div>
+				<script>
+					$(function(){
+						$('#s_typeid_'+project.search.s_typeid).addClass('select');
+						$('#menu_'+project.search.s_typeid).addClass('active');
+						$('#s_sex_'+project.search.s_sex).addClass('select');
+						$('#s_over_'+project.search.s_over).addClass('select');
+						$('#s_im_'+project.search.s_im).addClass('select');
+					})
+				</script>
+				</form>
+			</div>
+
+			<div class="list-items">
+				<ul class="list-companion">
+					{dede:search}
+					<li><a href="[sfield:linkurl/]">[sfield:title/]</a></li>
+					{/dede:search}
+				</ul>
+			</div>
+			<div class="pages">
+				{dede:pagelist listitem="info,index,end,pre,next,pageno,option" listsize="5"/}
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+{dede:include filename="footer.htm"/}
+</body>
+</html>

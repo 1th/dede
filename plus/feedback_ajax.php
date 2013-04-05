@@ -233,12 +233,10 @@ else if($dopost=='send')
 
 <div class='decmt-box2'>
   <ul>
-    <li> <a href='<?php echo $spaceurl; ?>' class='plpic'><img src='<?php echo $mface;?>'  height='40' width='40'/></a> <span class="title"><a href="<?php echo $spaceurl; ?>"><?php echo $username; ?></a></span>
-    <div class="comment_act"><span class="fl"><?php echo GetDateMk($dtime); ?>发表</span></div>
+    <li>
+	    <span class="title"><?php echo $username; ?></span>
+    <div class="comment_act"><span class="fl"><?php echo GetDateMk($dtime); ?> 留言</span></div>
       <div style="clear:both"><?php echo ubb($msg); ?></div>
-      <div class="newcomment_act"><span class="fr"><span id='goodfb<?php echo $id; ?>'> <a href='#goodfb<?php echo $id; ?>' onclick="postBadGood('goodfb',<?php echo $id; ?>);">支持</a>[0] </span> <span id='badfb<?php echo $id; ?>'> <a href='#badfb<?php echo $id; ?>' onclick="postBadGood('badfb',<?php echo $id; ?>);">反对</a>[0] </span> <span class='quote'>
-        <!--<a href='/plus/feedback.php?aid=<?php echo $id; ?>&fid=<?php echo $id; ?>&action=quote'>[引用]</a>-->
-        <a href='javascript:ajaxFeedback(<?php echo $id; ?>,<?php echo $id; ?>,"quote");'>[引用]</a> </span></span></div>
     </li>
     <div id="ajaxfeedback_<?php echo $id; ?>"></div>
   </ul>
@@ -300,12 +298,9 @@ function GetList($page=1)
 ?>
 <div class="decmt-box2">
   <ul>
-    <li> <a href='<?php echo $spaceurl; ?>' class='plpic'><img src='<?php echo $mface;?>'  height='40' width='40'/></a> <span class="title"><a href="<?php echo $spaceurl; ?>"><?php echo $username; ?></a></span>
-      <div class="comment_act"><span class="fl"><?php echo GetDateMk($dtime); ?>发表</span></div>
+    <li>
+      <div class="comment_act"><?php echo $username; ?>&nbsp;<span class="fl">&nbsp;<?php echo GetDateMk($dtime); ?>&nbsp;留言</span></div>
       <div style="clear:both"><?php echo ubb($msg); ?></div>
-      <div class="newcomment_act"><span class="fr"><span id='goodfb<?php echo $id; ?>'> <a href='#goodfb<?php echo $id; ?>' onclick="postBadGood('goodfb',<?php echo $id; ?>);">支持</a>[<?php echo $good; ?>] </span> <span id='badfb<?php echo $id; ?>'> <a href='#badfb<?php echo $id; ?>' onclick="postBadGood('badfb',<?php echo $id; ?>);">反对</a>[<?php echo $bad; ?>] </span> <span class='quote'>
-        <!--<a href='/plus/feedback.php?aid=<?php echo $id; ?>&fid=<?php echo $id; ?>&action=quote'>[引用]</a>-->
-        <a href='javascript:ajaxFeedback(<?php echo $id; ?>,<?php echo $id; ?>,"quote");'>[引用]</a> </span></span></div>
     </li>
   </ul>
   <div id="ajaxfeedback_<?php echo $id; ?>"></div>

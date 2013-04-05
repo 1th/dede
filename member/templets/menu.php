@@ -33,43 +33,12 @@
       	if($menutype == 'content')
       	{
       	?>
-        <h2 class="menuTitle" onclick="menuShow('menuFirst')" id="menuFirst_t"><b></b>系统模型内容</h2>
-        <ul id="menuFirst">
-        <?php
-        //是否启用文章投稿
-        if($channelInfos['article']['issend']==1 && $channelInfos['article']['isshow']==1)
-        {
-        ?>
-          <li class="articles"><a href="../member/content_list.php?channelid=1" title="已发布的文章"><b></b>文章</a><a href="../member/article_add.php" class="act" title="发表新文章">发表</a></li>
-        <?php
-      	}
-        //是否启用图集投稿
-        if($channelInfos['image']['issend']==1 && $cfg_mb_album=='Y'  && $channelInfos['image']['isshow']==1 
-        && ($channelInfos['image']['usertype']=='' || preg_match("#".$cfg_ml->fields['mtype']."#", $channelInfos['image']['usertype'])) )
-        {
-        ?>
-          
-          
-          <li class="photo"><a href="../member/content_list.php?channelid=2" title="管理图集"><b></b>图集</a><a href="../member/album_add.php" class="act" title="新建图集">新建</a></li>
-	        <?php
-	      	}
-	      	//是否启用软件投稿
-	        if($channelInfos['soft']['issend']==1 && $channelInfos['soft']['isshow']==1
-	        && ($channelInfos['image']['usertype']=='' || preg_match("#".$cfg_ml->fields['mtype']."#", $channelInfos['image']['usertype']))
-	        )
-	        {
-	        ?>
-          <li class="soft"><a href="../member/content_list.php?channelid=3" title="已发布的软件"><b></b>软件</a><a href="../member/soft_add.php" title="上传软件"class="act">上传</a></li>
-          <?php
-           }
-           ?>
-        </ul>
 				<?php
 				//是否允许对自定义模型投稿
 				if($cfg_mb_sendall=='Y')
 				{
 				?>
-        <h2 class="menuTitle" onclick="menuShow('menuSec')" id="menuSec_t"><b></b>自定义内容</h2>
+        <h2 class="menuTitle" onclick="menuShow('menuSec')" id="menuSec_t"><b></b>结伴同游</h2>
         <ul id="menuSec">
 					<?php
 					foreach($add_channel_menu as $nnarr) {
@@ -79,10 +48,6 @@
 					} 
 					}
 					?>  
-        </ul>
-        <h2 class="menuTitle" onclick="menuShow('menuThird')" id="menuThird_t"><b></b>其他管理</h2>
-        <ul id="menuThird">
-        	<li class="icon attachment"><a href="../member/uploads.php"><b></b>附件管理</a></li>
         </ul>
         
         <?php

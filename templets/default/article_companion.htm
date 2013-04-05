@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="{dede:global.cfg_soft_lang/}">
+	<title>{dede:global.cfg_webname/}</title>
+	<meta name="description" content="{dede:global.cfg_description/}" />
+	<meta name="keywords" content="{dede:global.cfg_keywords/}" />
+	<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/deploy.css" media="all">
+	<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/style/print.css" media="print" />
+	<script src="{dede:global.cfg_cmsurl/}/include/dedeajax2.js"></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jq_plugin/jquery.KinSlideshow.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/swfobject/swfobject.js" ></script>
+	<script src="{dede:global.cfg_cmspath/}/static/js/jquery.ui.min.js"></script>
+	<link rel="stylesheet" href="{dede:global.cfg_cmspath/}/static/css/jquery-ui.min.css" media="all" />
+	<script>
+		var project = project || {};
+		project.global = project.global || {};
+		project.global.cfg_cmspath = '{dede:global.cfg_cmspath/}';
+		project.article = {};
+		project.article.artid = {dede:field.aid/};
+		project.typeid = {dede:field.typeid/};
+	</script>
+	<script language="javascript" type="text/javascript">
+		<!--
+		function CheckLogin()
+		{
+			var taget_obj = document.getElementById('_ajax_feedback');
+			myajax = new DedeAjax(taget_obj,false,false,'','','');
+			myajax.SendGet2("{dede:global.cfg_cmsurl/}/member/ajax_feedback.php");
+			DedeXHTTP = null;
+		}
+
+		function postBadGood(ftype,fid)
+		{
+			var taget_obj = document.getElementById(ftype+fid);
+			var saveid = GetCookie('badgoodid');
+			if(saveid != null)
+			{
+				var saveids = saveid.split(',');
+				var hasid = false;
+				saveid = '';
+				j = 1;
+				for(i=saveids.length-1;i>=0;i--)
+				{
+					if(saveids[i]==fid && hasid) continue;
+					else {
+						if(saveids[i]==fid && !hasid) hasid = true;
+						saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+						j++;
+						if(j==10 && hasid) break;
+						if(j==9 && !hasid) break;
+					}
+				}
+				if(hasid) { alert('您刚才已表决过了喔！'); return false;}
+				else saveid += ','+fid;
+				SetCookie('badgoodid',saveid,1);
+			}
+			else
+			{
+				SetCookie('badgoodid',fid,1);
+			}
+			myajax = new DedeAjax(taget_obj,false,false,'','','');
+			myajax.SendGet2("{dede:field name='phpurl'/}/feedback.php?aid="+fid+"&action="+ftype+"&fid="+fid);
+			DedeXHTTP = null;
+		}
+		function postDigg(ftype,aid)
+		{
+			var taget_obj = document.getElementById('newdigg');
+			var saveid = GetCookie('diggid');
+			if(saveid != null)
+			{
+				var saveids = saveid.split(',');
+				var hasid = false;
+				saveid = '';
+				j = 1;
+				for(i=saveids.length-1;i>=0;i--)
+				{
+					if(saveids[i]==aid && hasid) continue;
+					else {
+						if(saveids[i]==aid && !hasid) hasid = true;
+						saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+						j++;
+						if(j==20 && hasid) break;
+						if(j==19 && !hasid) break;
+					}
+				}
+				if(hasid) { alert("您已经顶过该帖，请不要重复顶帖 ！"); return; }
+				else saveid += ','+aid;
+				SetCookie('diggid',saveid,1);
+			}
+			else
+			{
+				SetCookie('diggid',aid,1);
+			}
+			myajax = new DedeAjax(taget_obj,false,false,'','','');
+			var url = "{dede:global.cfg_phpurl/}/digg_ajax.php?action="+ftype+"&id="+aid;
+			myajax.SendGet2(url);
+			DedeXHTTP = null;
+		}
+		function getDigg(aid)
+		{
+			var taget_obj = document.getElementById('newdigg');
+			myajax = new DedeAjax(taget_obj,false,false,'','','');
+			myajax.SendGet2("{dede:global.cfg_phpurl/}/digg_ajax.php?id="+aid);
+			DedeXHTTP = null;
+		}
+		-->
+	</script>
+</head>
+<body>
+{dede:include filename="header.htm"/}
+<div class="layout mt10">
+	<div class="col-left idx-left">
+		{dede:include filename="side_search.htm"/}
+		{dede:include filename="side_weibo.htm"/}
+		{dede:include filename="side_article.htm"/}
+	</div>
+	<div class="col-right">
+		<div class="show">
+			<div class="show-block">
+				<h3>结伴同游</h3>
+				<div class="content">
+					<h4>{dede:field.title/}</h4>
+				</div>
+				<div class="content">
+					<table class="table-show">
+						<colgroup>
+							<col style="width:100px;">
+							<col style="width:550px;">
+						</colgroup>
+						<tr>
+							<td class="tab-title">线路名称:</td>
+							<td><a href="{dede:field.linelink/}">{dede:field.line/}</a></td>
+						</tr>
+						<tr>
+							<td class="tab-title">出行时间:</td>
+							<td>{dede:field.godate/}</td>
+						</tr>
+						<tr>
+							<td class="tab-title">现有人数:</td>
+							<td>{dede:field.curpeople/}</td>
+						</tr>
+						<tr>
+							<td class="tab-title">期望伴友:</td>
+							<td>{dede:field.needpeople/}</td>
+						</tr>
+						<tr>
+							<td class="tab-title">支付方式:</td>
+							<td>{dede:field.payment/}</td>
+						</tr>
+						<tr>
+							<td class="tab-title">姓名:</td>
+							<td>{dede:field.name/}</td>
+						</tr>
+						<tr>
+							<td class="tab-title">邮箱:</td>
+							<td>{dede:field.email/}</td>
+						</tr>
+						<tr>
+							<td class="tab-title">同游介绍:</td>
+							<td>{dede:field.content/}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="content">
+					{dede:include file='ajaxfeedback.htm' /}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+{dede:include filename="footer.htm"/}
+</body>
+</html>
