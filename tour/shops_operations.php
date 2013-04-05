@@ -57,7 +57,7 @@ if(isset($dopost))
         foreach($nids as $n)
         {
 //            $query = "DELETE FROM `#@__shops_products` WHERE oid='$n'";
-            $query2 = "DELETE FROM `#@__line_order` WHERE id='$n'";
+            $query2 = "DELETE FROM `#@__line_order` WHERE buyid='$n'";
 //            $query3 = "DELETE FROM `#@__shops_userinfo` WHERE oid='$n'";
 //            $dsql->ExecuteNoneQuery($query);
             $dsql->ExecuteNoneQuery($query2);
