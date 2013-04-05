@@ -46,7 +46,14 @@
 							<td>
 								<span style="font-size: 16px;font-weight: bold;color: #000;padding-right: 50px;">￥(人民币):<?php echo $line['price']; ?></span>
 								 <?php if(!$line['ischeck']) { ?>
-								<a href="http://www.alipay.com"><img src="templets/images/pay/alipay.jpg" alt=""></a>
+								<form action="pay.php" method="post">
+									<input type="hidden" name="WIDout_trade_no" value="<?php echo $line['buyid'] ?>">
+									<input type="hidden" name="WIDsubject" value="<?php echo $line['title'] ?>">
+									<input type="hidden" name="WIDtotal_fee" value="<?php echo $line['price'] ?>">
+									<input type="hidden" name="WIDbody" value="">
+									<input type="hidden" name="WIDshow_url" value="<?php echo $cfg_basehost;?>/plus/view.php?aid=<?php echo $line['aid'] ?>">
+									<input type="image" src="templets/images/pay/alipay.jpg">
+								</form>
 								 <?php  } else { ?>
 									echo "已支付";
 								 <?php } ?>
@@ -55,7 +62,7 @@
 						<tr>
 							<th>详细价格:</th>
 							<td>
-								<?php $desc = json_decode($line['descs']); ?>
+								<?php $desc = json_decode($line['descs'], true); ?>
 								<table class="table-show-detail">
 									<colgroup>
 										<col style="width:150px;">
@@ -102,7 +109,7 @@
 						<tr>
 							<th>用户信息</th>
 							<td>
-								<?php $userinfo = json_decode($line['userinfo']); ?>
+								<?php $userinfo = json_decode($line['userinfo'], true); ?>
 								<table class="table-show-detail" style="font-weight: normal">
 									<colgroup>
 										<col style="width:180px;">
@@ -120,10 +127,10 @@
 									{dede:php}
 									foreach($userinfo as $k => $v) {
 									echo "<tr>
-										<th>{$v->name}</th>
-										<th>{$v->sex}</th>
-										<th>{$v->id}</th>
-										<th>{$v->tel}</th>
+										<th>{$v['name']}</th>
+										<th>{$v['sex']}</th>
+										<th>{$v['id']}</th>
+										<th>{$v['tel']}</th>
 									</tr>";
 									}
 									{/dede:php}
