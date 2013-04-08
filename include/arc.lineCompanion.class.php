@@ -84,6 +84,14 @@ class LineCompanion
 		}
 	}
 
+	private  function _getTypeSql(){
+		if ($this->TypeID) {
+			return " and l.typeid = $this->TypeID";
+		} else {
+			return '';
+		}
+	}
+
 	private function _getComOverSql()
 	{
 		switch ($this->ComOver) {
@@ -253,6 +261,7 @@ class LineCompanion
 		$cnt .= $this->_getComImSql();
 		$cnt .= $this->_getComOverSql();
 		$cnt .= $this->_getComSexSql();
+		$cnt .= $this->_getTypeSql();
 		$rs = $this->dsql->GetOne($cnt);
 		$this->TotalResult = $rs['cnt'];
 		if ($this->TotalResult) {
@@ -260,6 +269,7 @@ class LineCompanion
 			$sql .= $this->_getComImSql();
 			$sql .= $this->_getComOverSql();
 			$sql .= $this->_getComSexSql();
+			$sql .= $this->_getTypeSql();
 			$sql .= $this->_getLimitSql();
 			$this->dsql->SetQuery($sql);
 			$this->dsql->Execute("al");
